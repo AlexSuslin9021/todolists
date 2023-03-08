@@ -1,0 +1,14 @@
+.errorText{
+    color:red
+}
+.errorInput{
+    color: red;
+    border: red 4px solid;
+}
+.active{
+    background-color: #dc767b;
+
+}
+.isDone {
+    opacity: 0.5;
+}
