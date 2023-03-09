@@ -66,6 +66,12 @@ function App() {
         setTasks({...tasks, [todoID]:[]})
 
     }
+    const addTodolist=(titleTodo: string)=>{
+        const newIdTodo=v1()
+        const newTodo:TodolistsType={id: newIdTodo, title: titleTodo, filter: 'all'}
+        setTodolists([...todolists,newTodo])
+        setTasks({...tasks, [newIdTodo]:[]})
+    }
     return <div>
         {todolists.map((t) => {
             let tasksFiltered = tasks[t.id]
