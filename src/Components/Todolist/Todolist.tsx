@@ -3,6 +3,7 @@ import {FilterType, TaskType} from "../../App";
 import s from './Todolist.module.css'
 import Button from "../Button/Button";
 import AddItemForm from "../AddItemForm/AddItemForm";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 
 type TodolistType = {
     idTodo: string
@@ -14,6 +15,8 @@ type TodolistType = {
     changeStatusCheck: (idTodo: string, idTask: string, isDone: boolean) => void
     filter: FilterType
     removeTodolist: (todoID: string) => void
+    onChangeTitleInput:(idIdTodo:string,idTask:string, title: string)=>void
+    onChangeTitleTodo:(idTodo:string, title: string)=>void
 }
 export const Todolist: FC<TodolistType> = (props) => {
 
@@ -49,16 +52,21 @@ export const Todolist: FC<TodolistType> = (props) => {
         props.addTask(props.idTodo, title)
     }
 
+    const onChangeTitleInputTitle=(id:string,title:string)=>{
+        debugger
+        props.onChangeTitleInput(props.idTodo,id, title)
+    }
     return (
         <div>
 
-            <h3>{props.title} <Button name={'x'} callback={onRemoveTodoHandler}/></h3>
+            <h3>  <EditableSpan title={props.title} onChangeTitleInput={(title)=>props.onChangeTitleTodo(props.idTodo,title)}/>
+                <Button name={'x'} callback={onRemoveTodoHandler}/></h3>
 
             <AddItemForm addItem={addTaskWrapper} />
 
             <ul>
                 {props.task.map(t => <li key={t.id}>
-                    <span>{t.title}</span>
+                    <EditableSpan title={t.title} onChangeTitleInput={(title:string)=>onChangeTitleInputTitle(t.id,title)} />
                     <input className={t.isDone ? s.isDone : ''} type="checkbox" checked={t.isDone}
                            onClick={() => onChengeStatut(t.id, t.isDone)}/>
                     <Button name={'x'} callback={() => onClickHandler(t.id)}/>

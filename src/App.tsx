@@ -68,12 +68,20 @@ function App() {
 
     }
     const addTodolist=(title: string)=>{
-        debugger
+
         const newIdTodo=v1()
         const newTodo:TodolistsType={id: newIdTodo, title: title, filter: 'all'}
         setTodolists([...todolists,newTodo])
         setTasks({...tasks, [newIdTodo]:[]})
     }
+    const onChangeTitleInput=(IdTodo:string,idTask:string, title: string)=>{
+        setTasks({...tasks, [IdTodo]: tasks[IdTodo].map(t=>t.id===idTask ? {...t, title:title}: t)})
+    }
+    const onChangeTitleTodo=(idTodo:string, title: string)=>{
+      let newTitleTodo= todolists.map(t=> t.id===idTodo ? {...t, title:title}:t)
+        setTodolists(newTitleTodo)
+    }
+
     return <div>
         <AddItemForm addItem={addTodolist} />
         {todolists.map((t) => {
@@ -91,6 +99,8 @@ function App() {
                 filter={t.filter}
                 changeStatusCheck={changeStatusCheck}
                 removeTodolist={removeTodolist}
+                onChangeTitleInput={onChangeTitleInput}
+                onChangeTitleTodo={onChangeTitleTodo}
             />
         })}
 
