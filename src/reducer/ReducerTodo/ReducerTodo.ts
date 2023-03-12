@@ -13,8 +13,8 @@ const changeFilterTodo="CHANGE-FILTER-TODOLIST"
 export type TodolistsType = {
     id: string, title: string, filter: FilterType
 }
-let todolistID1 = v1()
-let todolistID2 = v1()
+export let todolistID1 = v1()
+export let todolistID2 = v1()
 let initialState : TodolistsType[]  =
     [
         {id: todolistID1, title: 'What to learn', filter: 'all'},
