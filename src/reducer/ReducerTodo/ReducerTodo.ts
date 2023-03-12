@@ -10,7 +10,7 @@ const changeFilterTodo="CHANGE-FILTER-TODOLIST"
 
 //InitialState
 
-type TodolistsType = {
+export type TodolistsType = {
     id: string, title: string, filter: FilterType
 }
 let todolistID1 = v1()
@@ -22,11 +22,11 @@ let initialState : TodolistsType[]  =
     ]
 
 type actionType=ReturnType<typeof removeTodolistAC> | ReturnType<typeof addTodolistAC> | ReturnType<typeof changeTitleTodolistAC>| ReturnType<typeof changeFilterTodolistAC>
-export const reducerTodo=(state:TodolistsType[]=initialState, action:actionType)=>{
+export const reducerTodo=(state:TodolistsType[]=initialState, action:actionType):TodolistsType[]=>{
     switch (action.type){
         case removeTodo:
 
-            return[state.filter(t => t.id !== action.idTodo)]
+            return state.filter(t => t.id !== action.idTodo)
         case addTodo:
             const newIdTodo=v1()
             return[...state, {id:newIdTodo, title:action.title, filter:'all'}]
@@ -43,7 +43,7 @@ type RemoveTodolistType={
     type:'REMOVE-TODOLIST',
     idTodo :string
 }
-const removeTodolistAC=(idTodo:string):RemoveTodolistType=>{
+export const removeTodolistAC=(idTodo:string):RemoveTodolistType=>{
     return {
         type:removeTodo,
         idTodo
@@ -55,7 +55,7 @@ type AddTodolistType={
     type:'ADD-TODOLIST',
     title :string
 }
-const addTodolistAC=(title:string):AddTodolistType=>{
+export const addTodolistAC=(title:string):AddTodolistType=>{
     return {
         type:addTodo,
         title
@@ -67,7 +67,7 @@ type ChangeTitleTodolistType={
     idTodo:string
     title :string
 }
-const changeTitleTodolistAC=(idTodo:string, title: string):ChangeTitleTodolistType=>{
+export const changeTitleTodolistAC=(idTodo:string, title: string):ChangeTitleTodolistType=>{
     return {
         type:changeTitleTodo,
         idTodo,
@@ -80,7 +80,7 @@ type ChangeFilterTodolistType={
     idTodo:string
     value :FilterType
 }
-const changeFilterTodolistAC=(idTodo: string, value: FilterType):ChangeFilterTodolistType=>{
+export const changeFilterTodolistAC=(idTodo: string, value: FilterType):ChangeFilterTodolistType=>{
     return {
         type:changeFilterTodo,
         idTodo,
