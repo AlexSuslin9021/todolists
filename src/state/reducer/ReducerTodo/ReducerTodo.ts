@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 
-import {FilterType} from "../../App";
+import {FilterType} from "../../../App";
 
 ///TYPE Action
 const removeTodo='REMOVE-TODOLIST'
@@ -21,9 +21,9 @@ let initialState : TodolistsType[]  =
         {id: todolistID1, title: 'What to learn', filter: 'all'},
         {id: todolistID2, title: 'What to buy', filter: 'all'},
     ]
-
 type actionType=ReturnType<typeof removeTodolistAC> | ReturnType<typeof addTodolistAC> | ReturnType<typeof changeTitleTodolistAC>| ReturnType<typeof changeFilterTodolistAC>
 export const reducerTodo=(state:TodolistsType[]=initialState, action:actionType):TodolistsType[]=>{
+    debugger
     switch (action.type){
         case removeTodo:
 

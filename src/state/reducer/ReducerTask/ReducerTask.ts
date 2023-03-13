@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {addTodolistAC, removeTodolistAC, todolistID1, todolistID2} from "../ReducerTodo/ReducerTodo";
-import {TaskType} from "../../App";
+import {TaskType} from "../../../App";
 
 const removeTask = 'REMOVE-TASK'
 const addTask = 'ADD-TASK'
@@ -27,8 +27,10 @@ let tasks: TasksType = {
 }
 
 type ActionType= ReturnType<typeof removeTaskAC> |ReturnType<typeof addTaskAC> |ReturnType<typeof changeTaskStatusAC> | ReturnType<typeof changeTaskTitleAC> | ReturnType<typeof addTodolistAC> | ReturnType<typeof removeTodolistAC>
-export const reducerTask = (state: TasksType, action: ActionType): TasksType => {
+export const reducerTask = (state: TasksType=tasks, action: ActionType): TasksType => {
+    debugger
     switch (action.type){
+
         case removeTask:
             return {...state, [action.idTodo]: state[action.idTodo].filter(t => t.id !== action.idTask) }
         case addTask:
@@ -39,7 +41,7 @@ export const reducerTask = (state: TasksType, action: ActionType): TasksType => 
         case  changeTaskTitle:
             return {...state, [action.idTodo]: state[action.idTodo].map(t=>t.id===action.idTask ? {...t, title:action.title}: t)}
         case addTodo:
-            return {...state}
+            return {...state, [action.idTodo]:[]}
         case removeTodo:
             const copyState={...state, [action.idTodo]:state[action.idTodo]}
            delete copyState[action.idTodo]

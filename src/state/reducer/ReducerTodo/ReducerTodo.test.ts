@@ -8,13 +8,21 @@ import {
     TodolistsType
 } from "./ReducerTodo";
 
+let startState: TodolistsType[];
+beforeEach(()=>{
+    startState =
+        [
+            {id: '1', title: 'What to learn', filter: 'all'},
+            {id: '2', title: 'What to buy', filter: 'all'},
+        ]
+})
 
 test('one todo should be removed',()=> {
-        let startState: TodolistsType[] =
-            [
-                {id: '1', title: 'What to learn', filter: 'all'},
-                {id: '2', title: 'What to buy', filter: 'all'},
-            ]
+        // let startState: TodolistsType[] =
+        //     [
+        //         {id: '1', title: 'What to learn', filter: 'all'},
+        //         {id: '2', title: 'What to buy', filter: 'all'},
+        //     ]
 
     const action=removeTodolistAC('1')
     const newState= reducerTodo(startState, action)
@@ -27,11 +35,11 @@ test('one todo should be removed',()=> {
 )
 
 test('should be add todo',()=> {
-        let startState: TodolistsType[] =
-            [
-                {id: '1', title: 'What to learn', filter: 'all'},
-                {id: '2', title: 'What to buy', filter: 'all'},
-            ]
+        // let startState: TodolistsType[] =
+        //     [
+        //         {id: '1', title: 'What to learn', filter: 'all'},
+        //         {id: '2', title: 'What to buy', filter: 'all'},
+        //     ]
 
         const action=addTodolistAC('test')
         const newState= reducerTodo(startState, action)
@@ -44,11 +52,11 @@ test('should be add todo',()=> {
 
 )
 test('need change title Todo',()=> {
-        let startState: TodolistsType[] =
-            [
-                {id: '1', title: 'What to learn', filter: 'all'},
-                {id: '2', title: 'What to buy', filter: 'all'},
-            ]
+        // let startState: TodolistsType[] =
+        //     [
+        //         {id: '1', title: 'What to learn', filter: 'all'},
+        //         {id: '2', title: 'What to buy', filter: 'all'},
+        //     ]
 
         const action=changeTitleTodolistAC('1','What to read')
         const newState= reducerTodo(startState, action)
@@ -62,11 +70,11 @@ test('need change title Todo',()=> {
 )
 
 test('need change filter Todo',()=> {
-        let startState: TodolistsType[] =
-            [
-                {id: '1', title: 'What to learn', filter: 'all'},
-                {id: '2', title: 'What to buy', filter: 'all'},
-            ]
+        // let startState: TodolistsType[] =
+        //     [
+        //         {id: '1', title: 'What to learn', filter: 'all'},
+        //         {id: '2', title: 'What to buy', filter: 'all'},
+        //     ]
 
         const action=changeFilterTodolistAC('1','completed')
 
