@@ -1,4 +1,5 @@
 import React, {ChangeEvent, FC, useState} from 'react';
+import style from '../../Common/commonStyle.module.css'
 
 type EditableSpanType={
     title:string
@@ -19,7 +20,7 @@ const onClickHandler=()=>{
     return (<>
         {editMode ?   <span onDoubleClick={onClickHandler}>{props.title}</span>
             :
-            <input onBlur={onClickHandler}  autoFocus onChange={onChangeHandler} value={title}/>}</>
+            <input className={style.input}  onBlur={onClickHandler}  autoFocus onChange={onChangeHandler} value={title}/>}</>
     );
 };
 

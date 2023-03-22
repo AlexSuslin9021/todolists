@@ -23,7 +23,7 @@ let initialState : TodolistsType[]  =
     ]
 type actionType=ReturnType<typeof removeTodolistAC> | ReturnType<typeof addTodolistAC> | ReturnType<typeof changeTitleTodolistAC>| ReturnType<typeof changeFilterTodolistAC>
 export const reducerTodo=(state:TodolistsType[]=initialState, action:actionType):TodolistsType[]=>{
-    debugger
+
     switch (action.type){
         case removeTodo:
 

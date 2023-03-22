@@ -6,7 +6,8 @@
     border: red 4px solid;
 }
 .active{
-    background-color: #dc767b;
+    /*background: #2196F3;*/
+    color: yellow;
 
 }
 .isDone {

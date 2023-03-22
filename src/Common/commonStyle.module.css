@@ -1,0 +1,38 @@
+.btn {
+    background-color: white;
+    border-radius: 5px;
+    height: 30px;
+
+    cursor: pointer;
+    border-color: #2196F3;
+    color: dodgerblue;
+}
+
+.input {
+    height: 40px;
+    width: 150px;
+    box-sizing: border-box;
+    border: 2px solid #eaeaea;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+    border-radius: 5px;
+}
+.input:focus {
+    border: 2px solid gray;
+    box-shadow: 1px 1px #006dd6;
+}
+
+.buttonX {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-left: 3px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    border-color: lightgrey;
+}

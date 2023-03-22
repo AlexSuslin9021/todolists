@@ -9,7 +9,7 @@ const changeTaskTitle='CHANGE-TASK-TITLE'
 const addTodo='ADD-TODOLIST'
 const removeTodo='REMOVE-TODOLIST'
 
-type TasksType = {
+export type TasksType = {
     [key: string]: TaskType[]
 }
 
@@ -28,7 +28,7 @@ let tasks: TasksType = {
 
 type ActionType= ReturnType<typeof removeTaskAC> |ReturnType<typeof addTaskAC> |ReturnType<typeof changeTaskStatusAC> | ReturnType<typeof changeTaskTitleAC> | ReturnType<typeof addTodolistAC> | ReturnType<typeof removeTodolistAC>
 export const reducerTask = (state: TasksType=tasks, action: ActionType): TasksType => {
-    debugger
+
     switch (action.type){
 
         case removeTask:
