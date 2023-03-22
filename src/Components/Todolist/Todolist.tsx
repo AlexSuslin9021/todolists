@@ -1,6 +1,6 @@
 import React, {FC, useCallback} from 'react';
 import {FilterType, TaskType} from "../../App";
-
+import s from './Todolist.module.css'
 import Button from "../Button/Button";
 import AddItemForm from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
@@ -35,7 +35,7 @@ export const Todolist: FC<TodolistType> = React.memo((props) => {
 
 
     return (
-        <div>
+        <div className={s.todo} >
 
             <h3><EditableSpan title={props.title}
                               onChangeTitleInput={(title) => props.onChangeTitleTodo(props.idTodo, title)}/>

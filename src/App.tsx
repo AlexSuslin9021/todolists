@@ -33,7 +33,7 @@ export type TasksType = {
 
 export type FilterType = 'all' | 'active' | 'completed'
 
-function App() {
+ function App() {
 
 
     const dispatch = useDispatch()
@@ -42,59 +42,61 @@ function App() {
 
     const removeTask = useCallback((idTodo: string, idTask: string) => {
         dispatch(removeTaskAC(idTodo, idTask))
-    },[dispatch])
+    }, [dispatch])
 
     const addTask = useCallback((idTodo: string, newTitle: string) => {
         dispatch(addTaskAC(idTodo, newTitle))
-    },[dispatch])
+    }, [dispatch])
 
     const filterTask = useCallback((idTodo: string, value: FilterType) => {
         dispatch(changeFilterTodolistAC(idTodo, value))
-    },[dispatch])
+    }, [dispatch])
 
     const changeStatusCheck = useCallback((idTodo: string, idTask: string, isDone: boolean) => {
         dispatch(changeTaskStatusAC(idTodo, idTask, isDone))
-    },[dispatch])
+    }, [dispatch])
 
     const removeTodolist = useCallback((todoID: string) => {
         dispatch(removeTodolistAC(todoID))
-    },[dispatch])
+    }, [dispatch])
 
-    const addTodolist = useCallback ((title: string) => {
+    const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
-    },[dispatch])
+    }, [dispatch])
 
     const onChangeTitleInput = useCallback((IdTodo: string, idTask: string, title: string) => {
         dispatch(changeTaskTitleAC(IdTodo, idTask, title))
-    },[dispatch])
+    }, [dispatch])
 
     const onChangeTitleTodo = useCallback((idTodo: string, title: string) => {
         dispatch(changeTitleTodolistAC(idTodo, title))
-    },[dispatch])
+    }, [dispatch])
 
     return <div>
-        <div className={'header'}>
+        <div className={'header'}></div>
+        <div className={'container'}>
+            <div>
+                <AddItemForm addItem={addTodolist}/>
+            </div>
+            {todolist.map((t) => {
 
+                return <Todolist
+                    key={t.id}
+                    idTodo={t.id}
+                    task={tasks[t.id]}
+                    title={t.title}
+                    removeTask={removeTask}
+                    filterTask={filterTask}
+                    addTask={addTask}
+                    filter={t.filter}
+                    changeStatusCheck={changeStatusCheck}
+                    removeTodolist={removeTodolist}
+                    onChangeTitleInput={onChangeTitleInput}
+                    onChangeTitleTodo={onChangeTitleTodo}
+                />
+
+            })}
         </div>
-        <AddItemForm addItem={addTodolist}/>
-        {todolist.map((t) => {
-
-            return <Todolist
-                key={t.id}
-                idTodo={t.id}
-                task={tasks[t.id]}
-                title={t.title}
-                removeTask={removeTask}
-                filterTask={filterTask}
-                addTask={addTask}
-                filter={t.filter}
-                changeStatusCheck={changeStatusCheck}
-                removeTodolist={removeTodolist}
-                onChangeTitleInput={onChangeTitleInput}
-                onChangeTitleTodo={onChangeTitleTodo}
-            />
-        })}
-
 
     </div>
 }

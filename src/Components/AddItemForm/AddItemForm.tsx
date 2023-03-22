@@ -44,8 +44,6 @@ if(error)setError(false)
     const inputClass =  (error ? s.errorInput : '') + style.input
     return (
         <div>
-
-
             <input value={value}
                    onChange={onChangeHandler}
                    onKeyUp={onKeyDownHandler}
