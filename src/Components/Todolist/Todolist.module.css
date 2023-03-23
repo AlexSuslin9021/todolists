@@ -1,5 +1,25 @@
 
+.btn {
+    background-color: white;
+    border-radius: 5px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    /*border-color: #2196F3;*/
+    color: dodgerblue;
+    font-weight: bold;
+}
 
+.btn:hover {
+    background: #59a6ef;
+    color:white;
+}
+
+.active{
+    border: 1px solid #2196F3;
+    /*background:  yellow;*/
+
+}
 .todo{
 
    margin-left: 200px;
@@ -8,15 +28,8 @@
 .errorText{
     color:red
 }
-.errorInput{
-    color: red;
-    border: red 4px solid;
-}
-.active{
-    /*background: #2196F3;*/
-    color: yellow;
 
-}
+
 .isDone {
     opacity: 0.5;
 }

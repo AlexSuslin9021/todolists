@@ -6,6 +6,7 @@ type EditableSpanType={
     title:string
     onChangeTitleInput:(title: string)=>void
 }
+
 export const EditableSpan: FC<EditableSpanType> = (props) => {
     const [editMode, setEditMode]=useState<boolean>(true)
     const[title, setTitle]=useState<string>(props.title)

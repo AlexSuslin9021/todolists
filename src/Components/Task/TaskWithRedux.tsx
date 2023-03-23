@@ -56,9 +56,9 @@ type TaskWithReduxType ={
          dispatch( changeTaskTitleAC(props.idTodo,id, title))
      }
 
-     const buttonStyleAll = style.btn + ' ' + (props.filter === 'all' ? s.active : '')
-     const buttonStyleActive = style.btn + ' ' + (props.filter === 'active' ? s.active : '')
-     const buttonStyleCompleted = style.btn + ' ' + (props.filter === 'completed' ? s.active : '')
+     const buttonStyleAll =   (props.filter === 'all' ? s.active : '') +' '+ s.btn
+     const buttonStyleActive = s.btn + ' ' + (props.filter === 'active' ? s.active : '')
+     const buttonStyleCompleted = s.btn + ' ' + (props.filter === 'completed' ? s.active : '')
     return (
         <div>
             {tasks.map(t => <li key={t.id}>

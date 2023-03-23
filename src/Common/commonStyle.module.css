@@ -2,10 +2,11 @@
     background-color: white;
     border-radius: 5px;
     height: 30px;
-
+    border: none;
     cursor: pointer;
-    border-color: #2196F3;
+    /*border-color: #2196F3;*/
     color: dodgerblue;
+    font-weight: bold;
 }
 
 .input {
@@ -18,6 +19,7 @@
     outline: none;
     border-radius: 5px;
 }
+
 .input:focus {
     border: 2px solid gray;
     box-shadow: 1px 1px #006dd6;
@@ -34,5 +36,8 @@
 }
 
 .btn:hover {
-    border-color: lightgrey;
+    /*border: 1px solid #2196F3;*/
+}
+.active{
+    background: yellow;
 }

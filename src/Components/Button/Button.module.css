@@ -1,0 +1,23 @@
+.icon{
+    width: 15px;
+    height: 15px;
+    /*background: yellow;*/
+}
+.btn{
+    background: white;
+    border: none;
+}
+.add{
+    display: inline-block;
+    width: 20px;
+    height: 16px;
+    background:#2196F3;
+    color:white;
+    border-radius: 3px;
+    font-weight: bold;
+text-align: center;
+    border: 1px solid #2196F3;
+}
+.add:hover{
+    background: lightskyblue;
+}

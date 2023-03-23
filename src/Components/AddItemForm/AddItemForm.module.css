@@ -1,0 +1,22 @@
+.input {
+    height: 40px;
+    width: 150px;
+    box-sizing: border-box;
+    border: 2px solid #eaeaea;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+    border-radius: 5px;
+}
+
+.input:focus {
+    border: 2px solid gray;
+    box-shadow: 1px 1px #006dd6;
+}
+.errorInput{
+  border-radius: 5px;
+    border: red 2px solid;
+}
+.errorText{
+    color:red
+}
