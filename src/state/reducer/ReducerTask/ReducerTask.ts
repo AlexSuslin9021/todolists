@@ -28,10 +28,11 @@ let tasks: TasksType = {
 
 type ActionType= ReturnType<typeof removeTaskAC> |ReturnType<typeof addTaskAC> |ReturnType<typeof changeTaskStatusAC> | ReturnType<typeof changeTaskTitleAC> | ReturnType<typeof addTodolistAC> | ReturnType<typeof removeTodolistAC>
 export const reducerTask = (state: TasksType=tasks, action: ActionType): TasksType => {
-
+    debugger
     switch (action.type){
 
         case removeTask:
+
             return {...state, [action.idTodo]: state[action.idTodo].filter(t => t.id !== action.idTask) }
         case addTask:
             return {...state, [action.idTodo]: [...state[action.idTodo], {id: v1(), title: action.title, isDone: true}]}
@@ -60,6 +61,7 @@ type RemoveTaskType = {
 
 }
 export const removeTaskAC = (idTodo: string, idTask: string): RemoveTaskType => {
+
     return {
         type: removeTask,
         idTodo,

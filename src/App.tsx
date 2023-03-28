@@ -41,6 +41,7 @@ export type FilterType = 'all' | 'active' | 'completed'
     const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
 
     const removeTask = useCallback((idTodo: string, idTask: string) => {
+      debugger
         dispatch(removeTaskAC(idTodo, idTask))
     }, [dispatch])
 
@@ -49,6 +50,7 @@ export type FilterType = 'all' | 'active' | 'completed'
     }, [dispatch])
 
     const filterTask = useCallback((idTodo: string, value: FilterType) => {
+        debugger
         dispatch(changeFilterTodolistAC(idTodo, value))
     }, [dispatch])
 

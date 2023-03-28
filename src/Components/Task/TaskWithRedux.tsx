@@ -37,12 +37,13 @@ type TaskWithReduxType ={
      },[props.filterTask,props.idTodo])
 
      const onClickFilterCompleted = useCallback(() => {
-
+debugger
              props.filterTask(props.idTodo, 'completed')
          },
          [props.filterTask,props.idTodo]
      )
      const removeTask = (id: string) => {
+
          dispatch(removeTaskAC(props.idTodo, id))
      }
 
