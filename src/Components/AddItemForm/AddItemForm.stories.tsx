@@ -1,15 +1,16 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 // import s from './AddItemForm.module.css'
-import { AddItemForm } from "./AddItemForm/AddItemForm"
+import { AddItemForm } from "./AddItemForm"
 import {action} from "@storybook/addon-actions";
-import s from "./AddItemForm/AddItemForm.module.css";
-import Button from "./Button/Button";
+import s from "./AddItemForm.module.css";
+import Button from "../Button/Button";
+import axios from "axios";
 
 
 
 export default {
-  title: 'TODOLIST',
+  title: 'Todolist',
   component: AddItemForm,
 
   argTypes: {
@@ -81,14 +82,14 @@ AddItemFormStory.args = {
   );
 }
 export const AddItemFormStoryError = Input1.bind({});
-// export const  InputError: ComponentStory<typeof AddItemForm> = () => <AddItemForm  addItem={()=>{
-//   console.log('hello')}} />;
 
-// export const Template = Input.bind({});
-//
-// Input.args = {
-//
-//   addItem:()=>{console.log('Hello')}
-// };
+
+
+
+
+
+
+
+
 
 

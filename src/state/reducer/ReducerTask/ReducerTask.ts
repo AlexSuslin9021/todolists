@@ -21,7 +21,7 @@ let tasks: TasksType = {
 
     ],
     [todolistID2]: [
-        {id: v1(), title: 'Rest API', isDone: true},
+        {id: v1(), title: 'Rest api', isDone: true},
         {id: v1(), title: 'GraphQL', isDone: false},
     ]
 }
