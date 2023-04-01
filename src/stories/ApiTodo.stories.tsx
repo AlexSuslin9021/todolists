@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 
 import {todolistApi} from "../api/todolistApi";
+import {taskApi} from "../api/taskApi";
 
 export default {
     title: 'API',
@@ -23,23 +24,62 @@ export const GetTodolists = () => {
 }
 export const CreateTodolist = () => {
 
-    const [state, setState] = useState<any>(null)
+    const [state, setState] = useState<any>('')
+    const [title, setTitle] = useState<string>('')
     useEffect(() => {
-        todolistApi.createTodolist('Fruits')
+        // todolistApi.createTodolist('Fruits')
+        //     .then((res) => {
+        //         return setState(res.data)
+        //     })
+        //     .catch(() => {
+        //         setState('error')
+        //     })
+    }, [])
+
+    const onClickHandler = () => {
+        todolistApi.createTodolist(title)
             .then((res) => {
                 return setState(res.data)
             })
             .catch(() => {
                 setState('error')
             })
-    }, [])
+    }
+    // const onChangeHandler=(e:ChangeEvent<HTMLInputElement>)=>{
+    //     setState(e.currentTarget.value)
+    // }
+    const onChangeHandlerTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
 
-    return <div>{JSON.stringify(state)}</div>
+    return <div>
+
+        {/*<input onChange={onChangeHandler} />*/}
+        <span> Title</span>
+        <input onChange={onChangeHandlerTitle}/>
+        <button onClick={onClickHandler}> add</button>
+        {JSON.stringify(state)}
+
+    </div>
 }
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
-    const todolistId = 'de9fd8eb-e2de-4ca8-bc0b-3811727c20e9'
+    const [todolistId, seTodolistId] = useState<string>('')
+
     useEffect(() => {
+        // todolistApi.deleteTodolist(todolistId)
+        //     .then((res) => {
+        //         return setState(res.data)
+        //     })
+        //     .catch(() => {
+        //         setState('error')
+        //     })
+    }, [])
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        seTodolistId(e.currentTarget.value)
+    }
+    const onClickHandler = () => {
         todolistApi.deleteTodolist(todolistId)
             .then((res) => {
                 return setState(res.data)
@@ -47,21 +87,49 @@ export const DeleteTodolist = () => {
             .catch(() => {
                 setState('error')
             })
-    }, [])
 
-    return <div>{JSON.stringify(state)}</div>
+    }
+    return <div>{JSON.stringify(state)}
+        <span> Id</span>
+        <input onChange={onChangeHandler}/>
+        <button onClick={onClickHandler}> add</button>
+    </div>
 }
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
-    const todolistId = 'f3dcc47a-fe0b-4b9c-94eb-ed4775e3fe29'
+    const [todolistId, seTodolistId] = useState<string>('')
+    const [title, setTitle] = useState<string>('')
+
     useEffect(() => {
-        todolistApi.updateTodolist(todolistId, 'TodoTest')
+        // todolistApi.updateTodolist(todolistId, 'TodoTest')
+        //     .then((res) => {
+        //         return setState(res.data)
+        //     })
+    }, [])
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        seTodolistId(e.currentTarget.value)
+    }
+    const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
+    const onClickHandler = () => {
+        todolistApi.updateTodolist(todolistId, title)
             .then((res) => {
                 return setState(res.data)
             })
-    }, [])
+    }
+    return <div>{JSON.stringify(state)}
+        <div>
+            <span> Id</span>
+            <input onChange={onChangeHandler}/>
+        </div>
+        <div>
+            <span> Title</span>
+            <input onChange={onChangeTitle}/>
+        </div>
 
-    return <div>{JSON.stringify(state)}</div>
+        <button onClick={onClickHandler}> add</button>
+    </div>
 }
 
 
