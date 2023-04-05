@@ -11,7 +11,8 @@ import {EditableSpan} from "../EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
 import Button from "../Button/Button";
 import {FilterType} from "../../App";
-import style from '../../Common/commonStyle.module.css'
+import {TaskStatuses} from "../../api/taskApi";
+// import style from '../../Common/commonStyle.module.css'
 
 type TaskWithReduxType ={
     idTodo:string
@@ -23,8 +24,8 @@ type TaskWithReduxType ={
    let task= useSelector<AppStateType, TasksType>(state => state.tasks)
      const dispatch=useDispatch()
      let tasks = task[props.idTodo]
-     if (props.filter === 'active') tasks = tasks.filter(t => t.isDone)
-     if (props.filter === 'completed') tasks = tasks.filter(t => !t.isDone)
+     if (props.filter === 'active') tasks = tasks.filter(t => t.status===TaskStatuses.New)
+     if (props.filter === 'completed') tasks = tasks.filter(t => t.status===TaskStatuses.Completed)
 
      const onClickFilterAll = useCallback(() => {
 
@@ -47,9 +48,9 @@ debugger
          dispatch(removeTaskAC(props.idTodo, id))
      }
 
-     const onChangeStatus = (id: string, isDone: boolean) => {
+     const onChangeStatus = (id: string, status:TaskStatuses) => {
 
-         dispatch( changeTaskStatusAC(props.idTodo, id, isDone))
+         dispatch( changeTaskStatusAC(props.idTodo, id, status))
      }
 
      const onChangeTitleInputTitle=(id:string,title:string)=>{
@@ -63,9 +64,9 @@ debugger
     return (
         <div>
             {tasks.map(t => <li key={t.id}>
-                <EditableSpan title={t.title} onChangeTitleInput={()=>onChangeTitleInputTitle(t.id, t.title)} />
-                <input readOnly={true} className={t.isDone ? s.isDone : ''} type="checkbox" checked={t.isDone}
-                       onClick={() => onChangeStatus(t.id,t.isDone)}/>
+                <EditableSpan title={t.title} onChangeTitleInput={()=>  onChangeTitleInputTitle(t.id, t.title)} />
+                <input readOnly={true} className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}
+                       onClick={() => onChangeStatus(t.id,t.status)}/>
                 <Button name={'x'} callback={() =>removeTask(t.id)}/>
             </li>)
             }

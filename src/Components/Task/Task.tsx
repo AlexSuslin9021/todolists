@@ -2,13 +2,14 @@ import React, {FC} from 'react';
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
 import Button from "../Button/Button";
-import {TaskType} from "../../App";
+import {TaskStatuses, TaskType} from "../../api/taskApi";
+
 
 type PropsTaskType={
     task: TaskType[]
     idTodo: string
     removeTask: (idTodo: string, idTask: string) => void
-    changeStatusCheck: (idTodo: string, idTask: string, isDone: boolean) => void
+    changeStatusCheck: (idTodo: string, idTask: string, isDone: TaskStatuses) => void
     onChangeTitleInput:(idIdTodo:string,idTask:string, title: string)=>void
 }
 export const Task :FC<PropsTaskType> = (props) => {
@@ -16,8 +17,8 @@ export const Task :FC<PropsTaskType> = (props) => {
         <div>
             {props.task.map(t => <li key={t.id}>
                 <EditableSpan title={t.title} onChangeTitleInput={(title:string)=>props.onChangeTitleInput(props.idTodo,t.id,title)} />
-                <input readOnly={true} className={t.isDone ? s.isDone : ''} type="checkbox" checked={t.isDone}
-                       onClick={() => props.changeStatusCheck(props.idTodo,t.id, t.isDone)}/>
+                <input readOnly={true} className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}
+                       onClick={() => props.changeStatusCheck(props.idTodo,t.id, t.status)}/>
                 <Button name={'x'} callback={() => props.removeTask(props.idTodo ,t.id)}/>
             </li>)
             }

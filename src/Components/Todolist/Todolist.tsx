@@ -1,11 +1,12 @@
 import React, {FC, useCallback} from 'react';
-import {FilterType, TaskType} from "../../App";
+import {FilterType, } from "../../App";
 import s from './Todolist.module.css'
 import Button from "../Button/Button";
 import AddItemForm from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 
 import TaskWithRedux from "../Task/TaskWithRedux";
+import {TaskStatuses, TaskType} from "../../api/taskApi";
 
 type TodolistType = {
     idTodo: string
@@ -14,7 +15,7 @@ type TodolistType = {
     removeTask: (idTodo: string, idTask: string) => void
     filterTask: (idTodo: string, value: FilterType) => void
     addTask: (idTodo: string, newTitle: string) => void
-    changeStatusCheck: (idTodo: string, idTask: string, isDone: boolean) => void
+    changeStatusCheck: (idTodo: string, idTask: string, status:TaskStatuses) => void
     filter: FilterType
     removeTodolist: (todoID: string) => void
     onChangeTitleInput: (idIdTodo: string, idTask: string, title: string) => void

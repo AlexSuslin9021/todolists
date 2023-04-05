@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 import {addTodolistAC, removeTodolistAC, todolistID1, todolistID2} from "../ReducerTodo/ReducerTodo";
-import {TaskType} from "../../../App";
+import {TaskPriorities, TaskStatuses, TaskType} from "../../../api/taskApi";
+
 
 const removeTask = 'REMOVE-TASK'
 const addTask = 'ADD-TASK'
@@ -15,31 +16,38 @@ export type TasksType = {
 
 let tasks: TasksType = {
     [todolistID1]: [
-        {id: v1(), title: 'HTML&CSS', isDone: true},
-        {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'ReactJS', isDone: false},
+        {id: v1(), title: 'HTML&CSS', status:TaskStatuses.Completed, todoListId:todolistID1,description:'',
+        startDate:'', addedDate:'', deadline:'', order:0,priority:TaskPriorities.High },
+        {id: v1(), title: 'JS',status:TaskStatuses.Completed, todoListId:todolistID1,description:'',
+            startDate:'', addedDate:'', deadline:'', order:0,priority:TaskPriorities.High}
+
 
     ],
     [todolistID2]: [
-        {id: v1(), title: 'Rest api', isDone: true},
-        {id: v1(), title: 'GraphQL', isDone: false},
+        {id: v1(), title: 'Rest api', status:TaskStatuses.Completed, todoListId:todolistID2,description:'',
+            startDate:'', addedDate:'', deadline:'', order:0,priority:TaskPriorities.High},
+        {id: v1(), title: 'GraphQL', status:TaskStatuses.Completed, todoListId:todolistID2,description:'',
+            startDate:'', addedDate:'', deadline:'', order:0,priority:TaskPriorities.High},
     ]
 }
 
 type ActionType= ReturnType<typeof removeTaskAC> |ReturnType<typeof addTaskAC> |ReturnType<typeof changeTaskStatusAC> | ReturnType<typeof changeTaskTitleAC> | ReturnType<typeof addTodolistAC> | ReturnType<typeof removeTodolistAC>
 export const reducerTask = (state: TasksType=tasks, action: ActionType): TasksType => {
-    debugger
+
     switch (action.type){
 
         case removeTask:
 
             return {...state, [action.idTodo]: state[action.idTodo].filter(t => t.id !== action.idTask) }
         case addTask:
-            return {...state, [action.idTodo]: [...state[action.idTodo], {id: v1(), title: action.title, isDone: true}]}
+            return {...state, [action.idTodo]: [...state[action.idTodo], {id: v1(), title: action.title, status:TaskStatuses.New, todoListId:todolistID1,description:'',
+                    startDate:'', addedDate:'', deadline:'', order:0,priority:TaskPriorities.High}]}
 
         case changeTaskStatus:
-            return {...state, [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t, isDone: !action.isDone} : t)}
+
+            return {...state, [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t, status: action.status ?TaskStatuses.New :TaskStatuses.Completed} : {...t})}
         case  changeTaskTitle:
+            debugger
             return {...state, [action.idTodo]: state[action.idTodo].map(t=>t.id===action.idTask ? {...t, title:action.title}: t)}
         case addTodo:
             return {...state, [action.idTodo]:[]}
@@ -88,16 +96,16 @@ type ChangeTaskStatusType = {
     type: 'CHANGE-TASK-STATUS'
     idTodo: string
     idTask:string
-    isDone:boolean
+   status:TaskStatuses
 
 
 }
-export const changeTaskStatusAC = (idTodo: string, idTask: string, isDone: boolean): ChangeTaskStatusType => {
+export const changeTaskStatusAC = (idTodo: string, idTask: string, status:TaskStatuses): ChangeTaskStatusType => {
     return {
         type: changeTaskStatus,
         idTodo,
         idTask,
-        isDone
+       status
     }
 }
 // CHANGE TASK STATUS
