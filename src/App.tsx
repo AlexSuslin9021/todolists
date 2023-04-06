@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 
 
 import './App.css';
@@ -14,12 +14,13 @@ import {
 import {
     addTodolistAC,
     changeFilterTodolistAC,
-    changeTitleTodolistAC,
-    removeTodolistAC, TodolistDomainType
+    changeTitleTodolistAC, fetchTodolistTC,
+    removeTodolistAC, setTodolistAC, TodolistDomainType
 } from "./state/reducer/ReducerTodo/ReducerTodo";
 import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "./state/Store";
+import {AppStateType, useAppDispatch} from "./state/Store";
 import {TaskStatuses, TaskType} from "./api/taskApi";
+import {todolistApi} from "./api/todolistApi";
 
 
 // export type TaskType = {
@@ -34,12 +35,15 @@ export type TasksType = {
 
 export type FilterType = 'all' | 'active' | 'completed'
 
+
  function App() {
 
 
-    const dispatch = useDispatch()
+
+    const dispatch = useAppDispatch()
     const todolist = useSelector<AppStateType, TodolistDomainType[]>(state => state.todolist)
     const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
+
 
     const removeTask = useCallback((idTodo: string, idTask: string) => {
       debugger
@@ -74,6 +78,11 @@ export type FilterType = 'all' | 'active' | 'completed'
     const onChangeTitleTodo = useCallback((idTodo: string, title: string) => {
         dispatch(changeTitleTodolistAC(idTodo, title))
     }, [dispatch])
+
+     useEffect(()=>{
+         dispatch(fetchTodolistTC())
+
+     },[])
 
     return <div>
         <div className={'header'}></div>
