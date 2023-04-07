@@ -17,7 +17,7 @@ export const GetTasks = () => {
 
         // taskApi.getTask(todolistId)
         //     .then((res) => {
-        //         debugger
+        //
         //         return setState(res.data)
         //     })
         //     .catch(() => {
@@ -32,7 +32,7 @@ export const GetTasks = () => {
     const onClickHandler = () => {
         taskApi.getTask(todolistId)
             .then((res) => {
-                debugger
+
                 return setState(res.data)
             })
             .catch(() => {
@@ -55,7 +55,7 @@ export const CreateTask = () => {
     useEffect(() => {
         // taskApi.createTask(todolistId,title)
         //     .then((res) => {
-        //         debugger
+        //
         //         return setState(res.data)
         //     })
         //     .catch(() => {

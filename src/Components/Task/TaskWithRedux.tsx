@@ -1,11 +1,11 @@
 import React, {FC, useCallback} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../state/Store";
+import { useSelector} from "react-redux";
+import {AppStateType, useAppDispatch} from "../../state/Store";
 import {
     changeTaskStatusAC,
-    changeTaskTitleAC,
+    changeTaskTitleAC, deleteTasksTC,
     removeTaskAC,
-    TasksType
+    TasksType, updateTasksTC
 } from "../../state/reducer/ReducerTask/ReducerTask";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
@@ -22,7 +22,7 @@ type TaskWithReduxType ={
 
  const TaskWithRedux: FC<TaskWithReduxType> = (props) => {
    let task= useSelector<AppStateType, TasksType>(state => state.tasks)
-     const dispatch=useDispatch()
+     const dispatch=useAppDispatch()
      let tasks = task[props.idTodo]
      if (props.filter === 'active') tasks = tasks.filter(t => t.status===TaskStatuses.New)
      if (props.filter === 'completed') tasks = tasks.filter(t => t.status===TaskStatuses.Completed)
@@ -38,14 +38,14 @@ type TaskWithReduxType ={
      },[props.filterTask,props.idTodo])
 
      const onClickFilterCompleted = useCallback(() => {
-debugger
+
              props.filterTask(props.idTodo, 'completed')
          },
          [props.filterTask,props.idTodo]
      )
      const removeTask = (id: string) => {
 
-         dispatch(removeTaskAC(props.idTodo, id))
+         dispatch(deleteTasksTC(props.idTodo, id))
      }
 
      const onChangeStatus = (id: string, status:TaskStatuses) => {
@@ -55,7 +55,7 @@ debugger
 
      const onChangeTitleInputTitle=(id:string,title:string)=>{
 
-         dispatch( changeTaskTitleAC(props.idTodo,id, title))
+         dispatch( updateTasksTC(props.idTodo,id, title))
      }
 
      const buttonStyleAll =   (props.filter === 'all' ? s.active : '') +' '+ s.btn

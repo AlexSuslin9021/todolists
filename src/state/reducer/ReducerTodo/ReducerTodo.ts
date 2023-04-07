@@ -4,6 +4,7 @@ import {FilterType} from "../../../App";
 import {todolistApi, TodolistType} from "../../../api/todolistApi";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
+import {AppActionType, AppThunkType} from "../../Store";
 
 
 ///TYPE Action
@@ -22,13 +23,20 @@ export type TodolistDomainType =
 }
 export let todolistID1 = v1()
 export let todolistID2 = v1()
-let initialState : TodolistDomainType[]  =
-    [
+let initialState : TodolistDomainType[]  = [
         // {id: todolistID1, title: 'What to learn',addedDate: '',  order: 0, filter: 'all'},
         // {id: todolistID2, title: 'What to buy', addedDate: '',  order: 0, filter: 'all'},
     ]
-type ActionType=removeTodolistType | ReturnType<typeof addTodolistAC> | setTodolistType  | ReturnType<typeof changeTitleTodolistAC>| ReturnType<typeof changeFilterTodolistAC>
-export const reducerTodo=(state:TodolistDomainType[]=initialState, action:ActionType):TodolistDomainType[]=>{
+
+
+type addTodolistType=ReturnType<typeof addTodolistAC>
+type changeTitleTodolistType=ReturnType<typeof changeTitleTodolistAC>
+type changeFilterTodolistType=ReturnType<typeof changeFilterTodolistAC>
+export type setTodolistType=ReturnType<typeof setTodolistAC>
+
+
+export type TodoActionType=removeTodolistType | addTodolistType | setTodolistType  | changeTitleTodolistType| changeFilterTodolistType
+export const reducerTodo=(state:TodolistDomainType[]=initialState, action:AppActionType):TodolistDomainType[]=>{
 
     switch (action.type){
         case removeTodo:
@@ -64,7 +72,7 @@ export const changeTitleTodolistAC=(idTodo:string, title: string)=>{
 export const changeFilterTodolistAC=(idTodo: string, value: FilterType)=>{
     return {type:changeFilterTodo, idTodo, value} as const
 }
-export type setTodolistType=ReturnType<typeof setTodolistAC>
+
 
 
 export const setTodolistAC=(todolist:TodolistType[])=>{
@@ -74,12 +82,15 @@ export const setTodolistAC=(todolist:TodolistType[])=>{
     } as const
 }
 
-export const fetchTodolistTC=()=>(dispatch:Dispatch)=>{
-    // : ThunkAction<Promise<void>, TodolistDomainType[], unknown, ActionType>=>{
-// return (dispatch:Dispatch)=> {
+export const fetchTodolistTC=(): AppThunkType=>(dispatch:Dispatch<AppActionType>)=>{
     todolistApi.getTodolists().then((res) => {
         dispatch(setTodolistAC(res.data))
 
     })
-// }
+}
+// второй более используемый вариант
+export const _fetchTodolistTC=(): AppThunkType=> async dispatch=>{
+    const res= await todolistApi.getTodolists()
+    dispatch(setTodolistAC(res.data))
+
 }

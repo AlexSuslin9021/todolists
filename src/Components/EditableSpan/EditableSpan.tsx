@@ -14,7 +14,7 @@ export const EditableSpan: FC<EditableSpanType> = (props) => {
         setEditMode(!editMode)
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        debugger
+
         props.onChangeTitleInput(e.currentTarget.value)
         setTitle(e.currentTarget.value)
 
