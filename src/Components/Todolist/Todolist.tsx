@@ -1,4 +1,4 @@
-import React, {FC, useCallback} from 'react';
+import React, {FC, useCallback, useEffect} from 'react';
 import {FilterType, } from "../../App";
 import s from './Todolist.module.css'
 import Button from "../Button/Button";
@@ -7,6 +7,9 @@ import {EditableSpan} from "../EditableSpan/EditableSpan";
 
 import TaskWithRedux from "../Task/TaskWithRedux";
 import {TaskStatuses, TaskType} from "../../api/taskApi";
+import {fetchTodolistTC} from "../../state/reducer/ReducerTodo/ReducerTodo";
+import {getTasksTC} from "../../state/reducer/ReducerTask/ReducerTask";
+import {useAppDispatch} from "../../state/Store";
 
 type TodolistType = {
     idTodo: string
@@ -23,7 +26,7 @@ type TodolistType = {
 }
 export const Todolist: FC<TodolistType> = React.memo((props) => {
 
-
+    const dispatch = useAppDispatch()
     console.log('todolist')
 
     const onRemoveTodoHandler = () => {
@@ -33,6 +36,12 @@ export const Todolist: FC<TodolistType> = React.memo((props) => {
 
         props.addTask(props.idTodo, title)
     }, [props.addTask, props.idTodo])
+
+    useEffect(()=>{
+debugger
+        dispatch(getTasksTC(props.idTodo))
+
+    },[])
 
 
     return (

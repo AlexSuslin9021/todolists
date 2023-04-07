@@ -24,12 +24,12 @@ export let todolistID1 = v1()
 export let todolistID2 = v1()
 let initialState : TodolistDomainType[]  =
     [
-        {id: todolistID1, title: 'What to learn',addedDate: '',  order: 0, filter: 'all'},
-        {id: todolistID2, title: 'What to buy', addedDate: '',  order: 0, filter: 'all'},
+        // {id: todolistID1, title: 'What to learn',addedDate: '',  order: 0, filter: 'all'},
+        // {id: todolistID2, title: 'What to buy', addedDate: '',  order: 0, filter: 'all'},
     ]
 type ActionType=ReturnType<typeof removeTodolistAC> | ReturnType<typeof addTodolistAC> | ReturnType<typeof setTodolistAC>  | ReturnType<typeof changeTitleTodolistAC>| ReturnType<typeof changeFilterTodolistAC>
 export const reducerTodo=(state:TodolistDomainType[]=initialState, action:ActionType):TodolistDomainType[]=>{
-    debugger
+
     switch (action.type){
         case removeTodo:
 
@@ -41,7 +41,7 @@ export const reducerTodo=(state:TodolistDomainType[]=initialState, action:Action
         case changeFilterTodo:
             return state.map(t => t.id === action.idTodo ? {...t, filter: action.value} : t)
         case setTodolist:
-            debugger
+
             return action.todolist.map(tl=>({...tl, filter:'all'}))
 
 

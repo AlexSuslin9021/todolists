@@ -8,7 +8,7 @@ import AddItemForm from "./Components/AddItemForm/AddItemForm";
 import {
     addTaskAC,
     changeTaskStatusAC,
-    changeTaskTitleAC,
+    changeTaskTitleAC, getTasksTC,
     removeTaskAC
 } from "./state/reducer/ReducerTask/ReducerTask";
 import {
@@ -40,7 +40,7 @@ export type FilterType = 'all' | 'active' | 'completed'
 
 
 
-    const dispatch = useAppDispatch()
+ const dispatch = useAppDispatch()
     const todolist = useSelector<AppStateType, TodolistDomainType[]>(state => state.todolist)
     const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
 
@@ -81,6 +81,7 @@ export type FilterType = 'all' | 'active' | 'completed'
 
      useEffect(()=>{
          dispatch(fetchTodolistTC())
+
 
      },[])
 

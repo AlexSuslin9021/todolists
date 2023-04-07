@@ -10,8 +10,8 @@ const rootReducer=combineReducers({
    todolist:reducerTodo
 })
 type ThunkDispatchType=ThunkDispatch<AppStateType, any, AnyAction>
-
-export const useAppDispatch = () => useDispatch<ThunkDispatchType>()
+debugger
+export const useAppDispatch = () =>  useDispatch<ThunkDispatchType>()
 export type AppStateType=ReturnType<typeof rootReducer>
 export let store=legacy_createStore(rootReducer, applyMiddleware(thunk))
 
