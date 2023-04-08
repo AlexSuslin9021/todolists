@@ -13,8 +13,8 @@ import {
 import {
     addTodolistAC,
     changeFilterTodolistAC,
-    changeTitleTodolistAC, fetchTodolistTC,
-    removeTodolistAC, TodolistDomainType
+    changeTitleTodolistAC, createTodolistTC, deleteTodolistTC, fetchTodolistTC,
+    removeTodolistAC, TodolistDomainType, updateTodolistTC
 } from "./state/reducer/ReducerTodo/ReducerTodo";
 import {useSelector} from "react-redux";
 import {AppStateType, useAppDispatch} from "./state/Store";
@@ -63,11 +63,11 @@ export type FilterType = 'all' | 'active' | 'completed'
     }, [dispatch])
 
     const removeTodolist = useCallback((todoID: string) => {
-        dispatch(removeTodolistAC(todoID))
+        dispatch(deleteTodolistTC(todoID))
     }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistAC(title))
+        dispatch(createTodolistTC(title))
     }, [dispatch])
 
     const onChangeTitleInput = useCallback((IdTodo: string, idTask: string, title: string) => {
@@ -75,7 +75,7 @@ export type FilterType = 'all' | 'active' | 'completed'
     }, [dispatch])
 
     const onChangeTitleTodo = useCallback((idTodo: string, title: string) => {
-        dispatch(changeTitleTodolistAC(idTodo, title))
+        dispatch(updateTodolistTC(idTodo, title))
     }, [dispatch])
 
      useEffect(()=>{
