@@ -75,12 +75,7 @@ export const changeFilterTodolistAC=(idTodo: string, value: FilterType)=>{
 
 
 
-export const setTodolistAC=(todolist:TodolistType[])=>{
-    return {
-        type:setTodolist,
-        todolist
-    } as const
-}
+export const setTodolistAC=(todolist:TodolistType[])=>{return {type:setTodolist, todolist} as const}
 
 export const fetchTodolistTC=(): AppThunkType=>(dispatch:Dispatch<AppActionType>)=>{
     todolistApi.getTodolists().then((res) => {
