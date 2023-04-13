@@ -17,8 +17,11 @@ import {
     removeTodolistAC, TodolistDomainType, updateTodolistTC
 } from "./state/reducer/ReducerTodo/ReducerTodo";
 import {useSelector} from "react-redux";
-import {AppStateType, useAppDispatch} from "./state/Store";
+import {AppStateType, useAppDispatch, useAppSelector} from "./state/Store";
 import {TaskStatuses, TaskType} from "./api/taskApi";
+import {LinearProgress} from "@mui/material";
+import {RequestStatusType} from "./state/reducer/AppReducer/AppReducer";
+import {ErrorSnackbar} from "./Components/ErrorSnaskBar/ErrorSnaskBar";
 
 
 
@@ -37,6 +40,7 @@ export type FilterType = 'all' | 'active' | 'completed'
 
  function App() {
 
+const status=useAppSelector<RequestStatusType>((state)=>state.app.status)
 
 
  const dispatch = useAppDispatch()
@@ -86,6 +90,8 @@ export type FilterType = 'all' | 'active' | 'completed'
 
     return <div>
         <div className={'header'}></div>
+        {status==='loading' && <LinearProgress color={'secondary'}/>}
+        {/*{status==='imgLoading' && <CircleProgress color={'secondary'}/>}*/}
         <div className={'container'}>
             <div>
                 <AddItemForm addItem={addTodolist}/>
@@ -93,6 +99,7 @@ export type FilterType = 'all' | 'active' | 'completed'
             {todolist.map((t) => {
 
                 return <Todolist
+                    entityStatus={t.entityStatus}
                     key={t.id}
                     idTodo={t.id}
                     task={tasks[t.id]}
@@ -100,16 +107,18 @@ export type FilterType = 'all' | 'active' | 'completed'
                     removeTask={removeTask}
                     filterTask={filterTask}
                     addTask={addTask}
+                    // entityStatus={tl.en}
                     filter={t.filter}
                     changeStatusCheck={changeStatusCheck}
                     removeTodolist={removeTodolist}
                     onChangeTitleInput={onChangeTitleInput}
                     onChangeTitleTodo={onChangeTitleTodo}
+
                 />
 
             })}
         </div>
-
+      <ErrorSnackbar />
     </div>
 }
 

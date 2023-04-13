@@ -10,6 +10,7 @@ import {TaskStatuses, TaskType} from "../../api/taskApi";
 
 import {getTasksTC} from "../../state/reducer/ReducerTask/ReducerTask";
 import {useAppDispatch} from "../../state/Store";
+import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
 
 type TodolistType = {
     idTodo: string
@@ -23,6 +24,7 @@ type TodolistType = {
     removeTodolist: (todoID: string) => void
     onChangeTitleInput: (idIdTodo: string, idTask: string, title: string) => void
     onChangeTitleTodo: (idTodo: string, title: string) => void
+    entityStatus:RequestStatusType
 }
 export const Todolist: FC<TodolistType> = React.memo((props) => {
 
@@ -49,7 +51,7 @@ debugger
 
             <h3><EditableSpan title={props.title}
                               onChangeTitleInput={(title) => props.onChangeTitleTodo(props.idTodo, title)}/>
-                <Button name={'x'} callback={onRemoveTodoHandler}/>
+                <Button name={'x'} callback={onRemoveTodoHandler} disabled={props.entityStatus==='loading'}/>
             </h3>
             <AddItemForm addItem={addTaskWrapper}/>
             <TaskWithRedux

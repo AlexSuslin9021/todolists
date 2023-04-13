@@ -3,6 +3,8 @@ import {addTodolistAC, removeTodolistAC, setTodolist, setTodolistType} from "../
 import {taskApi, TaskPriorities, TaskStatuses, TaskType} from "../../../api/taskApi";
 import {Dispatch} from "redux";
 import {AppActionType, AppThunkType} from "../../Store";
+import {setErrorAC, SetErrorType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
+
 
 const removeTask = 'REMOVE-TASK'
 const addTask = 'ADD-TASK'
@@ -68,13 +70,22 @@ export const setTasksAC = (idTodo: string, task: TaskType[]) => {
 
 //Thunk
 export const getTasksTC = (id: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
+    dispatch(setStatusAC('loading'))
+
     taskApi.getTask(id).then((res) => {
+
         dispatch(setTasksAC(id, res.data.items))
+        dispatch(setStatusAC('succeeded'))
     })
 }
 export const createTasksTC = (idTodo: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
     taskApi.createTask(idTodo, title).then((res) => {
-        dispatch(addTaskAC(idTodo, title))
+        if(res.data.resultCode===0){
+            dispatch(addTaskAC(idTodo, title))
+        } else{
+            dispatch(setErrorAC('Error'))
+        }
+dispatch(setStatusAC('idle'))
     })
 }
 export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
@@ -106,6 +117,8 @@ export type TaskActionType =
     | ChangeTaskTitleType
     | AddTodolistType
     | RemoveTodolistType
+| SetStatusType
+    | SetErrorType
 
 // export const updateTasksTC = (taskId: string, todolistId: string, status: TaskStatuses) => {
 //     return (dispatch: Dispatch, getState: () => AppRootStateType) => {

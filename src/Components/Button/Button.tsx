@@ -4,6 +4,7 @@ import tras from "../../Common/Icon/trash_bin_icon-icons.com_67981.png"
 type ButtonType={
     name:string
     callback:()=>void
+    disabled?:boolean
 }
 export const Button:FC<ButtonType> = (props) => {
     const onClickHandler=()=>{
@@ -11,7 +12,7 @@ export const Button:FC<ButtonType> = (props) => {
     }
     return (
         <>
-            <button className={s.btn}    onClick={onClickHandler}>{props.name==='+'?<span className={s.add}>{props.name}</span> : <img className={s.icon} src={tras} alt=""/>}</button>
+            <button className={s.btn} disabled={props.disabled}    onClick={onClickHandler}>{props.name==='+'?<span className={s.add}>{props.name}</span> : <img className={s.icon} src={tras} alt=""/>}</button>
         </>
     );
 };
