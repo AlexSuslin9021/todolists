@@ -7,7 +7,7 @@ import {EditableSpan} from "../EditableSpan/EditableSpan";
 
 import TaskWithRedux from "../Task/TaskWithRedux";
 import {TaskStatuses, TaskType} from "../../api/taskApi";
-import {fetchTodolistTC} from "../../state/reducer/ReducerTodo/ReducerTodo";
+
 import {getTasksTC} from "../../state/reducer/ReducerTask/ReducerTask";
 import {useAppDispatch} from "../../state/Store";
 

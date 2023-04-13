@@ -10,7 +10,7 @@ const rootReducer=combineReducers({
    todolist:reducerTodo
 })
 type ThunkDispatchType=ThunkDispatch<AppStateType, any, AnyAction>
-debugger
+
 export const useAppDispatch = () =>  useDispatch<ThunkDispatchType>()
 export type AppStateType=ReturnType<typeof rootReducer>
 export type AppActionType=TodoActionType | TaskActionType
