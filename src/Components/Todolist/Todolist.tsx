@@ -40,7 +40,7 @@ export const Todolist: FC<TodolistType> = React.memo((props) => {
     }, [props.addTask, props.idTodo])
 
     useEffect(()=>{
-debugger
+
         dispatch(getTasksTC(props.idTodo))
 
     },[])

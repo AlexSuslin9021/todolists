@@ -7,7 +7,7 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed' | 'i
 
 
 const initialState = {
-    error:'SOME ERROR' as null | string,
+    error:null as null | any,
     status: 'loading' as RequestStatusType,
     } // as(воспринимай как этот тип) RequestStatusType! типизация объекта
 
@@ -24,7 +24,7 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 //Action creator
 
 export const setStatusAC=(status:RequestStatusType)=>{return {type:'APP/SET-STATUS',status } as const}
-export const setErrorAC=(error:null | string)=>{return {type:'APP/SET-ERROR',error } as const}
+export const setErrorAC=(error:any)=>{return {type:'APP/SET-ERROR',error } as const}
 
 //Thunk
 

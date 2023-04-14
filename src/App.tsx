@@ -90,7 +90,7 @@ const status=useAppSelector<RequestStatusType>((state)=>state.app.status)
 
     return <div>
         <div className={'header'}></div>
-        {status==='loading' && <LinearProgress color={'secondary'}/>}
+        {status==='loading' && <LinearProgress color={'secondary'} />}
         {/*{status==='imgLoading' && <CircleProgress color={'secondary'}/>}*/}
         <div className={'container'}>
             <div>

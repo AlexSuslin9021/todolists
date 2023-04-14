@@ -22,18 +22,36 @@ export const reducerTask = (state: TasksType = tasks, action: AppActionType): Ta
         case removeTask:
             return {...state, [action.idTodo]: state[action.idTodo].filter(t => t.id !== action.idTask)}
         case addTask:
-            return {...state, [action.idTodo]: [...state[action.idTodo],
-                    {id: v1(), title: action.title, status: TaskStatuses.New, todoListId: action.idTodo, description: '', startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High}
+            return {
+                ...state, [action.idTodo]: [...state[action.idTodo],
+                    {
+                        id: v1(),
+                        title: action.title,
+                        status: TaskStatuses.New,
+                        todoListId: action.idTodo,
+                        description: '',
+                        startDate: '',
+                        addedDate: '',
+                        deadline: '',
+                        order: 0,
+                        priority: TaskPriorities.High
+                    }
                 ]
             }
         case changeTaskStatus:
-            return {...state, [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t,
+            return {
+                ...state, [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {
+                    ...t,
                     status: action.status ? TaskStatuses.New : TaskStatuses.Completed
                 } : {...t})
             }
         case  changeTaskTitle:
-            return {...state, [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t, title: action.title} : t)}
-        case addTodo:return {...state, [action.idTodo]: []}
+            return {
+                ...state,
+                [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t, title: action.title} : t)
+            }
+        case addTodo:
+            return {...state, [action.idTodo]: []}
         case removeTodo:
             const copyState = {...state, [action.idTodo]: state[action.idTodo]}
             delete copyState[action.idTodo]
@@ -73,19 +91,37 @@ export const getTasksTC = (id: string): AppThunkType => (dispatch: Dispatch<Task
     dispatch(setStatusAC('loading'))
 
     taskApi.getTask(id).then((res) => {
-
+        // if (res.data.resultCode === 0) {
         dispatch(setTasksAC(id, res.data.items))
         dispatch(setStatusAC('succeeded'))
+        // }
+     // else{
+     //        if (res.data.messages.length) {
+     //            dispatch(setErrorAC(res.data.messages[0]))
+     //        } else {
+     //            dispatch(setErrorAC('Some error occurred'))
+     //        }
+     //        dispatch(setStatusAC('idle'))
+     //    }
+
+
     })
 }
 export const createTasksTC = (idTodo: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
     taskApi.createTask(idTodo, title).then((res) => {
-        if(res.data.resultCode===0){
+        if (res.data.resultCode === 0) {
             dispatch(addTaskAC(idTodo, title))
-        } else{
-            dispatch(setErrorAC('Error'))
+            dispatch(setStatusAC('succeeded'))
         }
-dispatch(setStatusAC('idle'))
+        else {
+            if (res.data.messages.length) {
+                dispatch(setErrorAC(res.data.messages))
+            } else {
+                dispatch(setErrorAC('Some error occurred'))
+            }
+            dispatch(setStatusAC('failed'))
+        }
+        dispatch(setStatusAC('idle'))
     })
 }
 export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
@@ -117,7 +153,7 @@ export type TaskActionType =
     | ChangeTaskTitleType
     | AddTodolistType
     | RemoveTodolistType
-| SetStatusType
+    | SetStatusType
     | SetErrorType
 
 // export const updateTasksTC = (taskId: string, todolistId: string, status: TaskStatuses) => {
