@@ -1,6 +1,6 @@
 
 import {
-    addTodolistAC,
+    addTodolistAC, changeEntityStatusAC,
     changeFilterTodolistAC,
     changeTitleTodolistAC,
     reducerTodo,
@@ -88,3 +88,25 @@ test('need change filter Todo',()=> {
     }
 
 )
+
+test('need change entity status',()=> {
+        // let startState: TodolistsType[] =
+        //     [
+        //         {id: '1', title: 'What to learn', filter: 'all'},
+        //         {id: '2', title: 'What to buy', filter: 'all'},
+        //     ]
+
+        const action=changeEntityStatusAC('1','loading')
+
+        const newState= reducerTodo(startState, action)
+
+        expect(newState.length).toBe(2)
+        expect(newState[0].entityStatus).toBe('loading')
+        expect(newState[1].entityStatus).toBe('idle')
+
+
+    }
+
+)
+
+
