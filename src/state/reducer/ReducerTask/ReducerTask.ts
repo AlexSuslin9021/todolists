@@ -125,8 +125,21 @@ export const createTasksTC = (idTodo: string, title: string): AppThunkType => (d
     })
 }
 export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
+    dispatch(setStatusAC('loading'))
     taskApi.deleteTask(idTodo, idTask).then((res) => {
-        dispatch(removeTaskAC(idTodo, idTask))
+        if (res.data.resultCode === 0) {
+            dispatch(removeTaskAC(idTodo, idTask))
+            dispatch(setStatusAC('succeeded'))
+        }
+        else {
+            if (res.data.messages.length) {
+                dispatch(setErrorAC(res.data.messages))
+            } else {
+                dispatch(setErrorAC('Some error occurred'))
+            }
+            dispatch(setStatusAC('failed'))
+        }
+        dispatch(setStatusAC('idle'))
     })
 }
 export const updateTasksTC = (idTodo: string, idTask: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {

@@ -18,6 +18,7 @@ type TaskWithReduxType ={
     idTodo:string
     filter: FilterType
     filterTask: (idTodo: string, value: FilterType) => void
+    disabled:string
 }
 
  const TaskWithRedux: FC<TaskWithReduxType> = (props) => {
@@ -67,7 +68,7 @@ type TaskWithReduxType ={
                 <EditableSpan title={t.title} onChangeTitleInput={()=>  onChangeTitleInputTitle(t.id, t.title)} />
                 <input readOnly={true} className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}
                        onClick={() => onChangeStatus(t.id,t.status)}/>
-                <Button name={'x'} callback={() =>removeTask(t.id)}/>
+                <Button name={'x'} callback={() =>removeTask(t.id)} disabled={props.disabled==='loading'}/>
             </li>)
             }
             <div>

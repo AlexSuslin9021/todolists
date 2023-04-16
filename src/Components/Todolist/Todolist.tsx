@@ -55,6 +55,7 @@ export const Todolist: FC<TodolistType> = React.memo((props) => {
             </h3>
             <AddItemForm addItem={addTaskWrapper}/>
             <TaskWithRedux
+                disabled={props.entityStatus}
                 idTodo={props.idTodo}
                 filter={props.filter}
                 filterTask={props.filterTask}
