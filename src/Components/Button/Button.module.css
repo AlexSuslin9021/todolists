@@ -21,3 +21,6 @@ text-align: center;
 .add:hover{
     background: lightskyblue;
 }
+.disabled{
+    opacity: 0.3;
+}

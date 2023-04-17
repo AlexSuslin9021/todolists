@@ -5,14 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {store} from "./state/Store";
-import {AppWrapper} from "./Components/AppWrapper/AppWrapper";
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
  <Provider store={store}>
-    <AppWrapper />
+    <App />
  </Provider>
 
 );

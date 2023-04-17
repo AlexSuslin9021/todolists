@@ -6,6 +6,7 @@ import s from './AddItemForm.module.css'
 type AddItemFormType = {
 
     addItem: (title: string) => void
+    disabled?:boolean
 }
 export const AddItemForm: FC<AddItemFormType> = React.memo((props) => {
 
@@ -53,7 +54,7 @@ export const AddItemForm: FC<AddItemFormType> = React.memo((props) => {
                    className={inputClass}
                    placeholder="  Title"
             />
-            <Button name={'+'} callback={onClickAddTask}/>
+            <Button name={'+'} callback={onClickAddTask} disabled={props.disabled}/>
             {error ? <div  className={ s.errorText}> Error! Title is required</div> : <div></div>}
         </div>
     );

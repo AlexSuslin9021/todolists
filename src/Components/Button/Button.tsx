@@ -12,7 +12,7 @@ export const Button:FC<ButtonType> = (props) => {
     }
     return (
         <>
-            <button className={s.btn} disabled={props.disabled}    onClick={onClickHandler}>{props.name==='+'?<span className={s.add}>{props.name}</span> : <img className={s.icon} src={tras} alt=""/>}</button>
+            <button className={props.disabled ? s.disabled : s.btn} disabled={props.disabled}    onClick={onClickHandler}>{props.name==='+'?<span className={s.add}>{props.name}</span> : <img className={s.icon} src={tras} alt=""/>}</button>
         </>
     );
 };

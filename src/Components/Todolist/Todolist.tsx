@@ -53,7 +53,7 @@ export const Todolist: FC<TodolistType> = React.memo((props) => {
                               onChangeTitleInput={(title) => props.onChangeTitleTodo(props.idTodo, title)}/>
                 <Button name={'x'} callback={onRemoveTodoHandler} disabled={props.entityStatus==='loading'}/>
             </h3>
-            <AddItemForm addItem={addTaskWrapper}/>
+            <AddItemForm addItem={addTaskWrapper} disabled={props.entityStatus==='loading'} />
             <TaskWithRedux
                 disabled={props.entityStatus}
                 idTodo={props.idTodo}

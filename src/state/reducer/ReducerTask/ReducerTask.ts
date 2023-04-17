@@ -13,6 +13,7 @@ const changeTaskTitle = 'CHANGE-TASK-TITLE'
 const addTodo = 'ADD-TODOLIST'
 const removeTodo = 'REMOVE-TODOLIST'
 const setTasks = 'SET_TASKS'
+const changeEntityStatus = 'CHANGE_ENTITY_STATUS'
 
 //initial state
 let tasks: TasksType = {}
@@ -66,6 +67,9 @@ export const reducerTask = (state: TasksType = tasks, action: AppActionType): Ta
         case setTasks: {
             return {...state, [action.idTodo]: action.task}
         }
+        case changeEntityStatus:
+            return {...state}
+                // [action.idTodo]:state[action.idTodo].map(t=>t.id===action.idTask ? {...t, ent})}
     }
     return state
 }
@@ -84,6 +88,9 @@ export const changeTaskTitleAC = (idTodo: string, idTask: string, title: string)
 }
 export const setTasksAC = (idTodo: string, task: TaskType[]) => {
     return {type: setTasks, idTodo, task,} as const
+}
+export const changeEntityTaskStatusAC = (idTodo: string, idTask: string, status: TaskStatuses) => {
+    return {type: changeEntityStatus, idTodo, idTask, status} as const
 }
 
 //Thunk
@@ -168,6 +175,7 @@ export type TaskActionType =
     | RemoveTodolistType
     | SetStatusType
     | SetErrorType
+    |ReturnType<typeof changeEntityTaskStatusAC>
 
 // export const updateTasksTC = (taskId: string, todolistId: string, status: TaskStatuses) => {
 //     return (dispatch: Dispatch, getState: () => AppRootStateType) => {
