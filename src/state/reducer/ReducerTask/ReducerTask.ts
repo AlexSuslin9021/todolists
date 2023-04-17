@@ -3,7 +3,8 @@ import {addTodolistAC, removeTodolistAC, setTodolist, setTodolistType} from "../
 import {taskApi, TaskPriorities, TaskStatuses, TaskType} from "../../../api/taskApi";
 import {Dispatch} from "redux";
 import {AppActionType, AppThunkType} from "../../Store";
-import {setErrorAC, SetErrorType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
+import {RequestStatusType, setErrorAC, SetErrorType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
+import {FilterType} from "../../../App";
 
 
 const removeTask = 'REMOVE-TASK'
@@ -16,9 +17,9 @@ const setTasks = 'SET_TASKS'
 const changeEntityStatus = 'CHANGE_ENTITY_STATUS'
 
 //initial state
-let tasks: TasksType = {}
+let tasks: TasksType  = {}
 
-export const reducerTask = (state: TasksType = tasks, action: AppActionType): TasksType => {
+export const reducerTask = (state: TasksType  = tasks, action: AppActionType): TasksType => {
     switch (action.type) {
         case removeTask:
             return {...state, [action.idTodo]: state[action.idTodo].filter(t => t.id !== action.idTask)}
@@ -35,7 +36,8 @@ export const reducerTask = (state: TasksType = tasks, action: AppActionType): Ta
                         addedDate: '',
                         deadline: '',
                         order: 0,
-                        priority: TaskPriorities.High
+                        priority: TaskPriorities.High,
+                        entityStatus:'loading'
                     }
                 ]
             }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import {RequestStatusType} from "../state/reducer/AppReducer/AppReducer";
 
 
 //api
@@ -59,7 +60,7 @@ export type TaskType = {
     todoListId: string
     order: number
     addedDate: string
-}
+} & { entityStatus: RequestStatusType}
 type GetTaskType = {
     error: string,
     items: TaskType[],

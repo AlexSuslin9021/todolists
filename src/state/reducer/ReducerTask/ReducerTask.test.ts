@@ -8,29 +8,29 @@ beforeEach(() => {
         'todolistId1': [
             {
                 id: '1', title: 'CSS', status: TaskStatuses.Completed, todoListId: todolistID1, description: '',
-                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High
+                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High, entityStatus:'loading'
             },
             {
                 id: '2', title: 'JS', status: TaskStatuses.Completed, todoListId: todolistID1, description: '',
-                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High
+                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High, entityStatus:'loading'
             },
             {
                 id: '3', title: 'React', status: TaskStatuses.Completed, todoListId: todolistID1, description: '',
-                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High
+                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High, entityStatus:'loading'
             }
         ],
         'todolistId2': [
             {
                 id: '1', title: 'bread', status: TaskStatuses.Completed, todoListId: todolistID1, description: '',
-                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High
+                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High, entityStatus:'loading'
             },
             {
                 id: '2', title: 'milk', status: TaskStatuses.Completed, todoListId: todolistID1, description: '',
-                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High
+                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High,entityStatus:'loading'
             },
             {
                 id: '3', title: 'tea', status: TaskStatuses.Completed, todoListId: todolistID1, description: '',
-                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High
+                startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High, entityStatus:'loading'
             }
         ]
     }
