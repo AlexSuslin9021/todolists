@@ -21,15 +21,21 @@ export const taskApi = {
         return instance.delete<DeleteTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`)
 
     },
-    updateTask(todolistId: string, taskId: string, title: string) {
-        return instance.put<UpdateTaskType>(
-            `todo-lists/${todolistId}/tasks/${taskId}`,
-            {title: title}
-        )
+    updateTask(todolistId: string, taskId: string, model: TaskStatus) {
+
+        return instance.put<TaskStatus>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
 
     }
 }
 
+export type TaskStatus= {
+    title: string,
+    startDate: string,
+    priority: TaskPriorities,
+    description: string,
+    deadline: string,
+    status: TaskStatuses
+}
 //types
 export enum TaskStatuses {
     New = 0,
@@ -48,10 +54,9 @@ export enum TaskPriorities {
     Later=4,
 
 }
-export type TaskType = {
+type TasksType={
     description: string
     title: string
-
     status: TaskStatuses
     priority: TaskPriorities
     startDate: string
@@ -60,7 +65,8 @@ export type TaskType = {
     todoListId: string
     order: number
     addedDate: string
-} & { entityStatus: RequestStatusType}
+}
+export type TaskType = TasksType & { entityStatus: RequestStatusType}
 type GetTaskType = {
     error: string,
     items: TaskType[],

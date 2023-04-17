@@ -74,8 +74,8 @@ const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
         dispatch(createTodolistTC(title))
     }, [dispatch])
 
-    const onChangeTitleInput = useCallback((IdTodo: string, idTask: string, title: string) => {
-        dispatch(updateTasksTC(IdTodo, idTask, title))
+    const onChangeTitleInput = useCallback((IdTodo: string, idTask: string, status: TaskStatuses) => {
+        dispatch(updateTasksTC(IdTodo, idTask, status))
     }, [dispatch])
 
     const onChangeTitleTodo = useCallback((idTodo: string, title: string) => {

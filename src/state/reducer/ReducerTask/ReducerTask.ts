@@ -1,10 +1,9 @@
 import {v1} from "uuid";
 import {addTodolistAC, removeTodolistAC, setTodolist, setTodolistType} from "../ReducerTodo/ReducerTodo";
-import {taskApi, TaskPriorities, TaskStatuses, TaskType} from "../../../api/taskApi";
+import {taskApi, TaskPriorities, TaskStatus, TaskStatuses, TaskType} from "../../../api/taskApi";
 import {Dispatch} from "redux";
-import {AppActionType, AppThunkType} from "../../Store";
+import {AppActionType, AppStateType, AppThunkType} from "../../Store";
 import {RequestStatusType, setErrorAC, SetErrorType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
-import {FilterType} from "../../../App";
 
 
 const removeTask = 'REMOVE-TASK'
@@ -37,17 +36,15 @@ export const reducerTask = (state: TasksType  = tasks, action: AppActionType): T
                         deadline: '',
                         order: 0,
                         priority: TaskPriorities.High,
-                        entityStatus:'loading'
+                        entityStatus:'idle'
                     }
                 ]
             }
         case changeTaskStatus:
+
             return {
                 ...state, [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {
-                    ...t,
-                    status: action.status ? TaskStatuses.New : TaskStatuses.Completed
-                } : {...t})
-            }
+                    ...t, status: action.status ? TaskStatuses.New:TaskStatuses.Completed} : {...t})}
         case  changeTaskTitle:
             return {
                 ...state,
@@ -70,8 +67,8 @@ export const reducerTask = (state: TasksType  = tasks, action: AppActionType): T
             return {...state, [action.idTodo]: action.task}
         }
         case changeEntityStatus:
-            return {...state}
-                // [action.idTodo]:state[action.idTodo].map(t=>t.id===action.idTask ? {...t, ent})}
+
+            return {...state, [action.idTodo] : state[action.idTodo].map(t=>t.id===action.idTask ? {...t,entityStatus:action.status}: t)}
     }
     return state
 }
@@ -91,7 +88,7 @@ export const changeTaskTitleAC = (idTodo: string, idTask: string, title: string)
 export const setTasksAC = (idTodo: string, task: TaskType[]) => {
     return {type: setTasks, idTodo, task,} as const
 }
-export const changeEntityTaskStatusAC = (idTodo: string, idTask: string, status: TaskStatuses) => {
+export const changeEntityTaskStatusAC = (idTodo: string, idTask: string, status: RequestStatusType) => {
     return {type: changeEntityStatus, idTodo, idTask, status} as const
 }
 
@@ -135,6 +132,7 @@ export const createTasksTC = (idTodo: string, title: string): AppThunkType => (d
 }
 export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
     dispatch(setStatusAC('loading'))
+    dispatch(changeEntityTaskStatusAC(idTodo,idTask,'loading'))
     taskApi.deleteTask(idTodo, idTask).then((res) => {
         if (res.data.resultCode === 0) {
             dispatch(removeTaskAC(idTodo, idTask))
@@ -151,10 +149,24 @@ export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (
         dispatch(setStatusAC('idle'))
     })
 }
-export const updateTasksTC = (idTodo: string, idTask: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
-    taskApi.updateTask(idTodo, idTask, title).then((res) => {
-        dispatch(changeTaskTitleAC(idTodo, idTask, title))
+
+export const updateTasksTC = (idTodo: string, idTask: string, status:TaskStatuses): AppThunkType => (dispatch: Dispatch<TaskActionType>, getState:()=>AppStateType) => {
+const task=getState().tasks[idTodo].find(t=>t.id===idTask)
+if(task) {
+    const model: TaskStatus = {
+        title: task.title,
+        startDate: task.startDate,
+        priority: task.priority,
+        description: task.description,
+        deadline: task.deadline,
+        status: status
+    }
+
+    taskApi.updateTask(idTodo, idTask, model).then((res) => {
+
+        dispatch(changeTaskStatusAC(idTodo, idTask, status))
     })
+}
 }
 
 // type

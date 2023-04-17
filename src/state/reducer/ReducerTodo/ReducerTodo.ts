@@ -24,7 +24,7 @@ export const reducerTodo=(state:TodolistDomainType[]=initialState, action:AppAct
         case removeTodo:
             return state.filter(t => t.id !== action.idTodo)
         case addTodo:
-            return[...state, { id:action.idTodo, title:action.title, filter:'all',addedDate: '',  order: 0, entityStatus:"idle"}]
+            return[{ id:action.idTodo, title:action.title, filter:'all',addedDate: '',  order: 0, entityStatus:"idle"},...state]
         case changeTitleTodo:
             return state.map(t=> t.id===action.idTodo ? {...t, title:action.title}:t)
         case changeFilterTodo:
@@ -71,14 +71,14 @@ export const createTodolistTC=( title:string): AppThunkType=> async dispatch=>{
         dispatch(fetchTodolistTC())
         dispatch(setStatusAC('succeeded'))
     }
-    // else {
-    //     if (res.data.messages.length) {
-    //         dispatch(setErrorAC(res.data.messages))
-    //     } else {
-    //         dispatch(setErrorAC('Some error occurred'))
-    //     }
-    //     dispatch(setStatusAC('failed'))
-    // }
+    else {
+        if (res.data.messages.length) {
+            dispatch(setErrorAC(res.data.messages))
+        } else {
+            dispatch(setErrorAC('Some error occurred'))
+        }
+        dispatch(setStatusAC('failed'))
+    }
 
 }
 export const deleteTodolistTC=( todoId:string): AppThunkType=> async dispatch=>{

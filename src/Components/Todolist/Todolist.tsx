@@ -6,7 +6,7 @@ import AddItemForm from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 
 import TaskWithRedux from "../Task/TaskWithRedux";
-import {TaskStatuses, TaskType} from "../../api/taskApi";
+import {TaskStatus, TaskStatuses, TaskType} from "../../api/taskApi";
 
 import {getTasksTC} from "../../state/reducer/ReducerTask/ReducerTask";
 import {useAppDispatch} from "../../state/Store";
@@ -22,7 +22,7 @@ type TodolistType = {
     changeStatusCheck: (idTodo: string, idTask: string, status:TaskStatuses) => void
     filter: FilterType
     removeTodolist: (todoID: string) => void
-    onChangeTitleInput: (idIdTodo: string, idTask: string, title: string) => void
+    onChangeTitleInput: (idIdTodo: string, idTask: string, status: TaskStatuses) => void
     onChangeTitleTodo: (idTodo: string, title: string) => void
     entityStatus:RequestStatusType
 }
@@ -55,10 +55,12 @@ export const Todolist: FC<TodolistType> = React.memo((props) => {
             </h3>
             <AddItemForm addItem={addTaskWrapper} disabled={props.entityStatus==='loading'} />
             <TaskWithRedux
-                disabled={props.entityStatus}
+
                 idTodo={props.idTodo}
                 filter={props.filter}
                 filterTask={props.filterTask}
+                entityStatus={props.entityStatus}
+
             />
 
         </div>

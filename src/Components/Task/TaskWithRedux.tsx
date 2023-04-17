@@ -11,14 +11,14 @@ import {EditableSpan} from "../EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
 import Button from "../Button/Button";
 import {FilterType} from "../../App";
-import {TaskStatuses} from "../../api/taskApi";
+import {TaskStatus, TaskStatuses} from "../../api/taskApi";
 // import style from '../../Common/commonStyle.module.css'
 
 type TaskWithReduxType ={
     idTodo:string
     filter: FilterType
     filterTask: (idTodo: string, value: FilterType) => void
-    disabled:string
+    entityStatus:string
 }
 
  const TaskWithRedux: FC<TaskWithReduxType> = (props) => {
@@ -51,24 +51,26 @@ type TaskWithReduxType ={
 
      const onChangeStatus = (id: string, status:TaskStatuses) => {
 
-         dispatch( changeTaskStatusAC(props.idTodo, id, status))
+         dispatch( updateTasksTC(props.idTodo, id, status))
      }
 
-     const onChangeTitleInputTitle=(id:string,title:string)=>{
+     const onChangeTitleInputTitle=(id:string,status:TaskStatuses)=>{
 
-         dispatch( updateTasksTC(props.idTodo,id, title))
+         dispatch( updateTasksTC(props.idTodo,id, status))
      }
 
      const buttonStyleAll =   (props.filter === 'all' ? s.active : '') +' '+ s.btn
      const buttonStyleActive = s.btn + ' ' + (props.filter === 'active' ? s.active : '')
      const buttonStyleCompleted = s.btn + ' ' + (props.filter === 'completed' ? s.active : '')
-    return (
+
+     return (
         <div>
+
             {tasks.map(t => <li key={t.id}>
-                <EditableSpan title={t.title} onChangeTitleInput={()=>  onChangeTitleInputTitle(t.id, t.title)} />
+                <EditableSpan title={t.title} onChangeTitleInput={()=>  onChangeTitleInputTitle(t.id, t.status)} />
                 <input readOnly={true} className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}
                        onClick={() => onChangeStatus(t.id,t.status)}/>
-                <Button name={'x'} callback={() =>removeTask(t.id)} disabled={props.disabled==='loading'}/>
+                <Button name={'x'} callback={() =>removeTask(t.id)} disabled={t.entityStatus==='loading'}/>
             </li>)
             }
             <div>

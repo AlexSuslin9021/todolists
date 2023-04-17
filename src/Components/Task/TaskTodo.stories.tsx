@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import {taskApi} from "../../api/taskApi";
+import {taskApi, TaskPriorities, TaskStatuses} from "../../api/taskApi";
 import {todolistApi} from "../../api/todolistApi";
 
 
@@ -162,7 +162,14 @@ export const UpdateTasks = () => {
         setTitle(e.currentTarget.value)
     }
     const onClickHandler=()=>{
-        taskApi.updateTask(todolistId, taskId,title)
+        taskApi.updateTask(todolistId, taskId,{
+            title:title,
+            startDate: '',
+            priority: TaskPriorities.High,
+            description: '',
+            deadline: '',
+            status: TaskStatuses.Completed
+        })
             .then((res) => {
                 return setState(res.data)
             })
