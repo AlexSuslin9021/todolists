@@ -68,17 +68,18 @@ export const createTodolistTC=( title:string): AppThunkType=> async dispatch=>{
  let res= await todolistApi.createTodolist(title)
     if (res.data.resultCode === 0) {
         dispatch(addTodolistAC(title))
-        dispatch(fetchTodolistTC())
         dispatch(setStatusAC('succeeded'))
     }
-    else {
-        if (res.data.messages.length) {
-            dispatch(setErrorAC(res.data.messages))
-        } else {
-            dispatch(setErrorAC('Some error occurred'))
-        }
-        dispatch(setStatusAC('failed'))
-    }
+    // dispatch(setStatusAC('succeeded'))
+
+    // else {
+    //     if (res.data.messages.length) {
+    //         dispatch(setErrorAC(res.data.messages))
+    //     } else {
+    //         dispatch(setErrorAC('Some error occurred'))
+    //     }
+    //     dispatch(setStatusAC('failed'))
+    // }
 
 }
 export const deleteTodolistTC=( todoId:string): AppThunkType=> async dispatch=>{

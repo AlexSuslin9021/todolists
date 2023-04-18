@@ -8,7 +8,7 @@ import {EditableSpan} from "../EditableSpan/EditableSpan";
 import TaskWithRedux from "../Task/TaskWithRedux";
 import {TaskStatus, TaskStatuses, TaskType} from "../../api/taskApi";
 
-import {getTasksTC} from "../../state/reducer/ReducerTask/ReducerTask";
+import {getTasksTC, TaskUpdateModelDomainType} from "../../state/reducer/ReducerTask/ReducerTask";
 import {useAppDispatch} from "../../state/Store";
 import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
 
@@ -19,10 +19,10 @@ type TodolistType = {
     removeTask: (idTodo: string, idTask: string) => void
     filterTask: (idTodo: string, value: FilterType) => void
     addTask: (idTodo: string, newTitle: string) => void
-    changeStatusCheck: (idTodo: string, idTask: string, status:TaskStatuses) => void
+    changeStatusCheck: (idTodo: string, idTask: string, domainModel:TaskUpdateModelDomainType) => void
     filter: FilterType
     removeTodolist: (todoID: string) => void
-    onChangeTitleInput: (idIdTodo: string, idTask: string, status: TaskStatuses) => void
+    onChangeTitleInput: (idIdTodo: string, idTask: string, domainModel:TaskUpdateModelDomainType) => void
     onChangeTitleTodo: (idTodo: string, title: string) => void
     entityStatus:RequestStatusType
 }
@@ -39,11 +39,7 @@ export const Todolist: FC<TodolistType> = React.memo((props) => {
         props.addTask(props.idTodo, title)
     }, [props.addTask, props.idTodo])
 
-    useEffect(()=>{
 
-        dispatch(getTasksTC(props.idTodo))
-
-    },[])
 
 
     return (

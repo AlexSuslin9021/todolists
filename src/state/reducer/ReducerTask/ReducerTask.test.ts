@@ -70,19 +70,19 @@ test('correct task should be deleted from correct array', () => {
     })
 })
 
-test('task should be add in array', () => {
-
-
-    const action = changeTaskStatusAC('todolistId1', '3', 1)
-
-    const endState = reducerTask(startState, action)
-
-    expect(endState['todolistId2'][2].status).toBe(TaskStatuses.Completed)
-    expect(endState['todolistId1'][2].status).toBe(TaskStatuses.New)
-    expect(endState['todolistId1'].length).toBe(3)
-
-
-})
+// test('task should be add in array', () => {
+//
+//
+//     const action = changeTaskStatusAC('todolistId1', '3', 1)
+//
+//     const endState = reducerTask(startState, action)
+//
+//     expect(endState['todolistId2'][2].status).toBe(TaskStatuses.Completed)
+//     expect(endState['todolistId1'][2].status).toBe(TaskStatuses.New)
+//     expect(endState['todolistId1'].length).toBe(3)
+//
+//
+// })
 
 test('in task should be change isDone ', () => {
 

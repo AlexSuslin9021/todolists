@@ -23,28 +23,28 @@ export const reducerTask = (state: TasksType  = tasks, action: AppActionType): T
         case removeTask:
             return {...state, [action.idTodo]: state[action.idTodo].filter(t => t.id !== action.idTask)}
         case addTask:
+
             return {
-                ...state, [action.idTodo]: [...state[action.idTodo],
-                    {
-                        id: v1(),
-                        title: action.title,
-                        status: TaskStatuses.New,
-                        todoListId: action.idTodo,
-                        description: '',
-                        startDate: '',
-                        addedDate: '',
-                        deadline: '',
-                        order: 0,
-                        priority: TaskPriorities.High,
-                        entityStatus:'idle'
-                    }
+                ...state, [action.idTodo]: [ {
+                    id: v1(),
+                    title: action.title,
+                    status: TaskStatuses.New,
+                    todoListId: action.idTodo,
+                    description: '',
+                    startDate: '',
+                    addedDate: '',
+                    deadline: '',
+                    order: 0,
+                    priority: TaskPriorities.High,
+                    entityStatus:'idle'
+                },...state[action.idTodo],
+
                 ]
             }
         case changeTaskStatus:
 
             return {
-                ...state, [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {
-                    ...t, status: action.status ? TaskStatuses.New:TaskStatuses.Completed} : {...t})}
+                ...state, [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t, ... action.model} : t)}
         case  changeTaskTitle:
             return {
                 ...state,
@@ -79,8 +79,8 @@ export const removeTaskAC = (idTodo: string, idTask: string) => {
 export const addTaskAC = (idTodo: string, title: string) => {
     return {type: addTask, idTodo, title,} as const
 }
-export const changeTaskStatusAC = (idTodo: string, idTask: string, status: TaskStatuses) => {
-    return {type: changeTaskStatus, idTodo, idTask, status} as const
+export const changeTaskStatusAC = (idTodo: string, idTask: string, model: TaskUpdateModelDomainType) => {
+    return {type: changeTaskStatus, idTodo, idTask, model} as const
 }
 export const changeTaskTitleAC = (idTodo: string, idTask: string, title: string) => {
     return {type: changeTaskTitle, idTodo, idTask, title} as const
@@ -150,26 +150,36 @@ export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (
     })
 }
 
-export const updateTasksTC = (idTodo: string, idTask: string, status:TaskStatuses): AppThunkType => (dispatch: Dispatch<TaskActionType>, getState:()=>AppStateType) => {
+export const updateTasksTC = (idTodo: string, idTask: string, domainModel:TaskUpdateModelDomainType): AppThunkType => (dispatch: Dispatch<TaskActionType>, getState:()=>AppStateType) => {
 const task=getState().tasks[idTodo].find(t=>t.id===idTask)
 if(task) {
-    const model: TaskStatus = {
+    const apiModel: TaskStatus = {
         title: task.title,
         startDate: task.startDate,
         priority: task.priority,
         description: task.description,
         deadline: task.deadline,
-        status: status
+        status: task.status,
+        ...domainModel
     }
 
-    taskApi.updateTask(idTodo, idTask, model).then((res) => {
+    taskApi.updateTask(idTodo, idTask, apiModel).then((res) => {
 
-        dispatch(changeTaskStatusAC(idTodo, idTask, status))
+        dispatch(changeTaskStatusAC(idTodo, idTask, domainModel))
     })
 }
 }
 
 // type
+
+export type TaskUpdateModelDomainType= {
+    title?: string,
+    startDate?: string,
+    priority?: TaskPriorities,
+    description?: string,
+    deadline?: string,
+    status?: TaskStatuses
+}
 export type TasksType = { [key: string]: TaskType[] }
 type RemoveTaskType = ReturnType<typeof removeTaskAC>
 type AddTaskType = ReturnType<typeof addTaskAC>
