@@ -23,7 +23,7 @@ export const taskApi = {
     },
     updateTask(todolistId: string, taskId: string, model: TaskStatus) {
 
-        return instance.put<TaskStatus>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+        return instance.put(`todo-lists/${todolistId}/tasks/${taskId}`, model)
 
     }
 }
