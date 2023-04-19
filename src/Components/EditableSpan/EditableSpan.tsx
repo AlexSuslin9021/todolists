@@ -4,7 +4,7 @@ import s from './EditableSpan.module.css'
 
 type EditableSpanType = {
     title: string
-    onChangeTitleInput: (title: string) => void
+    callback: (title: string) => void
 }
 
 export const EditableSpan: FC<EditableSpanType> = (props) => {
@@ -15,7 +15,7 @@ export const EditableSpan: FC<EditableSpanType> = (props) => {
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 
-        props.onChangeTitleInput(e.currentTarget.value)
+        props.callback(e.currentTarget.value)
         setTitle(e.currentTarget.value)
 
     }

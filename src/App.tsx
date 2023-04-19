@@ -7,7 +7,7 @@ import {Todolist} from "./Components/Todolist/Todolist";
 import AddItemForm from "./Components/AddItemForm/AddItemForm";
 import {
     changeTaskStatusAC,
-    changeTaskTitleAC, createTasksTC, deleteTasksTC, TaskUpdateModelDomainType, updateTasksTC,
+    changeTaskTitleAC, createTasksTC, deleteTasksTC, updateTaskTC,
 
 } from "./state/reducer/ReducerTask/ReducerTask";
 import {
@@ -62,7 +62,7 @@ const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
         dispatch(changeFilterTodolistAC(idTodo, value))
     }, [dispatch])
 
-    const changeStatusCheck = useCallback((idTodo: string, idTask: string, domainModel:TaskUpdateModelDomainType) => {
+    const changeStatusCheck = useCallback((idTodo: string, idTask: string, domainModel:TaskStatuses) => {
         dispatch(changeTaskStatusAC(idTodo, idTask, domainModel))
     }, [dispatch])
 
@@ -74,8 +74,8 @@ const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
         dispatch(createTodolistTC(title))
     }, [dispatch])
 
-    const onChangeTitleInput = useCallback((IdTodo: string, idTask: string, domainModel:TaskUpdateModelDomainType) => {
-        dispatch(updateTasksTC(IdTodo, idTask, domainModel))
+    const callback = useCallback((IdTodo: string, idTask: string, title:string) => {
+        dispatch(updateTaskTC(IdTodo, idTask, {title}))
     }, [dispatch])
 
     const onChangeTitleTodo = useCallback((idTodo: string, title: string) => {
@@ -111,7 +111,7 @@ const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
                     filter={t.filter}
                     changeStatusCheck={changeStatusCheck}
                     removeTodolist={removeTodolist}
-                    onChangeTitleInput={onChangeTitleInput}
+                    callback={callback}
                     onChangeTitleTodo={onChangeTitleTodo}
 
                 />

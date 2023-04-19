@@ -14,18 +14,19 @@ const addTodo = 'ADD-TODOLIST'
 const removeTodo = 'REMOVE-TODOLIST'
 const setTasks = 'SET_TASKS'
 const changeEntityStatus = 'CHANGE_ENTITY_STATUS'
+const updateTitle = 'UPDATE-TITLE'
 
 //initial state
-let tasks: TasksType  = {}
+let tasks: TasksType = {}
 
-export const reducerTask = (state: TasksType  = tasks, action: AppActionType): TasksType => {
+export const reducerTask = (state: TasksType = tasks, action: AppActionType): TasksType => {
     switch (action.type) {
         case removeTask:
             return {...state, [action.idTodo]: state[action.idTodo].filter(t => t.id !== action.idTask)}
         case addTask:
 
             return {
-                ...state, [action.idTodo]: [ {
+                ...state, [action.idTodo]: [{
                     id: v1(),
                     title: action.title,
                     status: TaskStatuses.New,
@@ -36,20 +37,21 @@ export const reducerTask = (state: TasksType  = tasks, action: AppActionType): T
                     deadline: '',
                     order: 0,
                     priority: TaskPriorities.High,
-                    entityStatus:'idle'
-                },...state[action.idTodo],
+                    entityStatus: 'idle'
+                }, ...state[action.idTodo],
 
                 ]
             }
         case changeTaskStatus:
 
             return {
-                ...state, [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t, ... action.model} : t)}
-        case  changeTaskTitle:
-            return {
-                ...state,
-                [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t, title: action.title} : t)
+                ...state
             }
+        // case  changeTaskTitle:
+        //     return {
+        //         ...state,
+        //         [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t, ...action.model} : t)
+        //     }
         case addTodo:
             return {...state, [action.todolist.id]: []}
         case removeTodo:
@@ -63,12 +65,23 @@ export const reducerTask = (state: TasksType  = tasks, action: AppActionType): T
             })
             return stateCopy;
         }
+        case updateTitle:
+    return {
+        ...state, [action.idTodo]:
+            state[action.idTodo].map(t => t.id === action.idTask ? {...t, ...action.api} : t)
+    }
         case setTasks: {
             return {...state, [action.idTodo]: [...action.task, ...state[action.idTodo]]}
         }
         case changeEntityStatus:
 
-            return {...state, [action.idTodo] : state[action.idTodo].map(t=>t.id===action.idTask ? {...t,entityStatus:action.status}: t)}
+            return {
+                ...state,
+                [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {
+                    ...t,
+                    entityStatus: action.status
+                } : t)
+            }
     }
     return state
 }
@@ -79,11 +92,16 @@ export const removeTaskAC = (idTodo: string, idTask: string) => {
 export const addTaskAC = (idTodo: string, title: string) => {
     return {type: addTask, idTodo, title,} as const
 }
-export const changeTaskStatusAC = (idTodo: string, idTask: string, model: TaskUpdateModelDomainType) => {
-    return {type: changeTaskStatus, idTodo, idTask, model} as const
+export const changeTaskStatusAC = (idTodo: string, idTask: string, status: TaskStatuses) => {
+    return {type: changeTaskStatus, idTodo, idTask, status} as const
 }
-export const changeTaskTitleAC = (idTodo: string, idTask: string, title: string) => {
-    return {type: changeTaskTitle, idTodo, idTask, title} as const
+export const changeTaskTitleAC = (idTodo: string, idTask: string, model: any) => {
+    return {type: changeTaskTitle, idTodo, idTask, model} as const
+}
+export const updateTitleTaskAC = (idTodo: string, idTask: string, api: UpdateDomainTaskType) => {
+    return {
+        type: updateTitle, idTodo, idTask, api
+    } as const
 }
 export const setTasksAC = (idTodo: string, task: TaskType[]) => {
     return {type: setTasks, idTodo, task,} as const
@@ -118,8 +136,7 @@ export const createTasksTC = (idTodo: string, title: string): AppThunkType => (d
         if (res.data.resultCode === 0) {
             dispatch(addTaskAC(idTodo, title))
             dispatch(setStatusAC('succeeded'))
-        }
-        else {
+        } else {
             if (res.data.messages.length) {
                 dispatch(setErrorAC(res.data.messages))
             } else {
@@ -133,11 +150,11 @@ export const createTasksTC = (idTodo: string, title: string): AppThunkType => (d
 }
 export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
     dispatch(setStatusAC('loading'))
-    dispatch(changeEntityTaskStatusAC(idTodo,idTask,'loading'))
+    dispatch(changeEntityTaskStatusAC(idTodo, idTask, 'loading'))
     taskApi.deleteTask(idTodo, idTask).then((res) => {
         // if (res.data.resultCode === 0) {
-            dispatch(removeTaskAC(idTodo, idTask))
-            dispatch(setStatusAC('succeeded'))
+        dispatch(removeTaskAC(idTodo, idTask))
+        dispatch(setStatusAC('succeeded'))
         // }
         // else {
         //     if (res.data.messages.length) {
@@ -150,35 +167,62 @@ export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (
         dispatch(setStatusAC('idle'))
     })
 }
-export const updateTasksTC = (idTodo: string, idTask: string, domainModel:TaskUpdateModelDomainType): AppThunkType => (dispatch: Dispatch<TaskActionType>, getState:()=>AppStateType) => {
-const task=getState().tasks[idTodo].find(t=>t.id===idTask)
-if(task) {
-    const apiModel: TaskStatus = {
-        title: task.title,
-        startDate: task.startDate,
-        priority: task.priority,
-        description: task.description,
-        deadline: task.deadline,
-        status: task.status,
-        ...domainModel
-    }
+// export const updateTasksTC = (idTodo: string, idTask: string, api: TaskUpdateModelDomainType): AppThunkType => (dispatch: Dispatch<TaskActionType>, getState: () => AppStateType) => {
+//     const task = getState().tasks[idTodo].find(t => t.id === idTask)
+//     if (task) {
+//         const apiModel: TaskStatus = {
+//             title: task.title,
+//             startDate: task.startDate,
+//             priority: task.priority,
+//             description: task.description,
+//             deadline: task.deadline,
+//             status: task.status,
+//             ...api
+//         }
+//         taskApi.updateTask(idTodo, idTask, apiModel).then(() => {
+//             dispatch(changeTaskTitleAC(idTodo, idTask, api))
+//         })
+//
+//     }
+// }
+export const updateTaskTC = (idTodo: string, idTask: string, api: UpdateDomainTaskType) => (dispatch: Dispatch, getState:()=>AppStateType) => {
+    let task=getState().tasks[idTodo].find(t=>t.id===idTask)
+    if(task){
+        let model:TaskStatus={
+            title:task.title,
+            description: task.description,
 
-    taskApi.updateTask(idTodo, idTask, apiModel).then((res) => {
+            status: task.status,
+            priority: task.priority,
+            startDate: task.startDate,
+            deadline: task.deadline,
+            ...api
+        }
+        taskApi.updateTask(idTodo, idTask, model).then((res) => {
 
-        dispatch(changeTaskStatusAC(idTodo, idTask, domainModel))
-    })
-}
-}
-
+            dispatch(updateTitleTaskAC(idTodo, idTask, api))
+        })
+    }}
 // type
+// case updateTitleTask:
+//     return {
+//         ...state, [action.idTodo]:
+//             state[action.idTodo].map(t => t.id === action.idTask ? {...t, ...action.api} : t)
+//     }
+// const updateTitleTaskAC = (idTodo: string, idTask: string, api: UpdateDomainTaskType) => {
+//     return {
+//         type: updateTitleTask, idTodo, idTask, api
+//     } as const
+// }
 
-export type TaskUpdateModelDomainType= {
-    title?: string,
-    startDate?: string,
-    priority?: TaskPriorities,
-    description?: string,
-    deadline?: string,
+export type UpdateDomainTaskType = {
+    title?: string
+    description?: string
+
     status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: string
+    deadline?: string
 }
 export type TasksType = { [key: string]: TaskType[] }
 type RemoveTaskType = ReturnType<typeof removeTaskAC>
@@ -199,7 +243,8 @@ export type TaskActionType =
     | RemoveTodolistType
     | SetStatusType
     | SetErrorType
-    |ReturnType<typeof changeEntityTaskStatusAC>
+    | ReturnType<typeof changeEntityTaskStatusAC>
+| ReturnType<typeof updateTitleTaskAC>
 
 
 // switch (action.type) {

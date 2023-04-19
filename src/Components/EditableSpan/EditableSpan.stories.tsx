@@ -24,7 +24,7 @@ export const EditableSpanStory = Input.bind({});
 EditableSpanStory.args = {
 
   title: 'new',
-  onChangeTitleInput: ()=>{
+  callback: ()=>{
     console.log(EditableSpanStory.args?.title) }
 };
 

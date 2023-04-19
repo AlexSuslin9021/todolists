@@ -98,7 +98,7 @@ test('in task should be change isDone ', () => {
 
 test('in task should be cange title ', () => {
 
-    const action = changeTaskTitleAC('todolistId2', '2', 'apple')
+    const action = changeTaskTitleAC('todolistId2', '2', {title:'apple'})
     const endState = reducerTask(startState, action)
 
     expect(endState['todolistId2'].length).toBe(3)

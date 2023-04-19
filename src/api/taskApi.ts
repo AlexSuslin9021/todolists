@@ -26,7 +26,7 @@ export const taskApi = {
     },
     updateTask(todolistId: string, taskId: string, model: TaskStatus) {
 
-        return instance.put(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+        return instance.put<TaskStatus, AxiosResponse<ResponseType<{items:TaskType}>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
 
     }
 }

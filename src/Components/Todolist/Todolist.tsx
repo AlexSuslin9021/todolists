@@ -8,7 +8,7 @@ import {EditableSpan} from "../EditableSpan/EditableSpan";
 import TaskWithRedux from "../Task/TaskWithRedux";
 import {TaskStatus, TaskStatuses, TaskType} from "../../api/taskApi";
 
-import {getTasksTC, TaskUpdateModelDomainType} from "../../state/reducer/ReducerTask/ReducerTask";
+import {getTasksTC} from "../../state/reducer/ReducerTask/ReducerTask";
 import {useAppDispatch} from "../../state/Store";
 import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
 
@@ -19,10 +19,10 @@ type TodolistType = {
     removeTask: (idTodo: string, idTask: string) => void
     filterTask: (idTodo: string, value: FilterType) => void
     addTask: (idTodo: string, newTitle: string) => void
-    changeStatusCheck: (idTodo: string, idTask: string, domainModel:TaskUpdateModelDomainType) => void
+    changeStatusCheck: (idTodo: string, idTask: string, domainModel:TaskStatuses) => void
     filter: FilterType
     removeTodolist: (todoID: string) => void
-    onChangeTitleInput: (idIdTodo: string, idTask: string, domainModel:TaskUpdateModelDomainType) => void
+    callback: (idIdTodo: string, idTask: string, api:any) => void
     onChangeTitleTodo: (idTodo: string, title: string) => void
     entityStatus:RequestStatusType
 }
@@ -50,7 +50,7 @@ export const Todolist: FC<TodolistType> = React.memo((props) => {
         <div className={s.todo} >
 
             <h3><EditableSpan title={props.title}
-                              onChangeTitleInput={(title) => props.onChangeTitleTodo(props.idTodo, title)}/>
+                              callback={(title) => props.onChangeTitleTodo(props.idTodo, title)}/>
                 <Button name={'x'} callback={onRemoveTodoHandler} disabled={props.entityStatus==='loading'}/>
             </h3>
             <AddItemForm addItem={addTaskWrapper} disabled={props.entityStatus==='loading'} />

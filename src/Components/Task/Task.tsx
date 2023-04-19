@@ -10,13 +10,13 @@ type PropsTaskType={
     idTodo: string
     removeTask: (idTodo: string, idTask: string) => void
     changeStatusCheck: (idTodo: string, idTask: string, isDone: TaskStatuses) => void
-    onChangeTitleInput:(idIdTodo:string,idTask:string, title: string)=>void
+    callback:(idIdTodo:string,idTask:string, title: string)=>void
 }
 export const Task :FC<PropsTaskType> = (props) => {
     return (
         <div>
             {props.task.map(t => <li key={t.id}>
-                <EditableSpan title={t.title} onChangeTitleInput={(title:string)=>props.onChangeTitleInput(props.idTodo,t.id,title)} />
+                <EditableSpan title={t.title} callback={(title:string)=>props.callback(props.idTodo,t.id,title)} />
                 <input readOnly={true} className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}
                        onClick={() => props.changeStatusCheck(props.idTodo,t.id, t.status)}/>
                 <Button name={'x'} callback={() => props.removeTask(props.idTodo ,t.id)}/>

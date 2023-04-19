@@ -1,11 +1,11 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, {ChangeEvent, FC, useCallback, useEffect} from 'react';
 import { useSelector} from "react-redux";
 import {AppStateType, useAppDispatch} from "../../state/Store";
 import {
     changeTaskStatusAC,
     changeTaskTitleAC, deleteTasksTC, getTasksTC,
     removeTaskAC,
-    TasksType, updateTasksTC
+    TasksType, updateTaskTC
 } from "../../state/reducer/ReducerTask/ReducerTask";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
@@ -49,28 +49,27 @@ type TaskWithReduxType ={
          dispatch(deleteTasksTC(props.idTodo, id))
      }
 
-     const onChangeStatus = (id: string, status:TaskStatuses) => {
 
-         dispatch( updateTasksTC(props.idTodo, id, {status:status}))
-     }
 
-     const onChangeTitleInputTitle=(id:string,title:string)=>{
-
-         dispatch( updateTasksTC(props.idTodo,id, {title}))
+     const onChangeTitle=( idTask:string, title:string)=>{
+         dispatch(updateTaskTC( props.idTodo,idTask,{title:title}))
      }
 
 
      const buttonStyleAll =   (props.filter === 'all' ? s.active : '') +' '+ s.btn
      const buttonStyleActive = s.btn + ' ' + (props.filter === 'active' ? s.active : '')
      const buttonStyleCompleted = s.btn + ' ' + (props.filter === 'completed' ? s.active : '')
+     // let newIsDoneValue = e.currentTarget.checked
+     // checked={props.task.status === TaskStatuses.Completed}
+     // props.changeTaskStatus(props.task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New, props.todolistId)
 
      return (
         <div>
 
             {tasks.map(t => <li key={t.id}>
-                <EditableSpan title={t.title} onChangeTitleInput={()=>  onChangeTitleInputTitle(t.id, t.title)} />
-                <input readOnly={true} className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}
-                       onChange={() => onChangeStatus(t.id,t.status)}/>
+                <EditableSpan key={t.id} title={t.title} callback={(title:string)=>onChangeTitle(t.id,title)}/>
+                <input  className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}
+                     />
                 <Button name={'x'} callback={() =>removeTask(t.id)} disabled={t.entityStatus==='loading'}/>
             </li>)
             }
