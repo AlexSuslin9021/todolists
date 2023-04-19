@@ -51,7 +51,7 @@ export const reducerTask = (state: TasksType  = tasks, action: AppActionType): T
                 [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t, title: action.title} : t)
             }
         case addTodo:
-            return {...state, [action.idTodo]: []}
+            return {...state, [action.todolist.id]: []}
         case removeTodo:
             const copyState = {...state, [action.idTodo]: state[action.idTodo]}
             delete copyState[action.idTodo]
@@ -97,19 +97,19 @@ export const getTasksTC = (id: string): AppThunkType => (dispatch: Dispatch<Task
     dispatch(setStatusAC('loading'))
 
     taskApi.getTask(id).then((res) => {
-        // if (res.data.resultCode === 0) {
+
+
         dispatch(setTasksAC(id, res.data.items))
         dispatch(setStatusAC('succeeded'))
-        // }
-     // else{
-     //        if (res.data.messages.length) {
-     //            dispatch(setErrorAC(res.data.messages[0]))
-     //        } else {
-     //            dispatch(setErrorAC('Some error occurred'))
-     //        }
-     //        dispatch(setStatusAC('idle'))
-     //    }
 
+        // else{
+        //     if (res.data) {
+        //         dispatch(setErrorAC(res.data.))
+        //     } else {
+        //         dispatch(setErrorAC('Some error occurred'))
+        //     }
+        //     dispatch(setStatusAC('idle'))
+        // }
 
     })
 }
@@ -127,8 +127,9 @@ export const createTasksTC = (idTodo: string, title: string): AppThunkType => (d
             }
             dispatch(setStatusAC('failed'))
         }
-        dispatch(setStatusAC('idle'))
+
     })
+
 }
 export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
     dispatch(setStatusAC('loading'))
@@ -149,7 +150,6 @@ export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (
         dispatch(setStatusAC('idle'))
     })
 }
-
 export const updateTasksTC = (idTodo: string, idTask: string, domainModel:TaskUpdateModelDomainType): AppThunkType => (dispatch: Dispatch<TaskActionType>, getState:()=>AppStateType) => {
 const task=getState().tasks[idTodo].find(t=>t.id===idTask)
 if(task) {
@@ -200,6 +200,38 @@ export type TaskActionType =
     | SetStatusType
     | SetErrorType
     |ReturnType<typeof changeEntityTaskStatusAC>
+
+
+// switch (action.type) {
+//     case 'REMOVE-TASK':
+//         return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)}
+//     case 'ADD-TASK':
+//         return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
+//     case 'UPDATE-TASK':
+//         return {
+//             ...state,
+//             [action.todolistId]: state[action.todolistId]
+//                 .map(t => t.id === action.taskId ? {...t, ...action.model} : t)
+//         }
+//     case 'ADD-TODOLIST':
+//         return {...state, [action.todolist.id]: []}
+//     case 'REMOVE-TODOLIST':
+//         const copyState = {...state}
+//         delete copyState[action.id]
+//         return copyState
+//     case 'SET-TODOLISTS': {
+//         const copyState = {...state}
+//         action.todolists.forEach(tl => {
+//             copyState[tl.id] = []
+//         })
+//         return copyState
+//     }
+//     case 'SET-TASKS':
+//         return {...state, [action.todolistId]: action.tasks}
+//     default:
+//         return state
+// }
+
 
 // export const updateTasksTC = (taskId: string, todolistId: string, status: TaskStatuses) => {
 //     return (dispatch: Dispatch, getState: () => AppRootStateType) => {

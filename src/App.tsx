@@ -86,7 +86,7 @@ const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
          dispatch(fetchTodolistTC())
 
 
-     },[fetchTodolistTC])
+     },[])
 
     return <div>
         <div className={'header'}></div>

@@ -62,7 +62,7 @@ type TaskWithReduxType ={
 
          dispatch(getTasksTC(props.idTodo))
 
-     },[props.idTodo])
+     },[])
 
      const buttonStyleAll =   (props.filter === 'all' ? s.active : '') +' '+ s.btn
      const buttonStyleActive = s.btn + ' ' + (props.filter === 'active' ? s.active : '')

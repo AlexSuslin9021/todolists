@@ -112,7 +112,7 @@ test('in task should be cange title ', () => {
 test('new array should be added when new todolist is added', () => {
 
 
-    const action = addTodolistAC('new todolist')
+    const action = addTodolistAC({id: '3', title: 'new todolist',addedDate: '',  order: 0,})
 
     const endState = reducerTask(startState, action)
 

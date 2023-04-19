@@ -41,12 +41,13 @@ test('should be add todo',()=> {
         //         {id: '2', title: 'What to buy', filter: 'all'},
         //     ]
 
-        const action=addTodolistAC('test')
+        const action=addTodolistAC({id: '3', title: 'test',addedDate: '',  order: 0,})
         const newState= reducerTodo(startState, action)
 
         expect(newState.length).toBe(3)
-        expect(newState[2].title).toBe('test')
-        expect(newState[1].title).toBe('What to buy')
+        expect(newState[0].title).toBe('test')
+        expect(newState[2].title).toBe('What to buy')
+        expect(newState[0].id).toBe('3')
 
     }
 

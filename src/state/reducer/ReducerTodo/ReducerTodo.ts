@@ -24,7 +24,7 @@ export const reducerTodo=(state:TodolistDomainType[]=initialState, action:AppAct
         case removeTodo:
             return state.filter(t => t.id !== action.idTodo)
         case addTodo:
-            return[{ id:action.idTodo, title:action.title, filter:'all',addedDate: '',  order: 0, entityStatus:"idle"},...state]
+            return [{...action.todolist, filter: 'all', entityStatus: 'idle'}, ...state]
         case changeTitleTodo:
             return state.map(t=> t.id===action.idTodo ? {...t, title:action.title}:t)
         case changeFilterTodo:
@@ -40,7 +40,7 @@ export const reducerTodo=(state:TodolistDomainType[]=initialState, action:AppAct
 //Action Creator
 export const removeTodolistAC=(idTodo:string)=>{return {type:removeTodo, idTodo} as const}
 export const changeEntityStatusAC=(idTodo:string, status:RequestStatusType)=>{return{type:changeEntityStatus, idTodo, status} as const}
-export const addTodolistAC=(title:string)=>{return {type:addTodo, title, idTodo:v1()} as const}
+export const addTodolistAC=(todolist:TodolistType)=>{return {type:addTodo, todolist} as const}
 export const changeTitleTodolistAC=(idTodo:string, title: string)=>{return {type:changeTitleTodo, idTodo, title} as const}
 export const changeFilterTodolistAC=(idTodo: string, value: FilterType)=>{return {type:changeFilterTodo, idTodo, value} as const}
 export const setTodolistAC=(todolist:TodolistType[])=>{return {type:setTodolist, todolist} as const}
@@ -56,20 +56,17 @@ export const updateTodolistTC=(todoId:string, title:string): AppThunkType=> asyn
 
         dispatch(setStatusAC('loading'))
       await todolistApi.updateTodolist(todoId, title)
-
         dispatch(changeTitleTodolistAC(todoId, title))
-
-
-
     dispatch(setStatusAC('idle'))
 }
 export const createTodolistTC=( title:string): AppThunkType=> async dispatch=>{
     dispatch(setStatusAC('loading'))
  let res= await todolistApi.createTodolist(title)
-    if (res.data.resultCode === 0) {
-        dispatch(addTodolistAC(title))
-        dispatch(setStatusAC('succeeded'))
-    }
+        dispatch(addTodolistAC(res.data.data.item))
+    dispatch(setStatusAC('succeeded'))
+
+
+
     // dispatch(setStatusAC('succeeded'))
 
     // else {
@@ -101,3 +98,22 @@ export type TodoActionType=removeTodolistType |
     addTodolistType | setTodolistType  | changeTitleTodolistType| changeFilterTodolistType
     | SetStatusType
     | ChangeEntityStatusType
+
+
+// case 'REMOVE-TODOLIST':
+// return state.filter(tl => tl.id !== action.id)
+// case 'ADD-TODOLIST':
+// return [{...action.todolist, filter: 'all', entityStatus: 'idle'}, ...state]
+//
+// case 'CHANGE-TODOLIST-TITLE':
+// return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
+// case 'CHANGE-TODOLIST-FILTER':
+// return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
+// case 'CHANGE-TODOLIST-ENTITY-STATUS':
+// return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.status} : tl)
+// case 'SET-TODOLISTS':
+// return action.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
+// default:
+// return state
+// }
+
