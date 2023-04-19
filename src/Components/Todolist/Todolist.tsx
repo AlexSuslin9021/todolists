@@ -40,7 +40,11 @@ export const Todolist: FC<TodolistType> = React.memo((props) => {
     }, [props.addTask, props.idTodo])
 
 
+    useEffect(()=>{
 
+        dispatch(getTasksTC(props.idTodo))
+
+    },[])
 
     return (
         <div className={s.todo} >

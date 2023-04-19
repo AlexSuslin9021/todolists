@@ -64,7 +64,7 @@ export const reducerTask = (state: TasksType  = tasks, action: AppActionType): T
             return stateCopy;
         }
         case setTasks: {
-            return {...state, [action.idTodo]: action.task}
+            return {...state, [action.idTodo]: [...action.task, ...state[action.idTodo]]}
         }
         case changeEntityStatus:
 
@@ -135,18 +135,18 @@ export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (
     dispatch(setStatusAC('loading'))
     dispatch(changeEntityTaskStatusAC(idTodo,idTask,'loading'))
     taskApi.deleteTask(idTodo, idTask).then((res) => {
-        if (res.data.resultCode === 0) {
+        // if (res.data.resultCode === 0) {
             dispatch(removeTaskAC(idTodo, idTask))
             dispatch(setStatusAC('succeeded'))
-        }
-        else {
-            if (res.data.messages.length) {
-                dispatch(setErrorAC(res.data.messages))
-            } else {
-                dispatch(setErrorAC('Some error occurred'))
-            }
-            dispatch(setStatusAC('failed'))
-        }
+        // }
+        // else {
+        //     if (res.data.messages.length) {
+        //         dispatch(setErrorAC(res.data.messages))
+        //     } else {
+        //         dispatch(setErrorAC('Some error occurred'))
+        //     }
+        //     dispatch(setStatusAC('failed'))
+        // }
         dispatch(setStatusAC('idle'))
     })
 }

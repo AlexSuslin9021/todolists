@@ -21,7 +21,7 @@ export const taskApi = {
         return instance.post<CreateTaskType>(`todo-lists/${todolistId}/tasks`, {title: title},)
     },
     deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<DeleteTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+        return instance.delete<AxiosResponse<DeleteTaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`)
 
     },
     updateTask(todolistId: string, taskId: string, model: TaskStatus) {
@@ -92,4 +92,8 @@ type UpdateTaskType = {
     title: string
 }
 
-
+type ResponseType<D>={
+    resultCode: number
+    messages: string[],
+    data: D
+}
