@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {RequestStatusType} from "../state/reducer/AppReducer/AppReducer";
+import {ResponseType} from "./todolistApi";
 
 
 //api
@@ -77,8 +78,8 @@ type GetTasksResponse = {
 
 }
 
-type ResponseType<D={}>={
-    resultCode: number
-    messages: string[],
-    data: D
-}
+// type ResponseType<D={}>={
+//     resultCode: number
+//     messages: string[],
+//     data: D
+// }

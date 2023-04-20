@@ -3,6 +3,7 @@ import {FilterType} from "../../../App";
 import {todolistApi, TodolistType} from "../../../api/todolistApi";
 import {AppActionType, AppThunkType} from "../../Store";
 import {RequestStatusType, setErrorAC, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
+import {handleServerAppError} from "../../../error-utils/error-utils";
 
 ///type:action.type
 const removeTodo = 'REMOVE-TODOLIST'
@@ -68,11 +69,11 @@ export const fetchTodolistTC = (): AppThunkType => async dispatch => {
 export const updateTodolistTC = (todoId: string, title: string): AppThunkType => async dispatch => {
 
     dispatch(setStatusAC('loading'))
-   const res= await todolistApi.updateTodolist(todoId, title)
-    if(res.data.resultCode===0) {
+    const res = await todolistApi.updateTodolist(todoId, title)
+    if (res.data.resultCode === 0) {
         dispatch(changeTitleTodolistAC(todoId, title))
         dispatch(setStatusAC('succeeded'))
-    } else{
+    } else {
         if (res.data.messages.length) {
             dispatch(setErrorAC(res.data.messages[0]))
         } else {
@@ -84,27 +85,22 @@ export const updateTodolistTC = (todoId: string, title: string): AppThunkType =>
 export const createTodolistTC = (title: string): AppThunkType => async dispatch => {
     dispatch(setStatusAC('loading'))
     let res = await todolistApi.createTodolist(title)
-    if(res.data.resultCode===0){
-    dispatch(addTodolistAC(res.data.data.item))
-    dispatch(setStatusAC('succeeded'))
-} else {
-        if (res.data.messages.length) {
-            dispatch(setErrorAC(res.data.messages[0]))
-        } else {
-            dispatch(setErrorAC('Some error occurred'))
-        }
-        dispatch(setStatusAC('failed'))
+    if (res.data.resultCode === 0) {
+        dispatch(addTodolistAC(res.data.data.item))
+        dispatch(setStatusAC('succeeded'))
+    } else {
+        handleServerAppError(res.data, dispatch)
     }
-
+    dispatch(setStatusAC('failed'))
 }
 export const deleteTodolistTC = (todoId: string): AppThunkType => async dispatch => {
     dispatch(setStatusAC('loading'))
     dispatch(changeEntityStatusAC(todoId, 'loading'))
-   let res= await todolistApi.deleteTodolist(todoId)
-    if(res.data.resultCode===0) {
+    let res = await todolistApi.deleteTodolist(todoId)
+    if (res.data.resultCode === 0) {
         dispatch(removeTodolistAC(todoId))
         dispatch(setStatusAC('succeeded'))
-    } else{
+    } else {
         if (res.data.messages.length) {
             dispatch(setErrorAC(res.data.messages[0]))
         } else {

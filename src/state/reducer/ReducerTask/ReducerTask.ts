@@ -4,6 +4,8 @@ import {taskApi, TaskPriorities, TaskStatus, TaskStatuses, TaskType} from "../..
 import {Dispatch} from "redux";
 import {AppActionType, AppStateType, AppThunkType} from "../../Store";
 import {RequestStatusType, setErrorAC, SetErrorType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
+import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
+import axios, {AxiosError} from "axios";
 
 
 const removeTask = 'REMOVE-TASK'
@@ -133,20 +135,23 @@ export const getTasksTC = (id: string): AppThunkType => (dispatch: Dispatch<Task
 }
 export const createTasksTC = (idTodo: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
     dispatch(setStatusAC('loading'))
-    taskApi.createTask(idTodo, title).then((res) => {
-        if (res.data.resultCode === 0) {
-            dispatch(addTaskAC(idTodo, title))
-            dispatch(setStatusAC('succeeded'))
-        } else {
-            if (res.data.messages.length) {
-                dispatch(setErrorAC(res.data.messages[0]))
+    try {
+        taskApi.createTask(idTodo, title).then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(addTaskAC(idTodo, title))
+                dispatch(setStatusAC('succeeded'))
             } else {
-                dispatch(setErrorAC('Some error occurred'))
+                handleServerAppError(res.data, dispatch)
             }
-            dispatch(setStatusAC('failed'))
+
+        })
+    }catch (e) {
+        if(axios.isAxiosError(e))
+            handleServerNetworkError(e, dispatch)
+        //дописать
         }
 
-    })
+
 
 }
 export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
@@ -158,12 +163,7 @@ export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (
         dispatch(setStatusAC('succeeded'))
         }
         else {
-            if (res.data.messages.length) {
-                dispatch(setErrorAC(res.data.messages[0]))
-            } else {
-                dispatch(setErrorAC('Some error occurred'))
-            }
-            dispatch(setStatusAC('failed'))
+           handleServerAppError(res.data,dispatch)
         }
         dispatch(setStatusAC('idle'))
     })
@@ -195,6 +195,10 @@ export const updateTaskTC = (idTodo: string, idTask: string, api: UpdateDomainTa
                 dispatch(setStatusAC('failed'))
             }
             dispatch(setStatusAC('idle'))
+        })
+            .catch((e)=>{
+            dispatch(setStatusAC('failed'))
+            dispatch(setErrorAC(e.message))
         })
     }}
 // type

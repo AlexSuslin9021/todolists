@@ -32,7 +32,7 @@ export const todolistApi = {
 //type
 export type ResponseType<D={}>={
     resultCode:number
-    messages:string
+    messages:string[]
     fieldsErrors:string[]
     data:D
 }
