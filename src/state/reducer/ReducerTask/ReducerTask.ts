@@ -115,30 +115,31 @@ export const getTasksTC = (id: string): AppThunkType => (dispatch: Dispatch<Task
     dispatch(setStatusAC('loading'))
 
     taskApi.getTask(id).then((res) => {
+        if(!res.data.error) {
 
-
-        dispatch(setTasksAC(id, res.data.items))
-        dispatch(setStatusAC('succeeded'))
-
-        // else{
-        //     if (res.data) {
-        //         dispatch(setErrorAC(res.data.))
-        //     } else {
-        //         dispatch(setErrorAC('Some error occurred'))
-        //     }
-        //     dispatch(setStatusAC('idle'))
-        // }
+            dispatch(setTasksAC(id, res.data.items))
+            dispatch(setStatusAC('succeeded'))
+        }
+        else{
+            if (res.data.error) {
+                dispatch(setErrorAC(res.data.error))
+            } else {
+                dispatch(setErrorAC('Some error occurred'))
+            }
+            dispatch(setStatusAC('idle'))
+        }
 
     })
 }
 export const createTasksTC = (idTodo: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
+    dispatch(setStatusAC('loading'))
     taskApi.createTask(idTodo, title).then((res) => {
         if (res.data.resultCode === 0) {
             dispatch(addTaskAC(idTodo, title))
             dispatch(setStatusAC('succeeded'))
         } else {
             if (res.data.messages.length) {
-                dispatch(setErrorAC(res.data.messages))
+                dispatch(setErrorAC(res.data.messages[0]))
             } else {
                 dispatch(setErrorAC('Some error occurred'))
             }
@@ -152,55 +153,48 @@ export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (
     dispatch(setStatusAC('loading'))
     dispatch(changeEntityTaskStatusAC(idTodo, idTask, 'loading'))
     taskApi.deleteTask(idTodo, idTask).then((res) => {
-        // if (res.data.resultCode === 0) {
+        if (res.data.resultCode === 0) {
         dispatch(removeTaskAC(idTodo, idTask))
         dispatch(setStatusAC('succeeded'))
-        // }
-        // else {
-        //     if (res.data.messages.length) {
-        //         dispatch(setErrorAC(res.data.messages))
-        //     } else {
-        //         dispatch(setErrorAC('Some error occurred'))
-        //     }
-        //     dispatch(setStatusAC('failed'))
-        // }
+        }
+        else {
+            if (res.data.messages.length) {
+                dispatch(setErrorAC(res.data.messages[0]))
+            } else {
+                dispatch(setErrorAC('Some error occurred'))
+            }
+            dispatch(setStatusAC('failed'))
+        }
         dispatch(setStatusAC('idle'))
     })
 }
-// export const updateTasksTC = (idTodo: string, idTask: string, api: TaskUpdateModelDomainType): AppThunkType => (dispatch: Dispatch<TaskActionType>, getState: () => AppStateType) => {
-//     const task = getState().tasks[idTodo].find(t => t.id === idTask)
-//     if (task) {
-//         const apiModel: TaskStatus = {
-//             title: task.title,
-//             startDate: task.startDate,
-//             priority: task.priority,
-//             description: task.description,
-//             deadline: task.deadline,
-//             status: task.status,
-//             ...api
-//         }
-//         taskApi.updateTask(idTodo, idTask, apiModel).then(() => {
-//             dispatch(changeTaskTitleAC(idTodo, idTask, api))
-//         })
-//
-//     }
-// }
 export const updateTaskTC = (idTodo: string, idTask: string, api: UpdateDomainTaskType) => (dispatch: Dispatch, getState:()=>AppStateType) => {
     let task=getState().tasks[idTodo].find(t=>t.id===idTask)
     if(task){
         let model:TaskStatus={
             title:task.title,
             description: task.description,
-
             status: task.status,
             priority: task.priority,
             startDate: task.startDate,
             deadline: task.deadline,
             ...api
         }
+        dispatch(setStatusAC('loading'))
         taskApi.updateTask(idTodo, idTask, model).then((res) => {
-
-            dispatch(updateTitleTaskAC(idTodo, idTask, api))
+            if (res.data.resultCode === 0) {
+                dispatch(updateTitleTaskAC(idTodo, idTask, api))
+                dispatch(setStatusAC('succeeded'))
+            }
+            else {
+                if (res.data.messages.length) {
+                    dispatch(setErrorAC(res.data.messages[0]))
+                } else {
+                    dispatch(setErrorAC('Some error occurred'))
+                }
+                dispatch(setStatusAC('failed'))
+            }
+            dispatch(setStatusAC('idle'))
         })
     }}
 // type
@@ -232,6 +226,7 @@ type ChangeTaskStatusType = ReturnType<typeof changeTaskStatusAC>
 type ChangeTaskTitleType = ReturnType<typeof changeTaskTitleAC>
 type AddTodolistType = ReturnType<typeof addTodolistAC>
 type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
+
 export type TaskActionType =
     RemoveTaskType
     | AddTaskType

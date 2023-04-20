@@ -1,24 +1,21 @@
-import React, {ChangeEvent, FC, useCallback, useEffect} from 'react';
+import React, {FC, useCallback} from 'react';
 import { useSelector} from "react-redux";
 import {AppStateType, useAppDispatch} from "../../state/Store";
-import {
-    changeTaskStatusAC,
-    changeTaskTitleAC, deleteTasksTC, getTasksTC,
-    removeTaskAC,
-    TasksType, updateTaskTC
-} from "../../state/reducer/ReducerTask/ReducerTask";
+import {deleteTasksTC, TasksType, updateTaskTC} from "../../state/reducer/ReducerTask/ReducerTask";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
 import Button from "../Button/Button";
 import {FilterType} from "../../App";
-import {TaskStatus, TaskStatuses} from "../../api/taskApi";
-// import style from '../../Common/commonStyle.module.css'
+import { TaskStatuses} from "../../api/taskApi";
+import AddItemForm from "../AddItemForm/AddItemForm";
+
 
 type TaskWithReduxType ={
     idTodo:string
     filter: FilterType
     filterTask: (idTodo: string, value: FilterType) => void
     entityStatus:string
+    addTaskWrapper:(title: string)=>void
 }
 
  const TaskWithRedux: FC<TaskWithReduxType> = (props) => {
@@ -65,7 +62,7 @@ type TaskWithReduxType ={
 
      return (
         <div>
-
+            <AddItemForm addItem={props.addTaskWrapper} disabled={props.entityStatus==='loading'} />
             {tasks.map(t => <li key={t.id}>
                 <EditableSpan key={t.id} title={t.title} callback={(title:string)=>onChangeTitle(t.id,title)}/>
                 <input  className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}

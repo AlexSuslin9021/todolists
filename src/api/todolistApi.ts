@@ -20,7 +20,7 @@ export const todolistApi = {
 
     },
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<AxiosResponse<ResponseType>>(
+        return instance.put<{title: string}, AxiosResponse<ResponseType>>(
             `todo-lists/${todolistId}`,
             {title: title}
         )

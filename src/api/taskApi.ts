@@ -18,10 +18,10 @@ export const taskApi = {
     },
     createTask(todolistId: string, title: string) {
 
-        return instance.post<CreateTaskType>(`todo-lists/${todolistId}/tasks`, {title: title},)
+        return instance.post<{ title:string },AxiosResponse<ResponseType<{item: GetTasksResponse}>>>(`todo-lists/${todolistId}/tasks`, {title: title},)
     },
     deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<AxiosResponse<DeleteTaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`)
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
 
     },
     updateTask(todolistId: string, taskId: string, model: TaskStatus) {
@@ -71,28 +71,13 @@ type TasksType={
 }
 export type TaskType = TasksType & { entityStatus: RequestStatusType}
 type GetTasksResponse = {
-    error: string,
+    error: string |null,
     items: TaskType[],
     totalCount: number,
 
 }
-type CreateTaskType = {
-    resultCode: 0
-    messages: [],
-    data: {
-        item: GetTasksResponse
-    }
-}
-type DeleteTaskType = {
-    resultCode: number
-    messages: string[],
-    data: {}
-}
-type UpdateTaskType = {
-    title: string
-}
 
-type ResponseType<D>={
+type ResponseType<D={}>={
     resultCode: number
     messages: string[],
     data: D
