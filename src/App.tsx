@@ -23,6 +23,7 @@ import {LinearProgress} from "@mui/material";
 import {RequestStatusType} from "./state/reducer/AppReducer/AppReducer";
 import {ErrorSnackbar} from "./Components/ErrorSnaskBar/ErrorSnaskBar";
 import {Login} from "./Components/Login/Login";
+import {Route, Routes} from "react-router-dom";
 
 
 
@@ -119,7 +120,11 @@ const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
 
             })}
         </div>
-        <Login/>
+        <Routes>
+            <Route path={'/'} element={<App/>} />
+            <Route path={'/login'} element={<Login/>} />
+        </Routes>
+        {/*<Login/>*/}
       <ErrorSnackbar />
     </div>
 }
