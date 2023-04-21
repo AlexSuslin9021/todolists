@@ -74,14 +74,13 @@ export const TodolistList=()=>{
             return(<>
                 <Todolist
                 entityStatus={t.entityStatus}
-                key={t.id}
+                // key={t.id}
                 idTodo={t.id}
                 task={tasks[t.id]}
                 title={t.title}
                 removeTask={removeTask}
                 filterTask={filterTask}
                 addTask={addTask}
-                // entityStatus={tl.en}
                 filter={t.filter}
                 changeStatusCheck={changeStatusCheck}
                 removeTodolist={removeTodolist}
