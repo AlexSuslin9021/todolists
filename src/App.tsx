@@ -22,6 +22,7 @@ import {TaskStatuses, TaskType} from "./api/taskApi";
 import {LinearProgress} from "@mui/material";
 import {RequestStatusType} from "./state/reducer/AppReducer/AppReducer";
 import {ErrorSnackbar} from "./Components/ErrorSnaskBar/ErrorSnaskBar";
+import {Login} from "./Components/Login/Login";
 
 
 
@@ -118,6 +119,7 @@ const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
 
             })}
         </div>
+        <Login/>
       <ErrorSnackbar />
     </div>
 }
