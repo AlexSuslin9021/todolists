@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {FilterType} from "../../../App";
 import {todolistApi, TodolistType} from "../../../api/todolistApi";
 import {AppActionType, AppThunkType} from "../../Store";
 import {RequestStatusType, setErrorAC, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
@@ -122,7 +121,7 @@ export type TodoActionType = removeTodolistType |
     | SetStatusType
     | ChangeEntityStatusType
 
-
+export type FilterType = 'all' | 'active' | 'completed'
 // case 'REMOVE-TODOLIST':
 // return state.filter(tl => tl.id !== action.id)
 // case 'ADD-TODOLIST':

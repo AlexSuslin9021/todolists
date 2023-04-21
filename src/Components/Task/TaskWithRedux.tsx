@@ -5,9 +5,10 @@ import {deleteTasksTC, TasksType, updateTaskTC} from "../../state/reducer/Reduce
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
 import Button from "../Button/Button";
-import {FilterType} from "../../App";
+
 import { TaskStatuses} from "../../api/taskApi";
 import AddItemForm from "../AddItemForm/AddItemForm";
+import {FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
 
 
 type TaskWithReduxType ={

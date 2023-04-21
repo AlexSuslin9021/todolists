@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useEffect} from 'react';
-import {FilterType, } from "../../App";
+
 import s from './Todolist.module.css'
 import Button from "../Button/Button";
 import AddItemForm from "../AddItemForm/AddItemForm";
@@ -11,6 +11,7 @@ import {TaskStatus, TaskStatuses, TaskType} from "../../api/taskApi";
 import {getTasksTC} from "../../state/reducer/ReducerTask/ReducerTask";
 import {useAppDispatch} from "../../state/Store";
 import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
+import {FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
 
 type TodolistType = {
     idTodo: string
@@ -26,7 +27,7 @@ type TodolistType = {
     onChangeTitleTodo: (idTodo: string, title: string) => void
     entityStatus:RequestStatusType
 }
-export const Todolist: FC<TodolistType> = React.memo((props) => {
+export const Todolist: FC<TodolistType> = (props) => {
 
     const dispatch = useAppDispatch()
     console.log('todolist')
@@ -66,5 +67,5 @@ export const Todolist: FC<TodolistType> = React.memo((props) => {
 
         </div>
     );
-});
+};
 
