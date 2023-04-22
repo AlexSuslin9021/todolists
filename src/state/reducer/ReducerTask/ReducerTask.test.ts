@@ -1,8 +1,15 @@
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, reducerTask, removeTaskAC, TasksType} from "./ReducerTask";
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    reducerTask,
+    removeTaskAC,
+    TasksStateType
+} from "./ReducerTask";
 import {addTodolistAC, todolistID1} from "../ReducerTodo/ReducerTodo";
 import {TaskPriorities, TaskStatuses} from "../../../api/taskApi";
 
-let startState: TasksType;
+let startState: TasksStateType ;
 beforeEach(() => {
     startState = {
         'todolistId1': [
@@ -86,7 +93,10 @@ test('correct task should be deleted from correct array', () => {
 
 test('in task should be change isDone ', () => {
 
-    const action = addTaskAC('todolistId2', 'NewTask')
+    const action = addTaskAC( {
+        id: '1', title: 'NewTask', status: TaskStatuses.Completed, todoListId: 'todolistId2', description: '',
+        startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High
+    })
 
     const endState = reducerTask(startState, action)
 

@@ -54,7 +54,7 @@ export const Todolist: FC<TodolistType> = (props) => {
                               callback={(title) => props.onChangeTitleTodo(props.idTodo, title)}/>
                 <Button name={'x'} callback={onRemoveTodoHandler} disabled={props.entityStatus==='loading'}/>
             </h3>
-            {/*<AddItemForm addItem={addTaskWrapper} disabled={props.entityStatus==='loading'} />*/}
+            <AddItemForm addItem={addTaskWrapper} disabled={props.entityStatus==='loading'} />
             <TaskWithRedux
 
                 idTodo={props.idTodo}

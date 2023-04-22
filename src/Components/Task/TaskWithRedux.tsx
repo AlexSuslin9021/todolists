@@ -1,7 +1,7 @@
 import React, {FC, useCallback} from 'react';
 import { useSelector} from "react-redux";
 import {AppStateType, useAppDispatch} from "../../state/Store";
-import {deleteTasksTC, TasksType, updateTaskTC} from "../../state/reducer/ReducerTask/ReducerTask";
+import {deleteTasksTC, TasksStateType, updateTaskTC} from "../../state/reducer/ReducerTask/ReducerTask";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
 import Button from "../Button/Button";
@@ -20,7 +20,7 @@ type TaskWithReduxType ={
 }
 
  const TaskWithRedux: FC<TaskWithReduxType> = (props) => {
-   let task= useSelector<AppStateType, TasksType>(state => state.tasks)
+   let task= useSelector<AppStateType, TasksStateType>(state => state.tasks)
      const dispatch=useAppDispatch()
      let tasks = task[props.idTodo]
      if (props.filter === 'active') tasks = tasks.filter(t => t.status===TaskStatuses.New)
@@ -63,7 +63,7 @@ type TaskWithReduxType ={
 
      return (
         <div>
-            <AddItemForm addItem={props.addTaskWrapper} disabled={props.entityStatus==='loading'} />
+            {/*<AddItemForm addItem={props.addTaskWrapper} disabled={props.entityStatus==='loading'} />*/}
             {tasks.map(t => <li key={t.id}>
                 <EditableSpan key={t.id} title={t.title} callback={(title:string)=>onChangeTitle(t.id,title)}/>
                 <input  className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}

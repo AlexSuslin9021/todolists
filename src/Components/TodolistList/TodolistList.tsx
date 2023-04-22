@@ -9,7 +9,7 @@ import React, {useCallback, useEffect} from "react";
 import {
     changeTaskStatusAC,
     createTasksTC,
-    deleteTasksTC, TasksType,
+    deleteTasksTC, TasksStateType,
     updateTaskTC
 } from "../../state/reducer/ReducerTask/ReducerTask";
 import {TaskStatuses} from "../../api/taskApi";
@@ -23,7 +23,7 @@ export const TodolistList=()=>{
 
     const dispatch = useAppDispatch()
     const todolist = useSelector<AppStateType, TodolistDomainType[]>(state => state.todolist)
-    const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
+    const tasks = useSelector<AppStateType, TasksStateType>(state => state.tasks)
     const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
 
     const removeTask = useCallback((idTodo: string, idTask: string) => {
@@ -74,7 +74,7 @@ export const TodolistList=()=>{
             return(<>
                 <Todolist
                 entityStatus={t.entityStatus}
-                // key={t.id}
+                key={t.id}
                 idTodo={t.id}
                 task={tasks[t.id]}
                 title={t.title}

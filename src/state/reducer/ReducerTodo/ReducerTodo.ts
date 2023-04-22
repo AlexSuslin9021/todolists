@@ -24,6 +24,7 @@ export const reducerTodo = (state: TodolistDomainType[] = initialState, action: 
         case removeTodo:
             return state.filter(t => t.id !== action.idTodo)
         case addTodo:
+            debugger
             return [{...action.todolist, filter: 'all', entityStatus: 'idle'}, ...state]
         case changeTitleTodo:
             return state.map(t => t.id === action.idTodo ? {...t, title: action.title} : t)
@@ -46,6 +47,7 @@ export const changeEntityStatusAC = (idTodo: string, status: RequestStatusType) 
     return {type: changeEntityStatus, idTodo, status} as const
 }
 export const addTodolistAC = (todolist: TodolistType) => {
+    debugger
     return {type: addTodo, todolist} as const
 }
 export const changeTitleTodolistAC = (idTodo: string, title: string) => {
@@ -82,6 +84,7 @@ export const updateTodolistTC = (todoId: string, title: string): AppThunkType =>
     }
 }
 export const createTodolistTC = (title: string): AppThunkType => async dispatch => {
+    debugger
     dispatch(setStatusAC('loading'))
     let res = await todolistApi.createTodolist(title)
     if (res.data.resultCode === 0) {

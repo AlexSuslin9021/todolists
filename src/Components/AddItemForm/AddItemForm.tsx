@@ -36,7 +36,7 @@ export const AddItemForm: FC<AddItemFormType> = React.memo((props) => {
     }
     // ADD TASK
     const onClickAddTask = () => {
-
+debugger
         if (value.trim() !== '') {
             props.addItem(value.trim())
             setValue('')

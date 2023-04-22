@@ -1,5 +1,4 @@
 import axios, {AxiosResponse} from "axios";
-import {RequestStatusType} from "../state/reducer/AppReducer/AppReducer";
 import {ResponseType} from "./todolistApi";
 
 
@@ -19,7 +18,7 @@ export const taskApi = {
     },
     createTask(todolistId: string, title: string) {
 
-        return instance.post<{ title:string },AxiosResponse<ResponseType<{item: GetTasksResponse}>>>(`todo-lists/${todolistId}/tasks`, {title: title},)
+        return instance.post<{ title:string },AxiosResponse<ResponseType<{item: TaskType}>>>(`todo-lists/${todolistId}/tasks`, {title: title},)
     },
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
@@ -58,7 +57,7 @@ export enum TaskPriorities {
     Later=4,
 
 }
-type TasksType={
+export type TaskType={
     description: string
     title: string
     status: TaskStatuses
@@ -70,7 +69,7 @@ type TasksType={
     order: number
     addedDate: string
 }
-export type TaskType = TasksType & { entityStatus: RequestStatusType}
+
 type GetTasksResponse = {
     error: string |null,
     items: TaskType[],
