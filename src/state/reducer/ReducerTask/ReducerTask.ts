@@ -27,11 +27,11 @@ export const reducerTask = (state: TasksStateType = tasks, action: AppActionType
             return {...state, [action.idTodo]: state[action.idTodo].filter(t => t.id !== action.idTask)}
         case addTask:
             return {...state, [action.task.todoListId]:[{...action.task, entityStatus:'idle'}, ...state[action.task.todoListId]]}
-        case changeTaskStatus:
-
-            return {
-                ...state
-            }
+        // case changeTaskStatus:
+        //
+        //     return {
+        //         ...state, [action.idTodo]:state[action.idTodo].map(t=>t.id===action.idTask ? {...t, status:action.status} : t)
+        //     }
         // case  changeTaskTitle:
         //     return {
         //         ...state,
@@ -72,16 +72,7 @@ export const reducerTask = (state: TasksStateType = tasks, action: AppActionType
     }
     return state
 }
-// export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => ({
-//     type: 'SET-TASKS',
-//     tasks,
-//     todolistId
-// } as const)
 
-// thunks
-// return {...state, [action.todolistId]: action.tasks}
-// dispatch(setTasksAC(tasks, todolistId))
-//Action creator
 export const removeTaskAC = (idTodo: string, idTask: string) => {
     return {type: removeTask, idTodo, idTask,} as const
 }

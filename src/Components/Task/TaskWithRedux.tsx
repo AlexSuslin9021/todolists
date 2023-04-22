@@ -1,13 +1,12 @@
 import React, {FC, useCallback} from 'react';
-import { useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AppStateType, useAppDispatch} from "../../state/Store";
 import {deleteTasksTC, TasksStateType, updateTaskTC} from "../../state/reducer/ReducerTask/ReducerTask";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
 import Button from "../Button/Button";
 
-import { TaskStatuses} from "../../api/taskApi";
-import AddItemForm from "../AddItemForm/AddItemForm";
+import {TaskStatuses} from "../../api/taskApi";
 import {FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
 
 
@@ -47,7 +46,9 @@ type TaskWithReduxType ={
          dispatch(deleteTasksTC(props.idTodo, id))
      }
 
-
+     const onChangeTaskStatus=( idTask:string, status:TaskStatuses)=>{
+         dispatch(updateTaskTC( props.idTodo,idTask,{status:status}))
+     }
 
      const onChangeTitle=( idTask:string, title:string)=>{
          dispatch(updateTaskTC( props.idTodo,idTask,{title:title}))
@@ -66,8 +67,12 @@ type TaskWithReduxType ={
             {/*<AddItemForm addItem={props.addTaskWrapper} disabled={props.entityStatus==='loading'} />*/}
             {tasks.map(t => <li key={t.id}>
                 <EditableSpan key={t.id} title={t.title} callback={(title:string)=>onChangeTitle(t.id,title)}/>
-                <input  className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}
-                     />
+                <input  className={t.status ? s.isDone : ''} type="checkbox"
+                        checked={t.status === TaskStatuses.Completed}
+                        onChange={(e)=>onChangeTaskStatus(t.id,e.currentTarget.checked ?TaskStatuses.Completed : TaskStatuses.New)}
+
+
+                />
                 <Button name={'x'} callback={() =>removeTask(t.id)} disabled={t.entityStatus==='loading'}/>
             </li>)
             }
