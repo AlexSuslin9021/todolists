@@ -31,6 +31,7 @@
 .container{
     display: flex;
     flex-wrap: wrap;
+    margin-top: 50px;
 }
 .isDone {
     opacity: 0.5;
@@ -42,5 +43,8 @@
     border: 1px solid lightslategray;
     padding: 10px;
     border-radius: 5px;
+
+}
+.addItemForm{
 
 }

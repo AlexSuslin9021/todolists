@@ -119,12 +119,11 @@ export const getTasksTC = (id: string): AppThunkType => (dispatch: Dispatch<Task
     })
 }
 export const createTasksTC = (idTodo: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
-
     dispatch(setStatusAC('loading'))
     try {
         taskApi.createTask(idTodo, title).then((res) => {
             if (res.data.resultCode === 0) {
-                debugger
+
                 dispatch(addTaskAC(res.data.data.item))
                 dispatch(setStatusAC('succeeded'))
             } else {

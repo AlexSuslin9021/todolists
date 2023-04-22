@@ -14,10 +14,7 @@ import {
 } from "../../state/reducer/ReducerTask/ReducerTask";
 import {TaskStatuses} from "../../api/taskApi";
 import {Todolist} from "../Todolist/Todolist";
-
 import AddItemForm from "../AddItemForm/AddItemForm";
-import {LinearProgress} from "@mui/material";
-import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
 import s from '../TodolistList/TodolistList.module.css'
 
 
@@ -26,7 +23,6 @@ export const TodolistList=()=>{
     const dispatch = useAppDispatch()
     const todolist = useSelector<AppStateType, TodolistDomainType[]>(state => state.todolist)
     const tasks = useSelector<AppStateType, TasksStateType>(state => state.tasks)
-    const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
 
     const removeTask = useCallback((idTodo: string, idTask: string) => {
 
@@ -70,8 +66,9 @@ export const TodolistList=()=>{
     },[])
 
     return<div className={s.container}>
-        {status==='loading' && <LinearProgress color={'secondary'} />}
+        <div className={s.addItemForm}>
         <AddItemForm addItem={addTodolist}/>
+        </div>
         {todolist.map((t) => {
             return(<div className={s.containerTodo}>
                 <Todolist
