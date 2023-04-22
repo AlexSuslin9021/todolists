@@ -18,6 +18,8 @@ import {Todolist} from "../Todolist/Todolist";
 import AddItemForm from "../AddItemForm/AddItemForm";
 import {LinearProgress} from "@mui/material";
 import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
+import s from '../TodolistList/TodolistList.module.css'
+
 
 export const TodolistList=()=>{
 
@@ -67,11 +69,11 @@ export const TodolistList=()=>{
 
     },[])
 
-    return<>
+    return<div className={s.container}>
         {status==='loading' && <LinearProgress color={'secondary'} />}
         <AddItemForm addItem={addTodolist}/>
         {todolist.map((t) => {
-            return(<>
+            return(<div className={s.containerTodo}>
                 <Todolist
                 entityStatus={t.entityStatus}
                 key={t.id}
@@ -87,8 +89,10 @@ export const TodolistList=()=>{
                 callback={callback}
                 onChangeTitleTodo={onChangeTitleTodo}
 
-            /></>)
+            />
+                </div>
+            )
         })
         }
-    </>
+    </div>
 }

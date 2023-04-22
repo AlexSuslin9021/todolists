@@ -48,7 +48,7 @@ export const Todolist: FC<TodolistType> = (props) => {
     },[])
 
     return (
-        <div className={s.todo} >
+        < >
 
             <h3><EditableSpan title={props.title}
                               callback={(title) => props.onChangeTitleTodo(props.idTodo, title)}/>
@@ -65,7 +65,7 @@ export const Todolist: FC<TodolistType> = (props) => {
 
             />
 
-        </div>
+        </>
     );
 };
 
