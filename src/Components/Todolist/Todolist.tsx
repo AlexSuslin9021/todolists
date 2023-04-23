@@ -9,9 +9,10 @@ import TaskWithRedux from "../Task/TaskWithRedux";
 import {TaskStatus, TaskStatuses, TaskType} from "../../api/taskApi";
 
 import {getTasksTC} from "../../state/reducer/ReducerTask/ReducerTask";
-import {useAppDispatch} from "../../state/Store";
+import {useAppDispatch, useAppSelector} from "../../state/Store";
 import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
 import {FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
+import {Navigate} from "react-router-dom";
 
 type TodolistType = {
     idTodo: string
@@ -29,6 +30,7 @@ type TodolistType = {
 }
 export const Todolist: FC<TodolistType> = (props) => {
 
+   const isLoggedIn=useAppSelector<boolean>(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
     console.log('todolist')
 
@@ -41,11 +43,14 @@ export const Todolist: FC<TodolistType> = (props) => {
     }, [props.addTask, props.idTodo])
 
 
-    useEffect(()=>{
+    useEffect(()=> {
+        if (isLoggedIn) {
 
         dispatch(getTasksTC(props.idTodo))
-
+    }
     },[])
+
+    if(!isLoggedIn) {return <Navigate to={'/login'}/>}
 
     return (
         < >

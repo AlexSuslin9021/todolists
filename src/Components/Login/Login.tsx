@@ -8,12 +8,13 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
-import {setIsLoggedInTC} from "../../state/reducer/authReducers/autgReducers";
-import {useAppDispatch} from "../../state/Store";
+import {InitialStateType, setIsLoggedInTC} from "../../state/reducer/authReducers/autgReducers";
+import {AppStateType, useAppDispatch, useAppSelector} from "../../state/Store";
+import {Navigate} from "react-router-dom";
 
 export const Login = () => {
     const dispatch = useAppDispatch()
-
+const isLoggedIn=useAppSelector<boolean>(state => state.auth.isLoggedIn)
     const formik = useFormik({
         initialValues: { //дефолтное значение стейта
             email: '',
@@ -40,6 +41,8 @@ export const Login = () => {
             dispatch(setIsLoggedInTC(values))
         },
     })
+
+    if(isLoggedIn) {return <Navigate to={'/'}/>}
     // console.log(formik.errors)
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
