@@ -3,10 +3,11 @@ import {Dispatch} from "redux";
 import {setErrorAC, setStatusAC} from "../AppReducer/AppReducer";
 import {authApi, LoginType} from "../../../api/authApi";
 import axios from "axios";
-import {handleServerNetworkError} from "../../../error-utils/error-utils";
+import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
 
 const initialState={
-    isLoggedIn: false
+    isLoggedIn: false,
+    isInitialized:false
 }
 
 export type InitialStateType = typeof initialState
@@ -14,6 +15,8 @@ export const AuthReducers = (state:InitialStateType=initialState, action:ActionT
     switch (action.type){
         case "SET-IS-LOGGED-IN":
             return {...state, isLoggedIn: action.value}
+        case "SET-INITIALIZED":
+            return {...state, isInitialized: action.isInitialized}
     }
     return state
 };
@@ -21,6 +24,10 @@ export const AuthReducers = (state:InitialStateType=initialState, action:ActionT
 //AC
 export const setIsLoggedInAC=(value:boolean)=>{
     return{type: "SET-IS-LOGGED-IN" , value} as const
+
+}
+export const setIsInitializedAC=(isInitialized:boolean)=>{
+    return{type: "SET-INITIALIZED" , isInitialized} as const
 
 }
 //TC
@@ -32,20 +39,20 @@ export const initializedTC =() =>(dispatch:Dispatch) =>{
         if(res.data.resultCode===0){
             dispatch(setIsLoggedInAC(true))
             dispatch(setStatusAC('succeeded'))
+
         }
 
         else {
-            if (!res.data.messages.length) {
-                dispatch(setErrorAC(res.data.messages[0]))
-            } else {
-                dispatch(setErrorAC('Some error occurred'))
-            }
-            dispatch(setStatusAC('idle'))
+            handleServerAppError(res.data, dispatch)
         }
     }).catch((e)=>{
         if(axios.isAxiosError(e))
             handleServerNetworkError(e, dispatch)
-    })
+    }).finally(()=>{
+            dispatch(setIsInitializedAC(true))
+        }
+        // dispatch(setIsInitializedAC(false))
+    )
 }
 export const setIsLoggedInTC=(data:LoginType) =>(dispatch:Dispatch) =>{
     dispatch(setStatusAC('loading'))
@@ -57,12 +64,7 @@ export const setIsLoggedInTC=(data:LoginType) =>(dispatch:Dispatch) =>{
         }
 
         else {
-            if (!res.data.messages.length) {
-                dispatch(setErrorAC(res.data.messages[0]))
-            } else {
-                dispatch(setErrorAC('Some error occurred'))
-            }
-            dispatch(setStatusAC('idle'))
+            handleServerAppError(res.data, dispatch)
         }
     }).catch((e)=>{
         if(axios.isAxiosError(e))
@@ -70,5 +72,5 @@ export const setIsLoggedInTC=(data:LoginType) =>(dispatch:Dispatch) =>{
     })
 }
 // types
-type ActionType=ReturnType<typeof setIsLoggedInAC>
+type ActionType= ReturnType<typeof setIsLoggedInAC>| ReturnType<typeof setIsInitializedAC>
 

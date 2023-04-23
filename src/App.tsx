@@ -4,10 +4,10 @@ import {ErrorSnackbar} from "./Components/ErrorSnaskBar/ErrorSnaskBar";
 import {Login} from "./Components/Login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {TodolistList} from "./Components/TodolistList/TodolistList";
-import {LinearProgress} from "@mui/material";
+import {CircularProgress, LinearProgress} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "./state/Store";
 import {RequestStatusType} from "./state/reducer/AppReducer/AppReducer";
-import {initializedTC} from "./state/reducer/authReducers/autgReducers";
+import {initializedTC, InitialStateType} from "./state/reducer/authReducers/autgReducers";
 
 
  function App() {
@@ -16,6 +16,14 @@ import {initializedTC} from "./state/reducer/authReducers/autgReducers";
          dispatch(initializedTC())
      },[])
      const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
+     const isInitialized=useAppSelector< boolean>(state=>state.auth.isInitialized)
+
+     if (!isInitialized) {
+         return <div
+             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+             <CircularProgress/>
+         </div>
+     }
     return <div>
         <div className={'header'}></div>
         {status==='loading' && <LinearProgress  color={'secondary'}
