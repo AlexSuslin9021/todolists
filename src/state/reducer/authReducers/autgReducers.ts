@@ -71,6 +71,23 @@ export const setIsLoggedInTC=(data:LoginType) =>(dispatch:Dispatch) =>{
             handleServerNetworkError(e, dispatch)
     })
 }
+export const setLogoutTC=() =>(dispatch:Dispatch) =>{
+    dispatch(setStatusAC('loading'))
+
+    authApi.logout().then((res)=>{
+        if(res.data.resultCode===0){
+            dispatch(setIsLoggedInAC(false))
+            dispatch(setStatusAC('succeeded'))
+        }
+
+        else {
+            handleServerAppError(res.data, dispatch)
+        }
+    }).catch((e)=>{
+        if(axios.isAxiosError(e))
+            handleServerNetworkError(e, dispatch)
+    })
+}
 // types
 type ActionType= ReturnType<typeof setIsLoggedInAC>| ReturnType<typeof setIsInitializedAC>
 

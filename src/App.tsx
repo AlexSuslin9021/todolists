@@ -7,7 +7,7 @@ import {TodolistList} from "./Components/TodolistList/TodolistList";
 import {CircularProgress, LinearProgress} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "./state/Store";
 import {RequestStatusType} from "./state/reducer/AppReducer/AppReducer";
-import {initializedTC, InitialStateType} from "./state/reducer/authReducers/autgReducers";
+import {initializedTC,  setLogoutTC} from "./state/reducer/authReducers/autgReducers";
 
 
  function App() {
@@ -17,7 +17,9 @@ import {initializedTC, InitialStateType} from "./state/reducer/authReducers/autg
      },[])
      const status=useAppSelector< RequestStatusType>((state)=>state.app.status)
      const isInitialized=useAppSelector< boolean>(state=>state.auth.isInitialized)
-
+const logOut=()=>{
+         dispatch(setLogoutTC())
+}
      if (!isInitialized) {
          return <div
              style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
@@ -25,7 +27,7 @@ import {initializedTC, InitialStateType} from "./state/reducer/authReducers/autg
          </div>
      }
     return <div>
-        <div className={'header'}></div>
+        <div className={'header'}> <span onClick={logOut}>{ isInitialized ? '' : 'Logout'}</span>  </div>
         {status==='loading' && <LinearProgress  color={'secondary'}
              sx={ {position: "fixed", top: 50, left: 0, right: 0 }}
         />}
