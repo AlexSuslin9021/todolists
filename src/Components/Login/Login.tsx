@@ -8,8 +8,11 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
+import {setIsLoggedInTC} from "../../state/reducer/authReducers/autgReducers";
+import {useAppDispatch} from "../../state/Store";
 
 export const Login = () => {
+    const dispatch = useAppDispatch()
 
     const formik = useFormik({
         initialValues: { //дефолтное значение стейта
@@ -33,7 +36,8 @@ export const Login = () => {
             return errors
         },
         onSubmit: values => {
-            alert(JSON.stringify(values));
+            // alert(JSON.stringify(values));
+            dispatch(setIsLoggedInTC(values))
         },
     })
     // console.log(formik.errors)

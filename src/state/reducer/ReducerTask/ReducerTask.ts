@@ -1,4 +1,3 @@
-
 import {addTodolistAC, removeTodolistAC, setTodolist, setTodolistType} from "../ReducerTodo/ReducerTodo";
 import {taskApi, TaskPriorities, TaskStatus, TaskStatuses, TaskType} from "../../../api/taskApi";
 import {Dispatch} from "redux";
@@ -6,7 +5,6 @@ import {AppActionType, AppStateType, AppThunkType} from "../../Store";
 import {RequestStatusType, setErrorAC, SetErrorType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
 import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
 import axios from "axios";
-
 
 const removeTask = 'REMOVE-TASK'
 const addTask = 'ADD-TASK'
@@ -202,7 +200,6 @@ export const updateTaskTC = (idTodo: string, idTask: string, api: UpdateDomainTa
 export type UpdateDomainTaskType = {
     title?: string
     description?: string
-
     status?: TaskStatuses
     priority?: TaskPriorities
     startDate?: string

@@ -8,7 +8,7 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed' | 'i
 
 const initialState = {
     error:null as null | any,
-    status: 'loading' as RequestStatusType,
+    status: 'idle' as RequestStatusType,
     } // as(воспринимай как этот тип) RequestStatusType! типизация объекта
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
