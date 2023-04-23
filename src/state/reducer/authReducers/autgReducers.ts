@@ -25,6 +25,28 @@ export const setIsLoggedInAC=(value:boolean)=>{
 }
 //TC
 
+export const initializedTC =() =>(dispatch:Dispatch) =>{
+    dispatch(setStatusAC('loading'))
+
+    authApi.me().then((res)=>{
+        if(res.data.resultCode===0){
+            dispatch(setIsLoggedInAC(true))
+            dispatch(setStatusAC('succeeded'))
+        }
+
+        else {
+            if (!res.data.messages.length) {
+                dispatch(setErrorAC(res.data.messages[0]))
+            } else {
+                dispatch(setErrorAC('Some error occurred'))
+            }
+            dispatch(setStatusAC('idle'))
+        }
+    }).catch((e)=>{
+        if(axios.isAxiosError(e))
+            handleServerNetworkError(e, dispatch)
+    })
+}
 export const setIsLoggedInTC=(data:LoginType) =>(dispatch:Dispatch) =>{
     dispatch(setStatusAC('loading'))
 
@@ -46,9 +68,6 @@ export const setIsLoggedInTC=(data:LoginType) =>(dispatch:Dispatch) =>{
         if(axios.isAxiosError(e))
             handleServerNetworkError(e, dispatch)
     })
-
-
-
 }
 // types
 type ActionType=ReturnType<typeof setIsLoggedInAC>

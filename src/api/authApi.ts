@@ -16,13 +16,14 @@ export const authApi = {
 
         return instance.post<any,AxiosResponse<ResponseType<{userId: number}>>, LoginType>(`/auth/login`, data)
     },
+    me(){
+        return instance.get<ResponseType<{id: number, email: string, login: string}>>('/auth/me')
+    },
 
 }
 
 
 export type LoginType={
-
-
         email: string,
     password:string,
     rememberMe:boolean
