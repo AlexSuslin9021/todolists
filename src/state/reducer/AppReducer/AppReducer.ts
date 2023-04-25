@@ -33,6 +33,6 @@ export const setErrorAC=(error:any)=>{return {type:'APP/SET-ERROR',error } as co
 
 // type
 type ActionsType = SetStatusType | SetErrorType
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 export type SetStatusType = ReturnType<typeof setStatusAC >
 export type SetErrorType = ReturnType<typeof setErrorAC >
