@@ -24,17 +24,10 @@ export const reducerTask = (state: TasksStateType = tasks, action: AppActionType
         case removeTask:
             return {...state, [action.idTodo]: state[action.idTodo].filter(t => t.id !== action.idTask)}
         case addTask:
-            return {...state, [action.task.todoListId]:[{...action.task, entityStatus:'idle'}, ...state[action.task.todoListId]]}
-        // case changeTaskStatus:
-        //
-        //     return {
-        //         ...state, [action.idTodo]:state[action.idTodo].map(t=>t.id===action.idTask ? {...t, status:action.status} : t)
-        //     }
-        // case  changeTaskTitle:
-        //     return {
-        //         ...state,
-        //         [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {...t, ...action.model} : t)
-        //     }
+            return {
+                ...state,
+                [action.task.todoListId]: [{...action.task, entityStatus: 'idle'}, ...state[action.task.todoListId]]
+            }
         case addTodo:
             return {...state, [action.todolist.id]: []}
         case removeTodo:
@@ -49,10 +42,10 @@ export const reducerTask = (state: TasksStateType = tasks, action: AppActionType
             return stateCopy;
         }
         case updateTitle:
-    return {
-        ...state, [action.idTodo]:
-            state[action.idTodo].map(t => t.id === action.idTask ? {...t, ...action.api} : t)
-    }
+            return {
+                ...state, [action.idTodo]:
+                    state[action.idTodo].map(t => t.id === action.idTask ? {...t, ...action.api} : t)
+            }
         case setTasks: {
             return {
                 ...state, [action.idTodo]: action.task.map(tl => ({...tl, entityStatus: "idle"}))
@@ -74,15 +67,15 @@ export const reducerTask = (state: TasksStateType = tasks, action: AppActionType
 export const removeTaskAC = (idTodo: string, idTask: string) => {
     return {type: removeTask, idTodo, idTask,} as const
 }
-export const addTaskAC = (task:TaskType) => {
+export const addTaskAC = (task: TaskType) => {
     return {type: addTask, task} as const
 }
 export const changeTaskStatusAC = (idTodo: string, idTask: string, status: TaskStatuses) => {
     return {type: changeTaskStatus, idTodo, idTask, status} as const
 }
-export const changeTaskTitleAC = (idTodo: string, idTask: string, model: any) => {
-    return {type: changeTaskTitle, idTodo, idTask, model} as const
-}
+// export const changeTaskTitleAC = (idTodo: string, idTask: string, model: UpdateDomainTaskType) => {
+//     return {type: changeTaskTitle, idTodo, idTask, model} as const
+// }
 export const updateTitleTaskAC = (idTodo: string, idTask: string, api: UpdateDomainTaskType) => {
     return {
         type: updateTitle, idTodo, idTask, api
@@ -100,12 +93,11 @@ export const getTasksTC = (id: string): AppThunkType => (dispatch: Dispatch<Task
     dispatch(setStatusAC('loading'))
 
     taskApi.getTask(id).then((res) => {
-        if(!res.data.error) {
+        if (!res.data.error) {
 
             dispatch(setTasksAC(id, res.data.items))
             dispatch(setStatusAC('succeeded'))
-        }
-        else{
+        } else {
             if (res.data.error) {
                 dispatch(setErrorAC(res.data.error))
             } else {
@@ -121,7 +113,6 @@ export const createTasksTC = (idTodo: string, title: string): AppThunkType => (d
     try {
         taskApi.createTask(idTodo, title).then((res) => {
             if (res.data.resultCode === 0) {
-
                 dispatch(addTaskAC(res.data.data.item))
                 dispatch(setStatusAC('succeeded'))
             } else {
@@ -129,12 +120,11 @@ export const createTasksTC = (idTodo: string, title: string): AppThunkType => (d
             }
 
         })
-    }catch (e) {
-        if(axios.isAxiosError(e))
+    } catch (e) {
+        if (axios.isAxiosError(e))
             handleServerNetworkError(e, dispatch)
         //дописать
-        }
-
+    }
 
 
 }
@@ -143,20 +133,19 @@ export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (
     dispatch(changeEntityTaskStatusAC(idTodo, idTask, 'loading'))
     taskApi.deleteTask(idTodo, idTask).then((res) => {
         if (res.data.resultCode === 0) {
-        dispatch(removeTaskAC(idTodo, idTask))
-        dispatch(setStatusAC('succeeded'))
-        }
-        else {
-           handleServerAppError(res.data,dispatch)
+            dispatch(removeTaskAC(idTodo, idTask))
+            dispatch(setStatusAC('succeeded'))
+        } else {
+            handleServerAppError(res.data, dispatch)
         }
         dispatch(setStatusAC('idle'))
     })
 }
-export const updateTaskTC = (idTodo: string, idTask: string, api: UpdateDomainTaskType) => (dispatch: Dispatch, getState:()=>AppStateType) => {
-    let task=getState().tasks[idTodo].find(t=>t.id===idTask)
-    if(task){
-        let model:TaskStatus={
-            title:task.title,
+export const updateTaskTC = (idTodo: string, idTask: string, api: UpdateDomainTaskType) => (dispatch: Dispatch, getState: () => AppStateType) => {
+    let task = getState().tasks[idTodo].find(t => t.id === idTask)
+    if (task) {
+        let model: TaskStatus = {
+            title: task.title,
             description: task.description,
             status: task.status,
             priority: task.priority,
@@ -169,8 +158,7 @@ export const updateTaskTC = (idTodo: string, idTask: string, api: UpdateDomainTa
             if (res.data.resultCode === 0) {
                 dispatch(updateTitleTaskAC(idTodo, idTask, api))
                 dispatch(setStatusAC('succeeded'))
-            }
-            else {
+            } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
                 } else {
@@ -180,11 +168,12 @@ export const updateTaskTC = (idTodo: string, idTask: string, api: UpdateDomainTa
             }
             dispatch(setStatusAC('idle'))
         })
-            .catch((e)=>{
-            dispatch(setStatusAC('failed'))
-            dispatch(setErrorAC(e.message))
-        })
-    }}
+            .catch((e) => {
+                dispatch(setStatusAC('failed'))
+                dispatch(setErrorAC(e.message))
+            })
+    }
+}
 // type
 // case updateTitleTask:
 //     return {
@@ -205,13 +194,13 @@ export type UpdateDomainTaskType = {
     startDate?: string
     deadline?: string
 }
-type TasksDomainType=TaskType &{ entityStatus: RequestStatusType}
+type TasksDomainType = TaskType & { entityStatus: RequestStatusType }
 export type TasksStateType = { [key: string]: TasksDomainType[] }
 type RemoveTaskType = ReturnType<typeof removeTaskAC>
 type AddTaskType = ReturnType<typeof addTaskAC>
 type setTasksType = ReturnType<typeof setTasksAC>
 type ChangeTaskStatusType = ReturnType<typeof changeTaskStatusAC>
-type ChangeTaskTitleType = ReturnType<typeof changeTaskTitleAC>
+// type ChangeTaskTitleType = ReturnType<typeof changeTaskTitleAC>
 type AddTodolistType = ReturnType<typeof addTodolistAC>
 type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
 
@@ -221,13 +210,13 @@ export type TaskActionType =
     | setTasksType
     | setTodolistType
     | ChangeTaskStatusType
-    | ChangeTaskTitleType
+    // | ChangeTaskTitleType
     | AddTodolistType
     | RemoveTodolistType
     | SetStatusType
     | SetErrorType
     | ReturnType<typeof changeEntityTaskStatusAC>
-| ReturnType<typeof updateTitleTaskAC>
+    | ReturnType<typeof updateTitleTaskAC>
 
 
 // switch (action.type) {

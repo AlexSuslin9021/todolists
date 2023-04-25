@@ -13,9 +13,12 @@ const initialState={
 export type InitialStateType = typeof initialState
 export const AuthReducers = (state:InitialStateType=initialState, action:ActionType):InitialStateType => {
     switch (action.type){
+
         case "SET-IS-LOGGED-IN":
+            console.log(1)
             return {...state, isLoggedIn: action.value}
         case "SET-INITIALIZED":
+            console.log(2)
             return {...state, isInitialized: action.isInitialized}
     }
     return state
@@ -33,11 +36,14 @@ export const setIsInitializedAC=(isInitialized:boolean)=>{
 //TC
 
 export const initializedTC =() =>(dispatch:Dispatch) =>{
+    console.log(3)
     dispatch(setStatusAC('loading'))
 
     authApi.me().then((res)=>{
         if(res.data.resultCode===0){
+            console.log(4)
             dispatch(setIsLoggedInAC(true))
+            console.log(5)
             dispatch(setStatusAC('succeeded'))
 
         }

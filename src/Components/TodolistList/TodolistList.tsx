@@ -19,7 +19,6 @@ import s from '../TodolistList/TodolistList.module.css'
 
 
 export const TodolistList=()=>{
-
     const dispatch = useAppDispatch()
     const todolist = useSelector<AppStateType, TodolistDomainType[]>(state => state.todolist)
     const tasks = useSelector<AppStateType, TasksStateType>(state => state.tasks)
@@ -60,17 +59,20 @@ export const TodolistList=()=>{
     }, [])
 
     useEffect(()=>{
+
         dispatch(fetchTodolistTC())
 
 
     },[])
-
+ 
     return<div className={s.container}>
         <div className={s.addItemForm}>
+
         <AddItemForm addItem={addTodolist}/>
         </div>
         {todolist.map((t) => {
             return(<div className={s.containerTodo}>
+
                 <Todolist
                 entityStatus={t.entityStatus}
                 key={t.id}
