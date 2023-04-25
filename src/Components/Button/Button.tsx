@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import s from './Button.module.css'
-import tras from "../../Common/Icon/trash_bin_icon-icons.com_67981.png"
+import trash from '../../Common/Icon/trash.png'
 type ButtonType={
     name:string
     callback:()=>void
@@ -12,7 +12,7 @@ export const Button:FC<ButtonType> = (props) => {
     }
     return (
         <>
-            <button className={props.disabled ? s.disabled : s.btn} disabled={props.disabled}    onClick={onClickHandler}>{props.name==='+'?<span className={s.add}>{props.name}</span> : <img className={s.icon} src={tras} alt=""/>}</button>
+            <button className={props.disabled ? s.disabled : s.btn} disabled={props.disabled}    onClick={onClickHandler}>{props.name==='+'?<span className={s.add}>{props.name}</span> : <img className={s.icon} src={trash} alt="delete"/>}</button>
         </>
     );
 };
