@@ -27,9 +27,9 @@ const logOut=()=>{dispatch(setLogoutTC())}
          </div>
      }
     return <div>
-        <div className={'header'}> <span onClick={logOut}>{ isInitialized ? '' : 'Logout'}</span>  </div>
+        <div className={'header'}> <span onClick={logOut}>{ isInitialized ? 'Logout' : 'Login'}</span>  </div>
         {status==='loading' && <LinearProgress  color={'secondary'}
-             sx={ {position: "fixed", top: 50, left: 0, right: 0 }}
+             // sx={ {position: "fixed", top: 50, left: 0, right: 0 }}
         />}
         <Routes>
             <Route path={'/'} element={  <TodolistList/>} />

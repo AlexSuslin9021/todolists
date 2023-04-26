@@ -8,8 +8,8 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
-import {InitialStateType, setIsLoggedInTC} from "../../state/reducer/authReducers/autgReducers";
-import {AppStateType, useAppDispatch, useAppSelector} from "../../state/Store";
+import { setIsLoggedInTC} from "../../state/reducer/authReducers/autgReducers";
+import { useAppDispatch, useAppSelector} from "../../state/Store";
 import {Navigate} from "react-router-dom";
 
 export const Login = () => {
