@@ -36,14 +36,14 @@ export const setIsInitializedAC=(isInitialized:boolean)=>{
 //TC
 
 export const initializedTC =() =>(dispatch:Dispatch) =>{
-    console.log(3)
+
     dispatch(setStatusAC('loading'))
 
     authApi.me().then((res)=>{
         if(res.data.resultCode===0){
-            console.log(4)
+
             dispatch(setIsLoggedInAC(true))
-            console.log(5)
+
             dispatch(setStatusAC('succeeded'))
 
         }

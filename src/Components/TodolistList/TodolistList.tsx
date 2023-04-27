@@ -16,12 +16,14 @@ import {TaskStatuses} from "../../api/taskApi";
 import {Todolist} from "../Todolist/Todolist";
 import AddItemForm from "../AddItemForm/AddItemForm";
 import s from '../TodolistList/TodolistList.module.css'
+import {Navigate} from "react-router-dom";
 
 
 export const TodolistList=()=>{
     const dispatch = useAppDispatch()
     const todolist = useSelector<AppStateType, TodolistDomainType[]>(state => state.todolist)
     const tasks = useSelector<AppStateType, TasksStateType>(state => state.tasks)
+    const isLoggedIn=useAppSelector< boolean>(state=>state.auth.isLoggedIn)
 
     const removeTask = useCallback((idTodo: string, idTask: string) => {
 
@@ -64,7 +66,7 @@ export const TodolistList=()=>{
 
 
     },[])
- 
+    if(!isLoggedIn) {return <Navigate to={'/login'}/>}
     return<div className={s.container}>
         <div className={s.addItemForm}>
 
