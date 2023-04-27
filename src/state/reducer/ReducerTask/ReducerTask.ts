@@ -1,4 +1,10 @@
-import {addTodolistAC, removeTodolistAC, setTodolist, setTodolistType} from "../ReducerTodo/ReducerTodo";
+import {
+    addTodolistAC,
+    clearDataTodosType,
+    removeTodolistAC,
+    setTodolist,
+    setTodolistType
+} from "../ReducerTodo/ReducerTodo";
 import {taskApi, TaskPriorities, TaskStatus, TaskStatuses, TaskType} from "../../../api/taskApi";
 import {Dispatch} from "redux";
 import {AppActionType, AppStateType, AppThunkType} from "../../Store";
@@ -52,7 +58,6 @@ export const reducerTask = (state: TasksStateType = tasks, action: AppActionType
             }
         }
         case changeEntityStatus:
-
             return {
                 ...state,
                 [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {
@@ -60,6 +65,8 @@ export const reducerTask = (state: TasksStateType = tasks, action: AppActionType
                     entityStatus: action.status
                 } : t)
             }
+        case "CLEAR_DATA":
+            return {}
     }
     return state
 }
@@ -210,7 +217,7 @@ export type TaskActionType =
     | setTasksType
     | setTodolistType
     | ChangeTaskStatusType
-    // | ChangeTaskTitleType
+     | clearDataTodosType
     | AddTodolistType
     | RemoveTodolistType
     | SetStatusType

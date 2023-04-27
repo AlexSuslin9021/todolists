@@ -4,6 +4,7 @@ import {setErrorAC, setStatusAC} from "../AppReducer/AppReducer";
 import {authApi, LoginType} from "../../../api/authApi";
 import axios from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
+import {clearDataTodosAC} from "../ReducerTodo/ReducerTodo";
 
 const initialState={
     isLoggedIn: false,
@@ -84,6 +85,7 @@ export const setLogoutTC=() =>(dispatch:Dispatch) =>{
         if(res.data.resultCode===0){
             dispatch(setIsLoggedInAC(false))
             dispatch(setStatusAC('succeeded'))
+            dispatch(clearDataTodosAC())
         }
 
         else {

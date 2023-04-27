@@ -43,7 +43,7 @@ const isLoggedIn=useAppSelector<boolean>(state => state.auth.isLoggedIn)
     })
 
     if(isLoggedIn) {return <Navigate to={'/'}/>}
-    // console.log(formik.errors)
+
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <FormControl>

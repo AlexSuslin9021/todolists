@@ -43,12 +43,12 @@ export const Todolist: FC<TodolistType> = (props) => {
     }, [props.addTask, props.idTodo])
 
 
-    useEffect(()=> {
-        if (isLoggedIn) {
-
-        dispatch(getTasksTC(props.idTodo))
-    }
-    },[])
+    // useEffect(()=> {
+    //     if (isLoggedIn) {
+    //
+    //     dispatch(getTasksTC(props.idTodo))
+    // }
+    // },[])
 
     if(!isLoggedIn) {return <Navigate to={'/login'}/>}
 

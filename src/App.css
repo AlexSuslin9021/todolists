@@ -4,10 +4,19 @@
     height: 50px;
     background: #006dd6;
 position: relative;
+    display: flex;
+    align-items: center;
 
 }
-
-
+.header span{
+    color:white;
+  margin-left:40px ;
+    cursor:pointer;
+    font-weight: 700;
+}
+.header span:hover{
+    text-decoration: underline white;
+}
 .container {
     display: flex;
     margin: 50px;
