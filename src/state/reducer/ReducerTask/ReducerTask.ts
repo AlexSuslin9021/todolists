@@ -112,7 +112,7 @@ export const reducerTask = slice.reducer
 
 export const removeTaskAC = slice.actions.removeTaskAC
 export const addTaskAC = slice.actions.addTaskAC
-export const changeTaskStatusAC = slice.actions.changeEntityTaskStatusAC
+// export const changeTaskStatusAC = slice.actions.changeEntityTaskStatusAC
 // export const changeTaskTitleAC = (idTodo: string, idTask: string, model: UpdateDomainTaskType) => {
 //     return {type: changeTaskTitle, idTodo, idTask, model} as const
 // }
@@ -231,7 +231,7 @@ export type TasksStateType = { [key: string]: TasksDomainType[] }
 type RemoveTaskType = ReturnType<typeof removeTaskAC>
 type AddTaskType = ReturnType<typeof addTaskAC>
 type setTasksType = ReturnType<typeof setTasksAC>
-type ChangeTaskStatusType = ReturnType<typeof changeTaskStatusAC>
+
 // type ChangeTaskTitleType = ReturnType<typeof changeTaskTitleAC>
 type AddTodolistType = ReturnType<typeof addTodolistAC>
 type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
@@ -241,7 +241,7 @@ export type TaskActionType =
     | AddTaskType
     | setTasksType
     | setTodolistType
-    | ChangeTaskStatusType
+    // | ChangeTaskStatusType
      | clearDataTodosType
     | AddTodolistType
     | RemoveTodolistType

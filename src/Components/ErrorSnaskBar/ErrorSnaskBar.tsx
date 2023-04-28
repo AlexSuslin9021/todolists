@@ -19,7 +19,7 @@ export function ErrorSnackbar() {
 
             return
         }
-       dispatch(setErrorAC(null))
+       dispatch(setErrorAC({error:null}))
     }
     return (
         <Snackbar open={ error !== null }  autoHideDuration={6000} onClose={handleClose}>

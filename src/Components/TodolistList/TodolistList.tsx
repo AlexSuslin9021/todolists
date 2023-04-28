@@ -7,7 +7,7 @@ import {
 } from "../../state/reducer/ReducerTodo/ReducerTodo";
 import React, {useCallback, useEffect} from "react";
 import {
-    changeTaskStatusAC,
+
     createTasksTC,
     deleteTasksTC, TasksStateType,
     updateTaskTC
@@ -17,6 +17,7 @@ import {Todolist} from "../Todolist/Todolist";
 import AddItemForm from "../AddItemForm/AddItemForm";
 import s from '../TodolistList/TodolistList.module.css'
 import {Navigate} from "react-router-dom";
+import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
 
 
 export const TodolistList=()=>{
@@ -36,12 +37,12 @@ export const TodolistList=()=>{
 
     const filterTask = useCallback((idTodo: string, value: FilterType) => {
 
-        dispatch(changeFilterTodolistAC(idTodo, value))
+        dispatch(changeFilterTodolistAC({idTodo, value}))
     }, [dispatch])
 
-    const changeStatusCheck = useCallback((idTodo: string, idTask: string, domainModel:TaskStatuses) => {
-        dispatch(changeTaskStatusAC(idTodo, idTask, domainModel))
-    }, [dispatch])
+    // const changeStatusCheck = useCallback((idTodo: string, idTask: string, domainModel:RequestStatusType) => {
+    //     dispatch(changeTaskStatusAC({idTodo, idTask,status: domainModel}))
+    // }, [dispatch])
 
     const removeTodolist = useCallback((todoID: string) => {
         dispatch(deleteTodolistTC(todoID))
@@ -85,7 +86,7 @@ export const TodolistList=()=>{
                 filterTask={filterTask}
                 addTask={addTask}
                 filter={t.filter}
-                changeStatusCheck={changeStatusCheck}
+                // changeStatusCheck={changeStatusCheck}
                 removeTodolist={removeTodolist}
                 callback={callback}
                 onChangeTitleTodo={onChangeTitleTodo}

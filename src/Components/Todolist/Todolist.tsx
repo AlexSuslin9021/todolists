@@ -21,7 +21,7 @@ type TodolistType = {
     removeTask: (idTodo: string, idTask: string) => void
     filterTask: (idTodo: string, value: FilterType) => void
     addTask: (idTodo: string, newTitle: string) => void
-    changeStatusCheck: (idTodo: string, idTask: string, domainModel:TaskStatuses) => void
+    // changeStatusCheck: (idTodo: string, idTask: string, domainModel:TaskStatuses) => void
     filter: FilterType
     removeTodolist: (todoID: string) => void
     callback: (idIdTodo: string, idTask: string, api:any) => void
