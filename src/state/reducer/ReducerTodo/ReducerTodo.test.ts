@@ -20,7 +20,7 @@ beforeEach(()=>{
 test('one todo should be removed',()=> {
 
 
-    const action=removeTodolistAC('1')
+    const action=removeTodolistAC({idTodo:"1"})
     const newState= reducerTodo(startState, action)
 
     expect(newState.length).toBe(1)
@@ -33,7 +33,7 @@ test('one todo should be removed',()=> {
 test('should be add todo',()=> {
 
 
-        const action=addTodolistAC({id: '3', title: 'test',addedDate: '',  order: 0,})
+        const action=addTodolistAC({todolist:{id: '3', title: 'test',addedDate: '',  order: 0}})
         const newState= reducerTodo(startState, action)
 
         expect(newState.length).toBe(3)
@@ -46,7 +46,7 @@ test('should be add todo',()=> {
 )
 test('need change title Todo',()=> {
 
-        const action=changeTitleTodolistAC('1','What to read')
+        const action=changeTitleTodolistAC({idTodo:"1", title:"What to read"})
         const newState= reducerTodo(startState, action)
 
         expect(newState.length).toBe(2)
@@ -59,7 +59,7 @@ test('need change title Todo',()=> {
 
 test('need change filter Todo',()=> {
 
-        const action=changeFilterTodolistAC('1','completed')
+        const action=changeFilterTodolistAC({idTodo :"1",value:'completed'})
 
         const newState= reducerTodo(startState, action)
 
@@ -75,7 +75,7 @@ test('need change filter Todo',()=> {
 test('need change entity status',()=> {
 
 
-        const action=changeEntityStatusAC('1','loading')
+        const action=changeEntityStatusAC({idTodo :"1",status:'loading'})
         const newState= reducerTodo(startState, action)
 
         expect(newState.length).toBe(2)

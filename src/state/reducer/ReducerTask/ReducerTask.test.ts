@@ -1,8 +1,10 @@
 import {
-    addTaskAC, changeEntityTaskStatusAC,
+    addTaskAC,
+    changeEntityTaskStatusAC,
     reducerTask,
     removeTaskAC,
-    TasksStateType, updateTitleTaskAC
+    TasksStateType,
+    updateTitleTaskAC
 } from "./ReducerTask";
 import {addTodolistAC, todolistID1} from "../ReducerTodo/ReducerTodo";
 import {TaskPriorities, TaskStatuses} from "../../../api/taskApi";
@@ -43,7 +45,7 @@ beforeEach(() => {
 test('correct task should be deleted from correct array', () => {
 
 
-    const action = removeTaskAC('todolistId2', '2')
+    const action = removeTaskAC({idTodo:"todolistId2",idTask:"2"})
 
     const endState = reducerTask(startState, action)
 
@@ -52,10 +54,11 @@ test('correct task should be deleted from correct array', () => {
 })
 test('in task should be change isDone ', () => {
 
-    const action = addTaskAC( {
+    const action = addTaskAC( {task:{
+
         id: '2', title: 'NewTask', status: TaskStatuses.Completed, todoListId: 'todolistId2', description: '',
         startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High
-    })
+    }})
 
     const endState = reducerTask(startState, action)
 
@@ -66,7 +69,12 @@ test('in task should be change isDone ', () => {
 })
 test('in task should be cange title ', () => {
 
-    const action = updateTitleTaskAC('todolistId2', '2', {title:'apple'})
+    const action = updateTitleTaskAC({idTodo:'todolistId2',idTask: '2',api:{  title: 'apple',
+            description: '',
+            status:TaskStatuses.Completed ,
+            priority: TaskPriorities.High,
+            startDate: '',
+            deadline: '',}})
     const endState = reducerTask(startState, action)
 
     expect(endState['todolistId2'].length).toBe(3)
@@ -78,7 +86,7 @@ test('in task should be cange title ', () => {
 test('new array should be added when new todolist is added', () => {
 
 
-    const action = addTodolistAC({id: '3', title: 'new todolist',addedDate: '',  order: 0,})
+    const action = addTodolistAC({todolist:{id: '3', title: 'new todolist',addedDate: '',  order: 0,}})
 
     const endState = reducerTask(startState, action)
 
@@ -95,7 +103,7 @@ test('new array should be added when new todolist is added', () => {
 test('EntityStatus should be changed ', () => {
 
 
-    const action = changeEntityTaskStatusAC('todolistId2', '2',"idle")
+    const action = changeEntityTaskStatusAC({idTodo:'todolistId2',idTask: '2',status:"idle"})
 
     const endState = reducerTask(startState, action)
 
