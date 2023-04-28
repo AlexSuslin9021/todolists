@@ -9,7 +9,7 @@ beforeEach(() => {
 
 test('isLoggedIn should be changed', () => {
 
-    const action = setStatusAC('succeeded')
+    const action = setStatusAC({status:'succeeded'})
     const endState = appReducer(startState, action)
 
     expect(endState.status).toBe('succeeded')
@@ -18,7 +18,7 @@ test('isLoggedIn should be changed', () => {
 
 test('Error should be changed', () => {
 
-    const action = setErrorAC('error')
+    const action = setErrorAC({error:'error'})
     const endState = appReducer(startState, action)
 
     expect(endState.error).toBe('error')

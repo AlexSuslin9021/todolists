@@ -5,47 +5,55 @@ import {authApi, LoginType} from "../../../api/authApi";
 import axios from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
 import {clearDataTodosAC} from "../ReducerTodo/ReducerTodo";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState={
     isLoggedIn: false,
     isInitialized:false
 }
 
-export type InitialStateType = typeof initialState
-export const AuthReducers = (state:InitialStateType=initialState, action:ActionType):InitialStateType => {
-    switch (action.type){
-
-        case "SET-IS-LOGGED-IN":
-            console.log(1)
-            return {...state, isLoggedIn: action.value}
-        case "SET-INITIALIZED":
-            console.log(2)
-            return {...state, isInitialized: action.isInitialized}
+const slice=createSlice({
+    name:'auth',
+    initialState:initialState,
+    reducers:{
+        setIsLoggedInAC(state, action:PayloadAction<{value:boolean}>){
+            state.isLoggedIn=action.payload.value
+        },
+        setIsInitializedAC(state, action:PayloadAction<{isInitialized:boolean}>){
+            state.isInitialized=action.payload.isInitialized
+        },
     }
-    return state
-};
+})
+export type InitialStateType = typeof initialState
+export const AuthReducers=slice.reducer
+//     = (state:InitialStateType=initialState, action:ActionType):InitialStateType => {
+//     switch (action.type){
+//
+//         case "SET-IS-LOGGED-IN":
+//             console.log(1)
+//             return {...state, isLoggedIn: action.value}
+//         case "SET-INITIALIZED":
+//             console.log(2)
+//             return {...state, isInitialized: action.isInitialized}
+//     }
+//     return state
+// };
 
 //AC
-export const setIsLoggedInAC=(value:boolean)=>{
-    return{type: "SET-IS-LOGGED-IN" , value} as const
-
-}
-export const setIsInitializedAC=(isInitialized:boolean)=>{
-    return{type: "SET-INITIALIZED" , isInitialized} as const
-
-}
+export const setIsLoggedInAC=slice.actions.setIsLoggedInAC
+export const setIsInitializedAC=slice.actions.setIsInitializedAC
 //TC
 
 export const initializedTC =() =>(dispatch:Dispatch) =>{
 
-    dispatch(setStatusAC('loading'))
+    dispatch(setStatusAC({status:'loading'}))
 
     authApi.me().then((res)=>{
         if(res.data.resultCode===0){
 
-            dispatch(setIsLoggedInAC(true))
+            dispatch(setIsLoggedInAC({value:true}))
 
-            dispatch(setStatusAC('succeeded'))
+            dispatch(setStatusAC({status:'succeeded'}))
 
         }
 
@@ -56,18 +64,18 @@ export const initializedTC =() =>(dispatch:Dispatch) =>{
         if(axios.isAxiosError(e))
             handleServerNetworkError(e, dispatch)
     }).finally(()=>{
-            dispatch(setIsInitializedAC(true))
+            dispatch(setIsInitializedAC({isInitialized:true}))
         }
-        // dispatch(setIsInitializedAC(false))
+
     )
 }
 export const setIsLoggedInTC=(data:LoginType) =>(dispatch:Dispatch) =>{
-    dispatch(setStatusAC('loading'))
+    dispatch(setStatusAC({status:'loading'}))
 
     authApi.login(data).then((res)=>{
         if(res.data.resultCode===0){
-        dispatch(setIsLoggedInAC(true))
-            dispatch(setStatusAC('succeeded'))
+        dispatch(setIsLoggedInAC({value:true}))
+            dispatch(setStatusAC({status:'succeeded'}))
         }
 
         else {
@@ -79,12 +87,12 @@ export const setIsLoggedInTC=(data:LoginType) =>(dispatch:Dispatch) =>{
     })
 }
 export const setLogoutTC=() =>(dispatch:Dispatch) =>{
-    dispatch(setStatusAC('loading'))
+    dispatch(setStatusAC({status:'loading'}))
 
     authApi.logout().then((res)=>{
         if(res.data.resultCode===0){
-            dispatch(setIsLoggedInAC(false))
-            dispatch(setStatusAC('succeeded'))
+            dispatch(setIsLoggedInAC({value:false}))
+            dispatch(setStatusAC({status:'succeeded'}))
             dispatch(clearDataTodosAC())
         }
 
@@ -97,5 +105,5 @@ export const setLogoutTC=() =>(dispatch:Dispatch) =>{
     })
 }
 // types
-type ActionType= ReturnType<typeof setIsLoggedInAC>| ReturnType<typeof setIsInitializedAC>
+
 

@@ -10,7 +10,7 @@ beforeEach(() => {
 
 test('isLoggedIn should be changed', () => {
 
-    const action = setIsLoggedInAC(true)
+    const action = setIsLoggedInAC({value:true})
     const endState = AuthReducers(startState, action)
 
     expect(endState.isLoggedIn).toBe(true)
@@ -19,7 +19,7 @@ test('isLoggedIn should be changed', () => {
 
 test('isInitialized should be changed', () => {
 
-    const action = setIsInitializedAC(true)
+    const action = setIsInitializedAC({isInitialized:true})
     const endState = AuthReducers(startState, action)
 
     expect(endState.isInitialized).toBe(true)
