@@ -47,6 +47,7 @@ type TaskWithReduxType ={
      }
 
      const onChangeTaskStatus=( idTask:string, status:TaskStatuses)=>{
+         debugger
          dispatch(updateTaskTC( props.idTodo,idTask,{status:status}))
      }
 

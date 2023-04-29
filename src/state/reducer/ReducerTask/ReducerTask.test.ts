@@ -4,7 +4,7 @@ import {
     reducerTask,
     removeTaskAC,
     TasksStateType,
-    updateTitleTaskAC
+    updateTaskAC
 } from "./ReducerTask";
 import {addTodolistAC, todolistID1} from "../ReducerTodo/ReducerTodo";
 import {TaskPriorities, TaskStatuses} from "../../../api/taskApi";
@@ -69,7 +69,7 @@ test('in task should be change isDone ', () => {
 })
 test('in task should be cange title ', () => {
 
-    const action = updateTitleTaskAC({idTodo:'todolistId2',idTask: '2',api:{  title: 'apple',
+    const action = updateTaskAC({idTodo:'todolistId2',idTask: '2',api:{  title: 'apple',
             description: '',
             status:TaskStatuses.Completed ,
             priority: TaskPriorities.High,

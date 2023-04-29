@@ -12,12 +12,12 @@ import {
     deleteTasksTC, TasksStateType,
     updateTaskTC
 } from "../../state/reducer/ReducerTask/ReducerTask";
-import {TaskStatuses} from "../../api/taskApi";
+
 import {Todolist} from "../Todolist/Todolist";
 import AddItemForm from "../AddItemForm/AddItemForm";
 import s from '../TodolistList/TodolistList.module.css'
 import {Navigate} from "react-router-dom";
-import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
+
 
 
 export const TodolistList=()=>{
@@ -74,7 +74,7 @@ export const TodolistList=()=>{
         <AddItemForm addItem={addTodolist}/>
         </div>
         {todolist.map((t) => {
-            return(<div className={s.containerTodo}>
+            return(<div key={t.id} className={s.containerTodo}>
 
                 <Todolist
                 entityStatus={t.entityStatus}

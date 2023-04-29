@@ -4,7 +4,7 @@ import {setErrorAC, setStatusAC} from "../AppReducer/AppReducer";
 import {authApi, LoginType} from "../../../api/authApi";
 import axios from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
-import {clearDataTodosAC} from "../ReducerTodo/ReducerTodo";
+// import {clearDataTodosAC} from "../ReducerTodo/ReducerTodo";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState={
@@ -25,19 +25,8 @@ const slice=createSlice({
     }
 })
 export type InitialStateType = typeof initialState
-export const AuthReducers=slice.reducer
-//     = (state:InitialStateType=initialState, action:ActionType):InitialStateType => {
-//     switch (action.type){
-//
-//         case "SET-IS-LOGGED-IN":
-//             console.log(1)
-//             return {...state, isLoggedIn: action.value}
-//         case "SET-INITIALIZED":
-//             console.log(2)
-//             return {...state, isInitialized: action.isInitialized}
-//     }
-//     return state
-// };
+export const authReducers=slice.reducer
+
 
 //AC
 export const setIsLoggedInAC=slice.actions.setIsLoggedInAC
@@ -93,7 +82,7 @@ export const setLogoutTC=() =>(dispatch:Dispatch) =>{
         if(res.data.resultCode===0){
             dispatch(setIsLoggedInAC({value:false}))
             dispatch(setStatusAC({status:'succeeded'}))
-            dispatch(clearDataTodosAC())
+            // dispatch(clearDataTodosAC())
         }
 
         else {
