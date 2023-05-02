@@ -42,7 +42,7 @@ export const initializedTC =() =>(dispatch:Dispatch) =>{
 
             dispatch(setIsLoggedInAC({value:true}))
 
-            dispatch(setStatusAC({status:'succeeded'}))
+            // dispatch(setStatusAC({status:'succeeded'}))
 
         }
 
@@ -54,6 +54,7 @@ export const initializedTC =() =>(dispatch:Dispatch) =>{
             handleServerNetworkError(e, dispatch)
     }).finally(()=>{
             dispatch(setIsInitializedAC({isInitialized:true}))
+        dispatch(setStatusAC({status:'idle'}))
         }
 
     )

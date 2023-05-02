@@ -48,8 +48,6 @@ export const TodolistList=()=>{
         dispatch(deleteTodolistTC(todoID))
     }, [dispatch])
 
-
-
     const callback = useCallback((IdTodo: string, idTask: string, title:string) => {
         dispatch(updateTaskTC(IdTodo, idTask, {title}))
     }, [dispatch])

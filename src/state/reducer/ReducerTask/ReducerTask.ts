@@ -34,13 +34,12 @@ const slice = createSlice(({
             }, ...state[action.payload.task.todoListId]]
         },
         updateTaskAC(state, action: PayloadAction<{ idTodo: string, idTask: string, api: UpdateDomainTaskType }>) {
-            // state[action.payload.idTodo] = state[action.payload.idTodo].map(t => t.id === action.payload.idTask ? {...t, ...action.payload.api} : t)
-debugger
-            const task = state[action.payload.idTodo]
-            const index = task.findIndex(t => t.id !== action.payload.idTask)
-            if (index !== -1) {
-                task[index]={...task[index],...action.payload.api }
-            }
+            state[action.payload.idTodo] = state[action.payload.idTodo].map(t => t.id === action.payload.idTask ? {...t, ...action.payload.api} : t)
+
+            // const task = state[action.payload.idTodo]
+            // const index = task.findIndex(t => t.id !== action.payload.idTask)
+            // if (index !== -1) task[index]={...action.payload.api,...task[index] }
+
         },
         setTasksAC(state, action: PayloadAction<{ idTodo: string, task: TaskType[] }>) {
             state[action.payload.idTodo] = action.payload.task.map((tl: any) => ({...tl, entityStatus: "idle"}))
