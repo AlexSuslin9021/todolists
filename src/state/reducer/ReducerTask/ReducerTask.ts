@@ -1,13 +1,7 @@
-import {
-    addTodolistAC,
-
-    removeTodolistAC,
-    setTodolist, setTodolistAC,
-    setTodolistType
-} from "../ReducerTodo/ReducerTodo";
+import {addTodolistAC, removeTodolistAC, setTodolistAC, setTodolistType} from "../ReducerTodo/ReducerTodo";
 import {taskApi, TaskPriorities, TaskStatus, TaskStatuses, TaskType} from "../../../api/taskApi";
 import {Dispatch} from "redux";
-import {AppActionType, AppStateType, AppThunkType} from "../../Store";
+import { AppStateType, AppThunkType} from "../../Store";
 import {RequestStatusType, setErrorAC, SetErrorType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
 import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
 import axios from "axios";
@@ -24,9 +18,7 @@ const slice = createSlice(({
             const task = state[action.payload.idTodo]
             const index = task.findIndex(t => t.id !== action.payload.idTask)
             if (index !== -1) task.splice(index, 1)
-
-        }
-        ,
+        },
         addTaskAC(state, action: PayloadAction<{ task: TaskType }>) {
             state[action.payload.task.todoListId] = [{
                 ...action.payload.task,
@@ -35,22 +27,13 @@ const slice = createSlice(({
         },
         updateTaskAC(state, action: PayloadAction<{ idTodo: string, idTask: string, api: UpdateDomainTaskType }>) {
             state[action.payload.idTodo] = state[action.payload.idTodo].map(t => t.id === action.payload.idTask ? {...t, ...action.payload.api} : t)
-
-            // const task = state[action.payload.idTodo]
-            // const index = task.findIndex(t => t.id !== action.payload.idTask)
-            // if (index !== -1) task[index]={...action.payload.api,...task[index] }
-
         },
         setTasksAC(state, action: PayloadAction<{ idTodo: string, task: TaskType[] }>) {
             state[action.payload.idTodo] = action.payload.task.map((tl: any) => ({...tl, entityStatus: "idle"}))
         },
         changeEntityTaskStatusAC(state, action: PayloadAction<{ idTodo: string, idTask: string, status: RequestStatusType }>) {
-            // state[action.payload.idTodo] = state[action.payload.idTodo].map(t => t.id === action.payload.idTask ? {
-            //     ...t,
-            //     entityStatus: action.payload.status
-            // } : t)
             const task = state[action.payload.idTodo]
-            const index = task.findIndex(t => t.id !== action.payload.idTask)
+            const index = task.findIndex(t => t.id == action.payload.idTask)
             if (index !== -1) {
                 task[index]={...task[index],entityStatus: action.payload.status }
             }
@@ -70,72 +53,11 @@ const slice = createSlice(({
                     state[tl.id] = []
                 })
             })
-        // builder.addCase(clearDataTodosAC, (state, action) => {
-        //   return   state = {}
-        // })
+
     }
-    //     {
-    //     [setTodolistAC.type]:(state, action: PayloadAction<{ todolist: TodolistType[] }>)=>{
-    //         return  action.payload.todolist.forEach((tl:any) => {state[tl.id] = []})
-    //     },
-    //     [addTodolistAC.type]:(state, action: PayloadAction<{ todolist: TodolistType }>)=>{
-    //         state[action.payload.todolist.id]= []
-    //     },
-    //     [removeTodolistAC.type]:(state, action: PayloadAction<{ idTodo: string }>)=>{
-    //         delete state[action.payload.idTodo]
-    //     },
-    //     [clearDataTodosAC.type]:(state, action: PayloadAction)=>{
-    //         state = {}
-    //     },
-    // }
+
 }))
 export const reducerTask = slice.reducer
-// (state: TasksStateType = tasks, action: AppActionType): TasksStateType => {
-//     switch (action.type) {
-//         case removeTask:
-//             return {...state, [action.idTodo]: state[action.idTodo].filter(t => t.id !== action.idTask)}
-//         case addTask:
-//             return {
-//                 ...state,
-//                 [action.task.todoListId]: [{...action.task, entityStatus: 'idle'}, ...state[action.task.todoListId]]
-//             }
-//         case addTodo:
-//             return {...state, [action.todolist.id]: []}
-//         case removeTodo:
-//             const copyState = {...state, [action.idTodo]: state[action.idTodo]}
-//             delete copyState[action.idTodo]
-//             return copyState
-//         case setTodolist: {
-//             const stateCopy = {...state}
-//             action.todolist.forEach((tl) => {
-//                 stateCopy[tl.id] = []
-//             })
-//             return stateCopy;
-//         }
-//         case updateTitle:
-//             return {
-//                 ...state, [action.idTodo]:
-//                     state[action.idTodo].map(t => t.id === action.idTask ? {...t, ...action.api} : t)
-//             }
-//         case setTasks: {
-//             return {
-//                 ...state, [action.idTodo]: action.task.map(tl => ({...tl, entityStatus: "idle"}))
-//             }
-//         }
-//         case changeEntityStatus:
-//             return {
-//                 ...state,
-//                 [action.idTodo]: state[action.idTodo].map(t => t.id === action.idTask ? {
-//                     ...t,
-//                     entityStatus: action.status
-//                 } : t)
-//             }
-//         case "CLEAR_DATA":
-//             return {}
-//     }
-//     return state
-// }
-
 export const removeTaskAC = slice.actions.removeTaskAC
 export const addTaskAC = slice.actions.addTaskAC
 

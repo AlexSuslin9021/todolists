@@ -32,7 +32,7 @@ beforeEach(() => {
                 startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High, entityStatus:'loading'
             },
             {
-                id: '2', title: 'milk', status: TaskStatuses.Completed, todoListId: todolistID1, description: '',
+                id:'2', title: 'milk', status: TaskStatuses.Completed, todoListId: todolistID1, description: '',
                 startDate: '', addedDate: '', deadline: '', order: 0, priority: TaskPriorities.High,entityStatus:'loading'
             },
             {
@@ -87,28 +87,20 @@ test('new array should be added when new todolist is added', () => {
 
 
     const action = addTodolistAC({todolist:{id: '3', title: 'new todolist',addedDate: '',  order: 0,}})
-
     const endState = reducerTask(startState, action)
-
-
     const keys = Object.keys(endState)
     const newKey = keys.find(k => k != 'todolistId1' && k != 'todolistId2')
     if (!newKey) {
         throw Error('new key should be added')
     }
-
     expect(keys.length).toBe(3)
     expect(endState[newKey]).toEqual([])
 })
 test('EntityStatus should be changed ', () => {
 
-
     const action = changeEntityTaskStatusAC({idTodo:'todolistId2',idTask: '2',status:"idle"})
-
     const endState = reducerTask(startState, action)
-
-
-    expect(endState['todolistId2'][1].entityStatus).toEqual("idle")
+    expect(endState['todolistId2'][1].entityStatus).toBe("idle")
     expect(endState['todolistId1'][1].entityStatus).toEqual("loading")
 })
 

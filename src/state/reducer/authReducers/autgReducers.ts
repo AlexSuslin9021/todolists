@@ -9,7 +9,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState={
     isLoggedIn: false,
-    isInitialized:false
+    isInitialized:false // запрос ме, зарегистрированы или нет
 }
 
 const slice=createSlice({

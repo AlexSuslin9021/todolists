@@ -60,11 +60,10 @@ export const TodolistList=()=>{
     }, [])
 
     useEffect(()=>{
-
         dispatch(fetchTodolistTC())
 
-
     },[])
+    
     if(!isLoggedIn) {return <Navigate to={'/login'}/>}
     return<div className={s.container}>
         <div className={s.addItemForm}>
