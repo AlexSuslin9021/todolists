@@ -5,7 +5,7 @@ import { AppStateType, AppThunkType} from "../../Store";
 import {RequestStatusType, setErrorAC, SetErrorType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
 import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
 import axios from "axios";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 
 //initial state
@@ -66,25 +66,29 @@ export const setTasksAC = slice.actions.setTasksAC
 export const changeEntityTaskStatusAC = slice.actions.changeEntityTaskStatusAC
 
 //Thunk
-export const getTasksTC = (id: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
-    dispatch(setStatusAC({status: 'loading'}))
-
-    taskApi.getTask(id).then((res) => {
+export const getTasksTC=createAsyncThunk('task/getTask',(arg:string, thunkAPI)=> {
+    thunkAPI.dispatch(setStatusAC({status: 'loading'}))
+    taskApi.getTask(arg).then((res) => {
         if (!res.data.error) {
-
-            dispatch(setTasksAC({idTodo: id, task: res.data.items}))
-            dispatch(setStatusAC({status: 'succeeded'}))
+            thunkAPI.dispatch(setTasksAC({idTodo: arg, task: res.data.items}))
+            thunkAPI.dispatch(setStatusAC({status: 'succeeded'}))
         } else {
-            if (res.data.error) {
-                dispatch(setErrorAC({error: res.data.error}))
-            } else {
-                dispatch(setErrorAC({error: {error: 'Some error occurred'}}))
-            }
-            dispatch(setStatusAC({status: 'idle'}))
+            // handleServerAppError(res.data, thunkAPI.dispatch)
         }
-
     })
-}
+})
+// export const _getTasksTC = (id: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
+//     dispatch(setStatusAC({status: 'loading'}))
+//     taskApi.getTask(id).then((res) => {
+//         if (!res.data.error) {
+//             dispatch(setTasksAC({idTodo: id, task: res.data.items}))
+//             dispatch(setStatusAC({status: 'succeeded'}))
+//         }  else {
+//             // handleServerAppError(res.data, dispatch)
+//         }
+//
+//     })
+// }
 export const createTasksTC = (idTodo: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
     dispatch(setStatusAC({status: 'loading'}))
     try {
@@ -95,7 +99,6 @@ export const createTasksTC = (idTodo: string, title: string): AppThunkType => (d
             } else {
                 handleServerAppError(res.data, dispatch)
             }
-
         })
     } catch (e) {
         if (axios.isAxiosError(e))

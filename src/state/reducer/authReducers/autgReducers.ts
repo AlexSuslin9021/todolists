@@ -47,7 +47,7 @@ export const initializedTC =() =>(dispatch:Dispatch) =>{
         }
 
         else {
-            handleServerAppError(res.data, dispatch)
+            // handleServerAppError(res.data, dispatch)
         }
     }).catch((e)=>{
         if(axios.isAxiosError(e))
