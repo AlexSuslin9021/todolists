@@ -53,7 +53,6 @@ const slice = createSlice(({
                     state[tl.id] = []
                 })
             })
-
     }
 
 }))
@@ -66,48 +65,51 @@ export const setTasksAC = slice.actions.setTasksAC
 export const changeEntityTaskStatusAC = slice.actions.changeEntityTaskStatusAC
 
 //Thunk
-export const getTasksTC=createAsyncThunk('task/getTask',(arg:string, thunkAPI)=> {
+export const getTasksTC=createAsyncThunk('task/getTask', async (arg:string, thunkAPI)=> {
     thunkAPI.dispatch(setStatusAC({status: 'loading'}))
-    taskApi.getTask(arg).then((res) => {
+    let res= await taskApi.getTask(arg)
         if (!res.data.error) {
             thunkAPI.dispatch(setTasksAC({idTodo: arg, task: res.data.items}))
             thunkAPI.dispatch(setStatusAC({status: 'succeeded'}))
         } else {
             // handleServerAppError(res.data, thunkAPI.dispatch)
         }
-    })
+
 })
-// export const _getTasksTC = (id: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
-//     dispatch(setStatusAC({status: 'loading'}))
-//     taskApi.getTask(id).then((res) => {
-//         if (!res.data.error) {
-//             dispatch(setTasksAC({idTodo: id, task: res.data.items}))
-//             dispatch(setStatusAC({status: 'succeeded'}))
-//         }  else {
-//             // handleServerAppError(res.data, dispatch)
-//         }
-//
-//     })
-// }
-export const createTasksTC = (idTodo: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
-    dispatch(setStatusAC({status: 'loading'}))
+
+export const createTasksTC= createAsyncThunk('task/createTasksTC,',async (arg:{idTodo: string, title: string}, thunkAPI)=>{
+    thunkAPI.dispatch(setStatusAC({status: 'loading'}))
     try {
-        taskApi.createTask(idTodo, title).then((res) => {
+      let res = await taskApi.createTask(arg.idTodo, arg.title)
             if (res.data.resultCode === 0) {
-                dispatch(addTaskAC({task: res.data.data.item}))
-                dispatch(setStatusAC({status: 'succeeded'}))
+                thunkAPI.dispatch(addTaskAC({task: res.data.data.item}))
+                thunkAPI.dispatch(setStatusAC({status: 'succeeded'}))
             } else {
-                handleServerAppError(res.data, dispatch)
+                handleServerAppError(res.data, thunkAPI.dispatch)
             }
-        })
     } catch (e) {
         if (axios.isAxiosError(e))
-            handleServerNetworkError(e, dispatch)
+            handleServerNetworkError(e, thunkAPI.dispatch)
         //дописать
     }
-
-
-}
+})
+// export const createTasksTC = (idTodo: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
+//     dispatch(setStatusAC({status: 'loading'}))
+//     try {
+//         taskApi.createTask(idTodo, title).then((res) => {
+//             if (res.data.resultCode === 0) {
+//                 dispatch(addTaskAC({task: res.data.data.item}))
+//                 dispatch(setStatusAC({status: 'succeeded'}))
+//             } else {
+//                 handleServerAppError(res.data, dispatch)
+//             }
+//         })
+//     } catch (e) {
+//         if (axios.isAxiosError(e))
+//             handleServerNetworkError(e, dispatch)
+//         //дописать
+//     }
+// }
 export const deleteTasksTC = (idTodo: string, idTask: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
     dispatch(setStatusAC({status: 'loading'}))
     dispatch(changeEntityTaskStatusAC({idTodo, idTask, status: 'loading'}))

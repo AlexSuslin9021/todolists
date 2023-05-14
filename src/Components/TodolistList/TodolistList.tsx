@@ -32,7 +32,7 @@ export const TodolistList=()=>{
     }, [dispatch])
 
     const addTask = useCallback((idTodo: string, newTitle: string) => {
-        dispatch(createTasksTC(idTodo, newTitle))
+        dispatch(createTasksTC({idTodo, title: newTitle}))
     }, [dispatch])
 
     const filterTask = useCallback((idTodo: string, value: FilterType) => {
