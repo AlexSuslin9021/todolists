@@ -53,7 +53,7 @@ export const TodolistList=()=>{
     }, [dispatch])
 
     const onChangeTitleTodo = useCallback((idTodo: string, title: string) => {
-        dispatch(updateTodolistTC(idTodo, title))
+        dispatch(updateTodolistTC({todoId:idTodo, title:title}))
     }, [dispatch])
     const addTodolist = useCallback((title: string) => {
         dispatch(createTodolistTC(title))

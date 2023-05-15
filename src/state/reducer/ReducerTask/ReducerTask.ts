@@ -33,7 +33,7 @@ const slice = createSlice(({
         },
         changeEntityTaskStatusAC(state, action: PayloadAction<{ idTodo: string, idTask: string, status: RequestStatusType }>) {
             const task = state[action.payload.idTodo]
-            const index = task.findIndex(t => t.id == action.payload.idTask)
+            const index = task.findIndex(t => t.id === action.payload.idTask)
             if (index !== -1) {
                 task[index]={...task[index],entityStatus: action.payload.status }
             }
@@ -90,7 +90,6 @@ export const createTasksTC= createAsyncThunk('task/createTasksTC,',async (arg:{i
     } catch (e) {
         if (axios.isAxiosError(e))
             handleServerNetworkError(e, thunkAPI.dispatch)
-        //дописать
     }
 })
 // export const createTasksTC = (idTodo: string, title: string): AppThunkType => (dispatch: Dispatch<TaskActionType>) => {
