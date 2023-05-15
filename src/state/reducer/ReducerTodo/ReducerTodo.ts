@@ -89,11 +89,11 @@ export const setTodolistAC = slice.actions.setTodolistAC
 
 //Thunk
 export const fetchTodolistTC = (): AppThunkType => async dispatch => {
+    debugger
     dispatch(setStatusAC({status:'loading'}))
     const res = await todolistApi.getTodolists()
     dispatch(setTodolistAC({todolist:res.data}))
     await res.data.forEach((tl)=> dispatch(getTasksTC(tl.id)))
-
     dispatch(setStatusAC({status:'succeeded'}))
 }
 export const updateTodolistTC = (todoId: string, title: string): AppThunkType => async dispatch => {

@@ -43,7 +43,7 @@ type TaskWithReduxType ={
      )
      const removeTask = (id: string) => {
 
-         dispatch(deleteTasksTC(props.idTodo, id))
+         dispatch(deleteTasksTC(props.idTodo,id))
      }
 
      const onChangeTaskStatus=( idTask:string, status:TaskStatuses)=>{

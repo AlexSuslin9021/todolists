@@ -16,7 +16,7 @@ const slice = createSlice(({
     reducers: {
         removeTaskAC(state, action: PayloadAction<{ idTodo: string, idTask: string }>) {
             const task = state[action.payload.idTodo]
-            const index = task.findIndex(t => t.id !== action.payload.idTask)
+            const index = task.findIndex(t => t.id === action.payload.idTask)
             if (index !== -1) task.splice(index, 1)
         },
         addTaskAC(state, action: PayloadAction<{ task: TaskType }>) {

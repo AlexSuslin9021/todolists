@@ -1,17 +1,11 @@
-// обработка состояния аспектов всего приложения:
-// выбранный язык интерфейса, загружаются ли данные или нет, кто именно сейчас залогинен в систему…
-
-
-//initial state
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
+
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed' | 'imgLoading'
-
-
 const initialState = {
     error:null as null | any,
     status: 'idle' as RequestStatusType,
-    } // as(воспринимай как этот тип) RequestStatusType! типизация объекта
+    }
 
 const slice=createSlice({
     name:'app',
@@ -27,16 +21,9 @@ const slice=createSlice({
 })
 
 export const appReducer=slice.reducer
-//Action creator
-
 export const setStatusAC=slice.actions.setStatusAC
 export const setErrorAC=slice.actions.setErrorAC
 
-//Thunk
-
-
-
-// type
 
 export type InitialStateType = typeof initialState
 export type SetStatusType = ReturnType<typeof setStatusAC >
