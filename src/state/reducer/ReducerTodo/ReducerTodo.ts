@@ -7,23 +7,10 @@ import {getTasksTC} from "../ReducerTask/ReducerTask";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 
-///type:action.type
-
-export const setTodolist = "SET-TODOLIST"
-
-
-
-//InitialState
 export type TodolistDomainType = TodolistType & { filter: FilterType, entityStatus: RequestStatusType }
 export let todolistID1 = v1()
 let initialState: TodolistDomainType[] = []
 
-
-
-
-// export const clearDataTodosAC=slice.actions.clearDataTodosAC
-
-//Thunk
 
 export const fetchTodolistTC=createAsyncThunk('todo/fetchTodolistTC',async (_,thunkAPI)=>{
     const {dispatch} = thunkAPI
@@ -58,50 +45,42 @@ export const updateTodolistTC = createAsyncThunk('todo/updateTodolistTC_',async 
             handleServerNetworkError(e, thunkAPI.dispatch)
     }
 })
-// export const updateTodolistTC = (todoId: string, title: string): AppThunkType => async dispatch => {
-//
-//     dispatch(setStatusAC({status:'loading'}))
-//     const res = await todolistApi.updateTodolist(todoId, title)
-//     if (res.data.resultCode === 0) {
-//         dispatch(changeTitleTodolistAC({idTodo:todoId, title}))
-//         dispatch(setStatusAC({status:'succeeded'}))
-//     } else {
-//         if (res.data.messages.length) {
-//             dispatch(setErrorAC({error:res.data.messages[0]}))
-//         } else {
-//             dispatch(setErrorAC({error:'Some error occurred'}))
-//         }
-//         dispatch(setStatusAC({status:'failed'}))
-//     }
-// }
-export const createTodolistTC = (title: string): AppThunkType => async dispatch => {
 
-    dispatch(setStatusAC({status:'loading'}))
-    let res = await todolistApi.createTodolist(title)
-    if (res.data.resultCode === 0) {
-        dispatch(addTodolistAC({todolist:res.data.data.item}))
-        dispatch(setStatusAC({status:'succeeded'}))
-    } else {
-        handleServerAppError(res.data, dispatch)
-    }
-    dispatch(setStatusAC({status:'failed'}))
-}
-export const deleteTodolistTC = (todoId: string): AppThunkType => async dispatch => {
-    dispatch(setStatusAC({status:'loading'}))
-    dispatch(changeEntityStatusAC({idTodo:todoId, status:'loading'}))
-    let res = await todolistApi.deleteTodolist(todoId)
-    if (res.data.resultCode === 0) {
-        dispatch(removeTodolistAC({idTodo:todoId }))
-        dispatch(setStatusAC({status:'succeeded'}))
-    } else {
-        if (res.data.messages.length) {
-            dispatch(setErrorAC({error:res.data.messages[0]}))
+export const createTodolistTC=createAsyncThunk('todo/createTodolistTC',async (arg:string, thunkAPI)=>{
+    const {dispatch} = thunkAPI
+    try {
+        dispatch(setStatusAC({status: 'loading'}))
+        let res = await todolistApi.createTodolist(arg)
+        if (res.data.resultCode === 0) {
+            dispatch(addTodolistAC({todolist: res.data.data.item}))
+            dispatch(setStatusAC({status:'succeeded'}))
         } else {
-            dispatch(setErrorAC({error:'Some error occurred'}))
+            handleServerAppError(res.data, thunkAPI.dispatch)
         }
-        dispatch(setStatusAC({status:'failed'}))
+    } catch (e) {
+        if (axios.isAxiosError(e))
+            handleServerNetworkError(e, thunkAPI.dispatch)
     }
-}
+})
+
+export const deleteTodolistTC=createAsyncThunk('todo/deleteTodolistTC',async (arg:string, thunkAPI)=>{
+    const {dispatch} = thunkAPI
+    try{
+        dispatch(setStatusAC({status:'loading'}))
+        dispatch(changeEntityStatusAC({idTodo:arg, status:'loading'}))
+        let res = await todolistApi.deleteTodolist(arg)
+        if (res.data.resultCode === 0) {
+            dispatch(removeTodolistAC({idTodo:arg }))
+            dispatch(setStatusAC({status:'succeeded'}))
+        }else {
+            handleServerAppError(res.data, thunkAPI.dispatch)
+        }
+    } catch (e) {
+        if (axios.isAxiosError(e))
+            handleServerNetworkError(e, thunkAPI.dispatch)
+    }
+})
+
 
 //type
 type removeTodolistType = ReturnType<typeof removeTodolistAC>
@@ -157,12 +136,10 @@ const slice = createSlice({
     }
 })
 export const reducerTodo =slice.reducer
-
-
-
 export const removeTodolistAC = slice.actions.removeTodolistAC
 export const changeEntityStatusAC = slice.actions.changeEntityStatusAC
 export const addTodolistAC = slice.actions.addTodolistAC
 export const changeTitleTodolistAC = slice.actions.changeTitleTodolistAC
 export const changeFilterTodolistAC =slice.actions.changeFilterTodolistAC
 export const setTodolistAC = slice.actions.setTodolistAC
+// export const clearDataTodosAC=slice.actions.clearDataTodosAC
