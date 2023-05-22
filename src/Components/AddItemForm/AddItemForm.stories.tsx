@@ -12,7 +12,6 @@ import axios from "axios";
 export default {
   title: 'Todolist',
   component: AddItemForm,
-
   argTypes: {
     addItem: {
       description: 'Button '

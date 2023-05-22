@@ -1,21 +1,17 @@
 import {v1} from "uuid";
 import {todolistApi, TodolistType} from "../../../api/todolistApi";
-import {AppActionType, AppThunkType} from "../../Store";
-import {RequestStatusType, setErrorAC, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
+import {RequestStatusType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
 import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
 import {getTasksTC} from "../ReducerTask/ReducerTask";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 
-export type TodolistDomainType = TodolistType & { filter: FilterType, entityStatus: RequestStatusType }
-export let todolistID1 = v1()
-let initialState: TodolistDomainType[] = []
 
+let initialState: TodolistDomainType[] = []
 
 export const fetchTodolistTC=createAsyncThunk('todo/fetchTodolistTC',async (_,thunkAPI)=>{
     const {dispatch} = thunkAPI
     try {
-
         dispatch(setStatusAC({status: 'loading'}))
         const res = await todolistApi.getTodolists()
         dispatch(setTodolistAC({todolist: res.data}))
@@ -24,7 +20,6 @@ export const fetchTodolistTC=createAsyncThunk('todo/fetchTodolistTC',async (_,th
     }catch (e) {
         if (axios.isAxiosError(e))
             handleServerNetworkError(e, thunkAPI.dispatch)
-        //дописать
     }
 })
 
@@ -143,3 +138,6 @@ export const changeTitleTodolistAC = slice.actions.changeTitleTodolistAC
 export const changeFilterTodolistAC =slice.actions.changeFilterTodolistAC
 export const setTodolistAC = slice.actions.setTodolistAC
 // export const clearDataTodosAC=slice.actions.clearDataTodosAC
+
+export type TodolistDomainType = TodolistType & { filter: FilterType, entityStatus: RequestStatusType }
+export let todolistID1 = v1()

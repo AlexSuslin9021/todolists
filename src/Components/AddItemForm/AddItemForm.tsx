@@ -1,29 +1,18 @@
 import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
 import Button from "../Button/Button";
 import s from './AddItemForm.module.css'
-// import style from '../../Common/commonStyle.module.css'
 
-type AddItemFormType = {
-
-    addItem: (title: string) => void
-    disabled?:boolean
-}
 export const AddItemForm: FC<AddItemFormType> = React.memo((props) => {
-
     const [value, setValue] = useState<string>('')
     const [error, setError] = useState<boolean>(false)
-
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
         setError(false)
     }
-
     const onKeyDownHandler = (e: KeyboardEvent< HTMLInputElement>) => {
-        // if (error) setError(false)
         if (e.key === 'Enter' && value.trim() !== '') {
             props.addItem(value.trim())
             setValue('')
-
         }
         else if (value !== '') {
             setError(false)
@@ -31,10 +20,7 @@ export const AddItemForm: FC<AddItemFormType> = React.memo((props) => {
         else if(e.key === 'Enter' && value.trim() === '') {
             setError(true)
         }
-
-
     }
-    // ADD TASK
     const onClickAddTask = () => {
 debugger
         if (value.trim() !== '') {
@@ -44,7 +30,6 @@ debugger
             setError(true)
         }
     }
-
     const inputClass = (error ? s.errorInput : '') + " " + s.input
     return (
         <div>
@@ -61,3 +46,8 @@ debugger
 });
 
 export default AddItemForm;
+
+type AddItemFormType = {
+    addItem: (title: string) => void
+    disabled?:boolean
+}

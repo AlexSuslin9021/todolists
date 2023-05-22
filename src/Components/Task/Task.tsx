@@ -4,14 +4,6 @@ import s from "../Todolist/Todolist.module.css";
 import Button from "../Button/Button";
 import {TaskStatuses, TaskType} from "../../api/taskApi";
 
-
-type PropsTaskType={
-    task: TaskType[]
-    idTodo: string
-    removeTask: (idTodo: string, idTask: string) => void
-    changeStatusCheck: (idTodo: string, idTask: string, isDone: TaskStatuses) => void
-    callback:(idIdTodo:string,idTask:string, title: string)=>void
-}
 export const Task :FC<PropsTaskType> = (props) => {
     return (
         <div>
@@ -26,5 +18,10 @@ export const Task :FC<PropsTaskType> = (props) => {
         </div>
     );
 };
-
-export default Task;
+type PropsTaskType={
+    task: TaskType[]
+    idTodo: string
+    removeTask: (idTodo: string, idTask: string) => void
+    changeStatusCheck: (idTodo: string, idTask: string, isDone: TaskStatuses) => void
+    callback:(idIdTodo:string,idTask:string, title: string)=>void
+}

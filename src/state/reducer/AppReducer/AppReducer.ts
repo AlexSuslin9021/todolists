@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed' | 'imgLoading'
 const initialState = {
     error:null as null | any,

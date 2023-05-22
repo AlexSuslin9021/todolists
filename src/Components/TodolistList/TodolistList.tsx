@@ -18,8 +18,6 @@ import AddItemForm from "../AddItemForm/AddItemForm";
 import s from '../TodolistList/TodolistList.module.css'
 import {Navigate} from "react-router-dom";
 
-
-
 export const TodolistList=()=>{
     const dispatch = useAppDispatch()
     const todolist = useSelector<AppStateType, TodolistDomainType[]>(state => state.todolist)
@@ -40,10 +38,6 @@ export const TodolistList=()=>{
         dispatch(changeFilterTodolistAC({idTodo, value}))
     }, [dispatch])
 
-    // const changeStatusCheck = useCallback((idTodo: string, idTask: string, domainModel:RequestStatusType) => {
-    //     dispatch(changeTaskStatusAC({idTodo, idTask,status: domainModel}))
-    // }, [dispatch])
-
     const removeTodolist = useCallback((todoID: string) => {
         dispatch(deleteTodolistTC(todoID))
     }, [dispatch])
@@ -55,24 +49,22 @@ export const TodolistList=()=>{
     const onChangeTitleTodo = useCallback((idTodo: string, title: string) => {
         dispatch(updateTodolistTC({todoId:idTodo, title:title}))
     }, [dispatch])
+
     const addTodolist = useCallback((title: string) => {
         dispatch(createTodolistTC(title))
     }, [])
 
     useEffect(()=>{
         if(isLoggedIn)   dispatch(fetchTodolistTC())
-
     },[])
     
     if(!isLoggedIn) {return <Navigate to={'/login'}/>}
     return<div className={s.container}>
         <div className={s.addItemForm}>
-
         <AddItemForm addItem={addTodolist}/>
         </div>
         {todolist.map((t) => {
             return(<div key={t.id} className={s.containerTodo}>
-
                 <Todolist
                 entityStatus={t.entityStatus}
                 key={t.id}
@@ -83,11 +75,9 @@ export const TodolistList=()=>{
                 filterTask={filterTask}
                 addTask={addTask}
                 filter={t.filter}
-                // changeStatusCheck={changeStatusCheck}
                 removeTodolist={removeTodolist}
                 callback={callback}
                 onChangeTitleTodo={onChangeTitleTodo}
-
             />
                 </div>
             )

@@ -1,14 +1,9 @@
-import React, {FC, useCallback, useEffect} from 'react';
-
-import s from './Todolist.module.css'
+import React, {FC, useCallback} from 'react';
 import Button from "../Button/Button";
 import AddItemForm from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
-
-import TaskWithRedux from "../Task/TaskWithRedux";
-import {TaskStatus, TaskStatuses, TaskType} from "../../api/taskApi";
-
-import {getTasksTC} from "../../state/reducer/ReducerTask/ReducerTask";
+import {TaskWithRedux} from "../Task/TaskWithRedux";
+import { TaskType} from "../../api/taskApi";
 import {useAppDispatch, useAppSelector} from "../../state/Store";
 import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
 import {FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
@@ -21,7 +16,6 @@ type TodolistType = {
     removeTask: (idTodo: string, idTask: string) => void
     filterTask: (idTodo: string, value: FilterType) => void
     addTask: (idTodo: string, newTitle: string) => void
-    // changeStatusCheck: (idTodo: string, idTask: string, domainModel:TaskStatuses) => void
     filter: FilterType
     removeTodolist: (todoID: string) => void
     callback: (idIdTodo: string, idTask: string, api:any) => void
@@ -29,47 +23,31 @@ type TodolistType = {
     entityStatus:RequestStatusType
 }
 export const Todolist: FC<TodolistType> = (props) => {
-
    const isLoggedIn=useAppSelector<boolean>(state => state.auth.isLoggedIn)
-    const dispatch = useAppDispatch()
-    console.log('todolist')
 
     const onRemoveTodoHandler = () => {
         props.removeTodolist(props.idTodo)
     }
-    const addTaskWrapper = useCallback((title: string) => {
 
+    const addTaskWrapper = useCallback((title: string) => {
         props.addTask(props.idTodo, title)
     }, [props.addTask, props.idTodo])
-
-
-    // useEffect(()=> {
-    //     if (isLoggedIn) {
-    //
-    //     dispatch(getTasksTC(props.idTodo))
-    // }
-    // },[])
 
     if(!isLoggedIn) {return <Navigate to={'/login'}/>}
 
     return (
         < >
-
-            <h3><EditableSpan title={props.title}
-                              callback={(title) => props.onChangeTitleTodo(props.idTodo, title)}/>
+            <h3><EditableSpan title={props.title} callback={(title) => props.onChangeTitleTodo(props.idTodo, title)}/>
                 <Button name={'x'} callback={onRemoveTodoHandler} disabled={props.entityStatus==='loading'}/>
             </h3>
             <AddItemForm addItem={addTaskWrapper} disabled={props.entityStatus==='loading'} />
             <TaskWithRedux
-
                 idTodo={props.idTodo}
                 filter={props.filter}
                 filterTask={props.filterTask}
                 entityStatus={props.entityStatus}
                 addTaskWrapper={addTaskWrapper}
-
             />
-
         </>
     );
 };

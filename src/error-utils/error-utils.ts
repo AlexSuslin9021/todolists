@@ -4,7 +4,6 @@ import {setErrorAC, setStatusAC} from "../state/reducer/AppReducer/AppReducer";
 import {ResponseType} from "../api/todolistApi";
 
 
-// generic function
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
     if (data.messages.length) {
         debugger
@@ -21,4 +20,3 @@ export const handleServerNetworkError = (error: { message: string }, dispatch: a
     dispatch(setStatusAC({status:'failed'}))
 }
 
-// type ErrorUtilsDispatchType = Dispatch<SetAppErrorActionType | SetAppStatusActionType>
