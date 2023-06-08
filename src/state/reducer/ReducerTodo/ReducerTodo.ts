@@ -101,6 +101,7 @@ const slice = createSlice({
         removeTodolistAC(state, action: PayloadAction<{ idTodo: string }>) {
             const index=state.findIndex(todo=>todo.id===action.payload.idTodo)
             if(index!==-1) state.splice(index,1)
+          
         },
         changeEntityStatusAC(state, action: PayloadAction<{ idTodo: string, status: RequestStatusType }>) {
             const todo=state.find(todo=>todo.id===action.payload.idTodo)
