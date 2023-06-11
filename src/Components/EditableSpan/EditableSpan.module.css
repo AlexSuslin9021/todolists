@@ -1,6 +1,6 @@
 .span {
     font-family: Tahoma, Verdana, sans-serif;
-    color:black;
+    color:white;
     opacity: 0.7;
-    /*font-weight: lighter;*/
+    margin-left: 5px;
 }

@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import s from './Button.module.css'
-import trash from '../../Common/Icon/trash.png'
+import trash from '../../Common/Icon/trash2.svg'
 
 export const Button:FC<ButtonType> = (props) => {
     const onClickHandler=()=>{props.callback()}

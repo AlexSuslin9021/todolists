@@ -7,7 +7,7 @@ import {TaskStatuses, TaskType} from "../../api/taskApi";
 export const Task :FC<PropsTaskType> = (props) => {
     return (
         <div>
-            {props.task.map(t => <li key={t.id}>
+            {props.task.map(t => <li className={s.task} key={t.id}>
                 <EditableSpan title={t.title} callback={(title:string)=>props.callback(props.idTodo,t.id,title)} />
                 <input readOnly={true} className={t.status ? s.isDone : ''} type="checkbox" checked={t.status===TaskStatuses.Completed}
                        onClick={() => props.changeStatusCheck(props.idTodo,t.id, t.status)}/>

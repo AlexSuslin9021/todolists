@@ -21,7 +21,7 @@
 }
 
 .input:focus {
-    border: 2px solid gray;
+    border: 2px solid #7e54ed;
     box-shadow: 1px 1px #006dd6;
 }
 

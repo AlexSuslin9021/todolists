@@ -31,7 +31,7 @@ const logOut=()=>{
              <CircularProgress/>
          </div>
      }
-    return <div>
+    return <div className={'app'}>
         <div className={'header'}> <span onClick={logOut}>{!isLoggedIn ? '' : 'Logout'}</span>  </div>
         {status==='loading' && <LinearProgress  color={'secondary'}
              sx={ {position: "fixed", top: 50, left: 0, right: 0 }}

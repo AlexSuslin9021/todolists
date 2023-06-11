@@ -4,7 +4,7 @@ import AddItemForm from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {TaskWithRedux} from "../Task/TaskWithRedux";
 import { TaskType} from "../../api/taskApi";
-import {useAppDispatch, useAppSelector} from "../../state/Store";
+import { useAppSelector} from "../../state/Store";
 import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
 import {FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
 import {Navigate} from "react-router-dom";
