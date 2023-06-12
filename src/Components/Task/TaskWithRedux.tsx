@@ -47,7 +47,6 @@ export const TaskWithRedux: FC<TaskWithReduxType> = (props) => {
     return (
         <div>
             {tasks.map(t => <li className={s.task} key={t.id}>
-
                 <EditableSpan key={t.id} title={t.title} callback={(title: string) => onChangeTitle(t.id, title)}/>
                <div>
                 <input   className={t.status ? s.isDone : ''} type="checkbox"
