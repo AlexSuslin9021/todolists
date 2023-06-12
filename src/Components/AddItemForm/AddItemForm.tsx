@@ -32,7 +32,7 @@ debugger
     }
     const inputClass = (error ? s.errorInput : '') + " " + s.input
     return (
-        <div>
+        <div >
             <input value={value}
                    onChange={onChangeHandler}
                    onKeyUp={onKeyDownHandler}
