@@ -1,5 +1,6 @@
 import React from 'react'
 import Grid from '@mui/material/Grid';
+import s from './login.module.css'
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -25,7 +26,8 @@ export const Login = () => {
             const errors: FormikErrorType = {}
             if (!values.email) {
                 errors.email = 'Required'
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+            }
+            else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address'
             }
             if (!values.password) {
@@ -48,20 +50,23 @@ export const Login = () => {
         <Grid item justifyContent={'center'}>
             <FormControl>
                 <FormLabel>
-                    <p>To log in get registered
+                    <p className={s.p}>To log in get registered
                         <a href={'https://social-network.samuraijs.com/'}
                            target={'_blank'}> here
                         </a>
                     </p>
-                    <p>or use common test account credentials:</p>
-                    <p>Email: free@samuraijs.com</p>
-                    <p>Password: free</p>
+                    <p className={s.p}>or use common test account credentials:</p>
+                    <p className={s.p}>Email: free@samuraijs.com</p>
+                    <p className={s.p}>Password: free</p>
                 </FormLabel>
-                <form onSubmit={formik.handleSubmit}>
+                <form className={s.form} onSubmit={formik.handleSubmit}>
                     <FormGroup>
                         <TextField
                             label="Email"
                             margin="normal"
+                            // size={'small'}
+                            sx={{width:'250px'}}
+                            color="secondary"
                             name={'email'}
                             onChange={formik.handleChange}
                             value={formik.values.email}
@@ -69,18 +74,22 @@ export const Login = () => {
                         />
                         {formik.touched.email && formik.errors.email &&
                             <div style={{color: 'red'}}>{formik.errors.email}</div>}
-                        <TextField type="password" label="Password"
+                        <TextField
+                            sx={{zIndex:4}}
+                            color="secondary"
+                            type="password" label="Password"
                                    margin="normal"
                                    {...formik.getFieldProps('password')}
                         />
                         <FormControlLabel
+
                             label={'Remember me'}
-                            control={<Checkbox/>}
+                            control={<Checkbox color="secondary"/>}
                             name={'rememberMe'}
                             onChange={formik.handleChange}
                             value={formik.values.rememberMe}
                         />
-                        <Button type={'submit'} variant={'contained'} color={'primary'}>
+                        <Button type={'submit'} variant={'contained'} sx={{background:'#7e54ed'}}>
                             Login
                         </Button>
                     </FormGroup>
