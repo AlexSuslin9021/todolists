@@ -13,7 +13,7 @@ import {
     updateTaskTC
 } from "../../state/reducer/ReducerTask/ReducerTask";
 
-import {Todolist} from "../Todolist/Todolist";
+import {Todolist} from "../../featers/Todolist/Todolist";
 import AddItemForm from "../AddItemForm/AddItemForm";
 import s from '../TodolistList/TodolistList.module.css'
 import {Navigate} from "react-router-dom";

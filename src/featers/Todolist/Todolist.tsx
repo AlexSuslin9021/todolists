@@ -1,7 +1,7 @@
 import React, {FC, useCallback} from 'react';
-import Button from "../Button/Button";
-import AddItemForm from "../AddItemForm/AddItemForm";
-import {EditableSpan} from "../EditableSpan/EditableSpan";
+import Button from "../../Components/Button/Button";
+import AddItemForm from "../../Components/AddItemForm/AddItemForm";
+import {EditableSpan} from "../../Components/EditableSpan/EditableSpan";
 import {TaskWithRedux} from "../Task/TaskWithRedux";
 import { TaskType} from "../../api/taskApi";
 import { useAppSelector} from "../../state/Store";
