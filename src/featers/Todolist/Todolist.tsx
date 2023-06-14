@@ -13,11 +13,9 @@ type TodolistType = {
     idTodo: string
     task: TaskType[]
     title: string
-    removeTask: (idTodo: string, idTask: string) => void
     addTask: (idTodo: string, newTitle: string) => void
     filter: FilterType
     removeTodolist: (todoID: string) => void
-    callback: (idIdTodo: string, idTask: string, api:any) => void
     onChangeTitleTodo: (idTodo: string, title: string) => void
     entityStatus:RequestStatusType
 }

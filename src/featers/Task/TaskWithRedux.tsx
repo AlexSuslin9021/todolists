@@ -39,6 +39,4 @@ type TaskWithReduxType = {
     idTodo: string
     filter: FilterType
 
-    // entityStatus: string
-    // addTaskWrapper: (title: string) => void
 }
