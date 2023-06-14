@@ -1,36 +1,18 @@
-import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
+import React, {FC} from 'react';
 import Button from "../Button/Button";
 import s from './AddItemForm.module.css'
+import {useAddItemForm} from "./selectors";
 
-export const AddItemForm: FC<AddItemFormType> = React.memo((props) => {
-    const [value, setValue] = useState<string>('')
-    const [error, setError] = useState<boolean>(false)
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.currentTarget.value)
-        setError(false)
-    }
-    const onKeyDownHandler = (e: KeyboardEvent< HTMLInputElement>) => {
-        if (e.key === 'Enter' && value.trim() !== '') {
-            props.addItem(value.trim())
-            setValue('')
-        }
-        else if (value !== '') {
-            setError(false)
-        }
-        else if(e.key === 'Enter' && value.trim() === '') {
-            setError(true)
-        }
-    }
-    const onClickAddTask = () => {
-debugger
-        if (value.trim() !== '') {
-            props.addItem(value.trim())
-            setValue('')
-        } else {
-            setError(true)
-        }
-    }
-    const inputClass = (error ? s.errorInput : '') + " " + s.input
+export const AddItemForm: FC<AddItemFormType> = React.memo(({addItem,disabled}) => {
+    const{
+        onChangeHandler,
+        value,
+        error,
+        inputClass,
+        onKeyDownHandler,
+        onClickAddTask,
+    }=useAddItemForm(addItem)
+
     return (
         <div >
             <input value={value}
@@ -39,7 +21,7 @@ debugger
                    className={inputClass}
                    placeholder="  Title"
             />
-            <Button name={'+'} callback={onClickAddTask} disabled={props.disabled}/>
+            <Button name={'+'} callback={onClickAddTask} disabled={disabled}/>
             {error ? <div  className={ s.errorText}> Error! Title is required</div> : <div></div>}
         </div>
     );
