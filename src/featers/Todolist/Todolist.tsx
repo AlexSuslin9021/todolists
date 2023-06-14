@@ -14,7 +14,6 @@ type TodolistType = {
     task: TaskType[]
     title: string
     removeTask: (idTodo: string, idTask: string) => void
-    filterTask: (idTodo: string, value: FilterType) => void
     addTask: (idTodo: string, newTitle: string) => void
     filter: FilterType
     removeTodolist: (todoID: string) => void
@@ -44,9 +43,6 @@ export const Todolist: FC<TodolistType> = (props) => {
             <TaskWithRedux
                 idTodo={props.idTodo}
                 filter={props.filter}
-                filterTask={props.filterTask}
-                entityStatus={props.entityStatus}
-                addTaskWrapper={addTaskWrapper}
             />
         </>
     );

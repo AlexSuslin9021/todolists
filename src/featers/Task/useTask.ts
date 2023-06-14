@@ -4,12 +4,11 @@ import {deleteTasksTC, TasksStateType, updateTaskTC} from "../../state/reducer/R
 import s from "../Todolist/Todolist.module.css";
 import {useCallback} from "react";
 import {TaskStatuses} from "../../api/taskApi";
-import {FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
+import {changeFilterTodolistAC, FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
 
 export const useTask = (
     idTodo: string,
     filter: FilterType,
-    filterTask: (idTodo: string, value: FilterType) => void,
 ) => {
     const dispatch = useAppDispatch()
     let task = useSelector<AppStateType, TasksStateType>(state => state.tasks)
@@ -19,6 +18,10 @@ export const useTask = (
     let tasks = task[idTodo]
     if (filter === 'active') tasks = tasks.filter(t => t.status === TaskStatuses.New)
     if (filter === 'completed') tasks = tasks.filter(t => t.status === TaskStatuses.Completed)
+    const filterTask = useCallback((idTodo: string, value: FilterType) => {
+
+        dispatch(changeFilterTodolistAC({idTodo, value}))
+    }, [dispatch])
     const onClickFilterAll = useCallback(() => {
         filterTask(idTodo, 'all')
     }, [filterTask, idTodo])
@@ -26,6 +29,7 @@ export const useTask = (
     const onClickFilterActive = useCallback(() => {
         filterTask(idTodo, 'active')
     }, [filterTask, idTodo])
+
 
     const onClickFilterCompleted = useCallback(() => {
             filterTask(idTodo, 'completed')
@@ -44,6 +48,6 @@ export const useTask = (
         dispatch(updateTaskTC(idTodo, idTask, {title: title}))
     }
 return{removeTask,onClickFilterActive,onClickFilterAll,onChangeTitle,buttonStyleCompleted,
-    buttonStyleAll,buttonStyleActive,tasks,onChangeTaskStatus,onClickFilterCompleted
+    buttonStyleAll,filterTask,buttonStyleActive,tasks,onChangeTaskStatus,onClickFilterCompleted
 }
 }

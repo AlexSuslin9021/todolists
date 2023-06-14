@@ -1,7 +1,4 @@
-import React, {FC, useCallback} from 'react';
-import {useSelector} from "react-redux";
-import {AppStateType, useAppDispatch} from "../../state/Store";
-import {deleteTasksTC, TasksStateType, updateTaskTC} from "../../state/reducer/ReducerTask/ReducerTask";
+import React, {FC} from 'react';
 import {EditableSpan} from "../../Components/EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
 import Button from "../../Components/Button/Button";
@@ -10,9 +7,9 @@ import {FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
 import {useTask} from "./useTask";
 
 
-export const TaskWithRedux: FC<TaskWithReduxType> = ({idTodo,filterTask,entityStatus,addTaskWrapper,filter}) => {
+export const TaskWithRedux: FC<TaskWithReduxType> = ({idTodo,filter}) => {
 const{removeTask,onClickFilterAll,onChangeTitle,buttonStyleCompleted,onClickFilterActive,
-    buttonStyleAll,buttonStyleActive,tasks,onChangeTaskStatus,onClickFilterCompleted}=useTask(idTodo,filter,filterTask)
+    buttonStyleAll,buttonStyleActive,tasks,onChangeTaskStatus,filterTask,onClickFilterCompleted}=useTask(idTodo,filter)
 
 
     return (
@@ -41,7 +38,7 @@ const{removeTask,onClickFilterAll,onChangeTitle,buttonStyleCompleted,onClickFilt
 type TaskWithReduxType = {
     idTodo: string
     filter: FilterType
-    filterTask: (idTodo: string, value: FilterType) => void
-    entityStatus: string
-    addTaskWrapper: (title: string) => void
+
+    // entityStatus: string
+    // addTaskWrapper: (title: string) => void
 }

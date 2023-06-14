@@ -33,10 +33,6 @@ export const TodolistList=()=>{
         dispatch(createTasksTC({idTodo, title: newTitle}))
     }, [dispatch])
 
-    const filterTask = useCallback((idTodo: string, value: FilterType) => {
-
-        dispatch(changeFilterTodolistAC({idTodo, value}))
-    }, [dispatch])
 
     const removeTodolist = useCallback((todoID: string) => {
         dispatch(deleteTodolistTC(todoID))
@@ -72,7 +68,7 @@ export const TodolistList=()=>{
                 task={tasks[t.id]}
                 title={t.title}
                 removeTask={removeTask}
-                filterTask={filterTask}
+                // filterTask={filterTask}
                 addTask={addTask}
                 filter={t.filter}
                 removeTodolist={removeTodolist}
