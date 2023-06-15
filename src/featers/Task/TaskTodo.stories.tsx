@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import {taskApi, TaskPriorities, TaskStatuses} from "../../api/taskApi";
-import {todolistApi} from "../../api/todolistApi";
+import {taskApi, TaskPriorities, TaskStatuses} from "./taskApi";
+import {todolistApi} from "../Todolist/todolistApi";
 
 
 

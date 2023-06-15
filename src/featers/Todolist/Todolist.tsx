@@ -1,12 +1,12 @@
 import React, {FC, useCallback} from 'react';
-import Button from "../../Components/Button/Button";
-import AddItemForm from "../../Components/AddItemForm/AddItemForm";
-import {EditableSpan} from "../../Components/EditableSpan/EditableSpan";
+import Button from "../../Common/Components/Button/Button";
+import AddItemForm from "../../Common/Components/AddItemForm/AddItemForm";
+import {EditableSpan} from "../../Common/Components/EditableSpan/EditableSpan";
 import {TaskWithRedux} from "../Task/TaskWithRedux";
-import { TaskType} from "../../api/taskApi";
-import { useAppSelector} from "../../state/Store";
-import {RequestStatusType} from "../../state/reducer/AppReducer/AppReducer";
-import {FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
+import { TaskType} from "../Task/taskApi";
+import { useAppSelector} from "../../App/Store";
+import {RequestStatusType} from "../../App/AppReducer/AppReducer";
+import {FilterType} from "./ReducerTodo/ReducerTodo";
 import {Navigate} from "react-router-dom";
 
 type TodolistType = {

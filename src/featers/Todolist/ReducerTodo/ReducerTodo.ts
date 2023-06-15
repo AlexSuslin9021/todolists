@@ -1,8 +1,8 @@
 import {v1} from "uuid";
-import {todolistApi, TodolistType} from "../../../api/todolistApi";
-import {RequestStatusType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
-import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
-import {getTasksTC} from "../ReducerTask/ReducerTask";
+import {todolistApi, TodolistType} from "../todolistApi";
+import {RequestStatusType, setStatusAC, SetStatusType} from "../../../App/AppReducer/AppReducer";
+import {handleServerAppError, handleServerNetworkError} from "../../../Common/error-utils/error-utils";
+import {getTasksTC} from "../../Task/ReducerTask/ReducerTask";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 

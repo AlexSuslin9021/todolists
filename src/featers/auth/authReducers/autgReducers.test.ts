@@ -1,5 +1,5 @@
 
-import {reducerTask} from "../ReducerTask/ReducerTask";
+import {reducerTask} from "../../Task/ReducerTask/ReducerTask";
 import {authReducers, InitialStateType, setIsInitializedAC, setIsLoggedInAC} from "./autgReducers";
 
 let startState: InitialStateType ;

@@ -6,8 +6,8 @@ import {
     TasksStateType,
     updateTaskAC
 } from "./ReducerTask";
-import {addTodolistAC, todolistID1} from "../ReducerTodo/ReducerTodo";
-import {TaskPriorities, TaskStatuses} from "../../../api/taskApi";
+import {addTodolistAC, todolistID1} from "../../Todolist/ReducerTodo/ReducerTodo";
+import {TaskPriorities, TaskStatuses} from "../taskApi";
 
 let startState: TasksStateType ;
 beforeEach(() => {

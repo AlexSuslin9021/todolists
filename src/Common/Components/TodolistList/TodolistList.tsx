@@ -1,10 +1,10 @@
-import {fetchTodolistTC} from "../../state/reducer/ReducerTodo/ReducerTodo";
+import {fetchTodolistTC} from "../../../featers/Todolist/ReducerTodo/ReducerTodo";
 import React, { useEffect} from "react";
-import {Todolist} from "../../featers/Todolist/Todolist";
+import {Todolist} from "../../../featers/Todolist/Todolist";
 import AddItemForm from "../AddItemForm/AddItemForm";
-import s from '../TodolistList/TodolistList.module.css'
+import s from './TodolistList.module.css'
 import {Navigate} from "react-router-dom";
-import {useTodolist} from "../../featers/Todolist/useTodolist";
+import {useTodolist} from "../../../featers/Todolist/useTodolist";
 
 export const TodolistList=()=>{
   const{   dispatch,
@@ -25,8 +25,8 @@ export const TodolistList=()=>{
         <div className={s.addItemForm}>
         <AddItemForm addItem={addTodolist}/>
         </div>
-        {todolist.map((t) => {
-            return(<div key={t.id} className={s.containerTodo}>
+        {   todolist.map((t) => {
+            return(<li key={t.id} className={s.containerTodo}>
                 <Todolist
                 entityStatus={t.entityStatus}
                 key={t.id}
@@ -38,7 +38,7 @@ export const TodolistList=()=>{
                 removeTodolist={removeTodolist}
                 onChangeTitleTodo={onChangeTitleTodo}
             />
-                </div>
+                </li>
             )
         })
         }

@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
-import {EditableSpan} from "../../Components/EditableSpan/EditableSpan";
+import {EditableSpan} from "../../Common/Components/EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
-import Button from "../../Components/Button/Button";
-import {TaskStatuses} from "../../api/taskApi";
-import {FilterType} from "../../state/reducer/ReducerTodo/ReducerTodo";
+import Button from "../../Common/Components/Button/Button";
+import {TaskStatuses} from "./taskApi";
+import {FilterType} from "../Todolist/ReducerTodo/ReducerTodo";
 import {useTask} from "./useTask";
 
 

@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
-import {EditableSpan} from "../../Components/EditableSpan/EditableSpan";
+import {EditableSpan} from "../../Common/Components/EditableSpan/EditableSpan";
 import s from "../Todolist/Todolist.module.css";
-import Button from "../../Components/Button/Button";
-import {TaskStatuses, TaskType} from "../../api/taskApi";
+import Button from "../../Common/Components/Button/Button";
+import {TaskStatuses, TaskType} from "./taskApi";
 
 export const Task :FC<PropsTaskType> = (props) => {
     return (

@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC, useState} from 'react';
-import style from '../../Common/commonStyle.module.css'
+import style from '../../commonStyle.module.css'
 import s from './EditableSpan.module.css'
 
 

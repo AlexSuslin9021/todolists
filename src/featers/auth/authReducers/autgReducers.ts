@@ -1,7 +1,7 @@
-import {setStatusAC} from "../AppReducer/AppReducer";
-import {authApi, LoginType} from "../../../api/authApi";
+import {setStatusAC} from "../../../App/AppReducer/AppReducer";
+import {authApi, LoginType} from "../authApi";
 import axios from "axios";
-import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
+import {handleServerAppError, handleServerNetworkError} from "../../../Common/error-utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState = {isLoggedIn: false, isInitialized: false}

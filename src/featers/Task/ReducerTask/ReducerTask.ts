@@ -1,9 +1,9 @@
-import {addTodolistAC, removeTodolistAC, setTodolistAC, setTodolistType} from "../ReducerTodo/ReducerTodo";
-import {taskApi, TaskPriorities, TaskStatus, TaskStatuses, TaskType} from "../../../api/taskApi";
+import {addTodolistAC, removeTodolistAC, setTodolistAC, setTodolistType} from "../../Todolist/ReducerTodo/ReducerTodo";
+import {taskApi, TaskPriorities, TaskStatus, TaskStatuses, TaskType} from "../taskApi";
 import {Dispatch} from "redux";
-import { AppStateType, AppThunkType} from "../../Store";
-import {RequestStatusType, setErrorAC, SetErrorType, setStatusAC, SetStatusType} from "../AppReducer/AppReducer";
-import {handleServerAppError, handleServerNetworkError} from "../../../error-utils/error-utils";
+import { AppStateType, AppThunkType} from "../../../App/Store";
+import {RequestStatusType, setErrorAC, SetErrorType, setStatusAC, SetStatusType} from "../../../App/AppReducer/AppReducer";
+import {handleServerAppError, handleServerNetworkError} from "../../../Common/error-utils/error-utils";
 import axios from "axios";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 

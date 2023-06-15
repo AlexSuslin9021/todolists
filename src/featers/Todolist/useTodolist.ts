@@ -1,12 +1,12 @@
-import {AppStateType, useAppDispatch, useAppSelector} from "../../state/Store";
+import {AppStateType, useAppDispatch, useAppSelector} from "../../App/Store";
 import {useSelector} from "react-redux";
 import {
     createTodolistTC,
     deleteTodolistTC,
     TodolistDomainType,
     updateTodolistTC
-} from "../../state/reducer/ReducerTodo/ReducerTodo";
-import {createTasksTC, TasksStateType} from "../../state/reducer/ReducerTask/ReducerTask";
+} from "./ReducerTodo/ReducerTodo";
+import {createTasksTC, TasksStateType} from "../Task/ReducerTask/ReducerTask";
 import {useCallback} from "react";
 
 export const useTodolist=()=>{
