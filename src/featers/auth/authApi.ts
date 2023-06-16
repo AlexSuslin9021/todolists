@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {ResponseType} from "../Todolist/todolistApi";
+import {ResponseType} from "../todolist/todolistApi";
 
 const instance = axios.create({
     withCredentials: true,

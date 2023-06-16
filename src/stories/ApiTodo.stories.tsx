@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 
-import {todolistApi} from "../featers/Todolist/todolistApi";
-import {taskApi} from "../featers/Task/taskApi";
+import {todolistApi} from "../featers/todolist/todolistApi";
+import {taskApi} from "../featers/task/taskApi";
 
 export default {
     title: 'API',
