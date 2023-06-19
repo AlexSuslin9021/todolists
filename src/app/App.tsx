@@ -8,6 +8,7 @@ import {CircularProgress, LinearProgress} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "./store";
 import {RequestStatusType} from "./appReducer/appReducer";
 import {initializedTC, setLogoutTC} from "../featers/auth/authReducers/autgReducers";
+import {Error} from "../common/components/Error/Error";
 
 
 function App() {
@@ -34,9 +35,10 @@ function App() {
         />}
         <Routes>
             <Route path={'/'} element={<TodolistList/>}/>
+            {/*<Route path={"/"} element={<Navigate to="/todolists"/>} />*/}
             <Route path={'/login'} element={<Login/>}/>
-            <Route path={'/404'} element={<h1>NOT FOUND 404</h1>}/>
-            <Route path={'*'} element={<Navigate to={'/404'}/>}/>
+            <Route path={'/404'} element={<Error/>}/>
+            <Route path={'/*'} element={<Navigate to={'/404'}/>}/>
         </Routes>
         <ErrorSnackbar/>
     </div>
