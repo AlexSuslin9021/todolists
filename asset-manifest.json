@@ -1,16 +1,17 @@
 {
   "files": {
-    "main.css": "/todolists/static/css/main.5b54aa90.css",
-    "main.js": "/todolists/static/js/main.5cfa03a3.js",
+    "main.css": "/todolists/static/css/main.0c6e3bf2.css",
+    "main.js": "/todolists/static/js/main.7c10b849.js",
     "static/js/111.7183e72d.chunk.js": "/todolists/static/js/111.7183e72d.chunk.js",
+    "static/media/error.svg": "/todolists/static/media/error.9ec31c0ba8d95b0480272e46af98c955.svg",
     "static/media/trash2.svg": "/todolists/static/media/trash2.bd6be3bdff61bd4b05fb56567d44aa57.svg",
     "index.html": "/todolists/index.html",
-    "main.5b54aa90.css.map": "/todolists/static/css/main.5b54aa90.css.map",
-    "main.5cfa03a3.js.map": "/todolists/static/js/main.5cfa03a3.js.map",
+    "main.0c6e3bf2.css.map": "/todolists/static/css/main.0c6e3bf2.css.map",
+    "main.7c10b849.js.map": "/todolists/static/js/main.7c10b849.js.map",
     "111.7183e72d.chunk.js.map": "/todolists/static/js/111.7183e72d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5b54aa90.css",
-    "static/js/main.5cfa03a3.js"
+    "static/css/main.0c6e3bf2.css",
+    "static/js/main.7c10b849.js"
   ]
 }
